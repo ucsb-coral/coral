@@ -2,7 +2,7 @@
 
 ## Team members
 
-Wenjin Li: I am a senior student majoring in Computer Engineering. I have taken xxxxxx(add later)
+Wenjin Li: I am a senior student majoring in Computer Engineering. I have taken CS156 (add later)
 
 A:
 
