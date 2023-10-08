@@ -14,4 +14,3 @@
 | Jinghan Zhang |
 | Binyu Zhong |
 
-# TODO: pick roles
