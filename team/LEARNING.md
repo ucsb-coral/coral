@@ -4,7 +4,7 @@
 
 Wenjin Li: I am a senior student majoring in Computer Engineering. I have taken CS156 (add later)
 
-A:
+Sean Oh: I am a 4th year Computer Science student. I have taken CS156 and have some experience in React. I don't have any experience in Android or iOS development, but I am interested in Android development. 
 
 B:
 

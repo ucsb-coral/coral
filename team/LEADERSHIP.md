@@ -2,16 +2,16 @@
 
 | SCRUM roles |
 |:--------------:|
-| product owner: A |
-| scrum master:  B |
-| scribe:        C |
+| product owner: Jinghan Zhang |
+| scrum master:  Ethan Pletcher |
+| scribe:        Sean Oh |
 
 | team members |
 |:--------------:|
-| A |
-| B |
-| C |
-| D |
-| E |
+| Wenjin Li |
+| Sean Oh |
+| Ethan Pletcher |
+| Jinghan Zhang |
+| Binyu Zhong |
 
 # TODO: pick roles
