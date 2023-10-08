@@ -1,43 +1,34 @@
-# TODO: discuss your app idea and work towards a problem scenario
+# Application Idea Discussion
 
-I. Application Outline:
+## I. Application Outline
 
-Application module:
+### Application Module
+1. **User Sign-up and Login**
+2. **Weekly Schedule View**
+3. **Event and Course Addition Functionality**: 
+    - Users can add events and courses.
+    - Support adding through QR codes for group chats.
 
-1.1. User sign-up and login
+### Group Chat Module
+1. **Group Chat Creation and Joining**: 
+    - Users can create and join group chats.
+2. **Message Sending and Receiving**: 
+	- Implementation of real-time messaging within group chats.
+3. **Group Chat Member Management and Viewing**: 
+    - Users can view open and hidden information of group members.
+4. **Member Removal Functionality**:
+	- Facilitate removal of users from group chats as needed.
 
-1.2. Weekly schedule view
+## II. Technology Outline
 
-1.3. Event and course addition functionality
-	-such as a QR code to be added to the group chats 
+### Frontend
+- **Common Data Source**: Data from the weekly schedule may be obtained from the UCSB API (Consider using the CS156 dataset): https://developer.ucsb.edu/
+- **TODO**: (Additional frontend technologies and tools to be used.)
 
-Group Chat Module:
+### Backend
+- **Real-time Chat Functionality**: Considering using WebSockets for real-time chat functionality.
 
-2.1. Creation and joining of group chats(a set group chat may be needed )
-
-2.2. Message sending and receiving 
-
-2.3. Group chat member management and viewing
-	-open and Hidden information
-2.4. Application where a user can be removed from the group chats 
-	
-
-User Settings and Feedback Module:
-
-3.1. User personal settings
-
-3.2. Application feedback and help
-
-II. Technology Outline:
-Frontend:
--common: the data from the weekly schedule may get from the UCSB website (CS156 data set may help)
-TODO
-
-Backend:
-TODO
-Real-time chat functionality:
-Socket?
-
-
-
-Problem scenario:
+# Problem Scenario
+ - **Problem 1**: Students often have difficulty managing their time and keeping track of their schedules. So we need to have a button to manually update the schedule.
+ - **Problem 2**: (additional problems to be added.)
+ - **Problem 3**: (additional problems to be added.)
