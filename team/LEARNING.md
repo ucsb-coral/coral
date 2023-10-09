@@ -7,9 +7,10 @@ I am a senior student majoring in Computer Engineering. I have taken CS156 and I
 I am a 4th year Computer Science student. I have taken CS156 and have some experience in React. I don't have any experience in Android or iOS development, but I am interested in Android development. 
 
 ### Binyu Zhong:
-I am a senior Computer Engineering student, i experience of software is CS156. i do not have any experience about app development, but im now taken ECE150 which is also a Android app development class and a CS189 which is a capstone project class so i think as the quarter goes i would have more experience for app development. I am very intereted in app development. and i would do my best for my team and myself . 
+I am a senior Computer Engineering student, my experience of software is CS156. i do not have any experience about app development, but im now taken ECE150 which is also a Android app development class and a CS189 which is a capstone project class so i think as the quarter goes i would have more experience for app development. I am very intereted in app development. and i would do my best for my team and myself . 
 
 
-### C:
+### Jinghan Zhang:
+I'm a senior student majoring in Computer Science. I took CS156 last fall and learned a little in React. It's my first time to do Android app, but I'm always willing to face new challenge and learn something new.
 
 ### D:
