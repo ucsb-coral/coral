@@ -10,6 +10,6 @@ Team members:
 * Jinghan Zhang
   [xxzjh](<https://github.com/xxzjh>)
 * Sean Oh
-  [seannoh](<https://github.com/xxzjh>)
+  [seannoh](<https://github.com/seannoh>)
 * Wenjin Li
   [Wenjin09](<https://github.com/xxzjh>)
