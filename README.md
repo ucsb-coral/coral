@@ -12,4 +12,4 @@ Team members:
 * Sean Oh
   [seannoh](<https://github.com/seannoh>)
 * Wenjin Li
-  [Wenjin09](<https://github.com/xxzjh>)
+  [Wenjin09](<https://github.com/Wenjin09>)
