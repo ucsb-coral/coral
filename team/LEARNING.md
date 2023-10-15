@@ -19,3 +19,18 @@ I'm a senior student majoring in Computer Science. I took CS156 last fall and le
 ### Ethan Pletcher:
 
 I'm a senior student majoring in Computer Science and Philosophy. I am pretty familiar with React and React Native. I'm excited to explore the UCSB student scheduling API and to make an app I might use in the future.
+
+
+## Benefits and Challenges of React Native
+### Benefits:
+- Familiar to people who know React
+- Lots of tools and resources are available online
+- Can work in VSCode instead of bulky IDE like Android Studio
+- Amazing library of open source npm packages to use
+- TypeScript is pretty
+
+### Challenges
+- Difficult to set up
+- Slightly slower run time than native code in many circumstances
+- npm packages can get out of date
+- Facebook developed and FB sucks
