@@ -34,3 +34,10 @@ I'm a senior student majoring in Computer Science and Philosophy. I am pretty fa
 - Slightly slower run time than native code in many circumstances
 - npm packages can get out of date
 - Facebook developed and FB sucks
+
+## Posting Resources on Slack
+
+### Post Links
+- https://ucsb-184-f23.slack.com/archives/C060DCW1MGS/p1697244310869729
+- https://ucsb-184-f23.slack.com/archives/C060DCW1MGS/p1697244093670919
+- https://ucsb-184-f23.slack.com/archives/C060DCW1MGS/p1697244858900189
