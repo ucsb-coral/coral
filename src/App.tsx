@@ -1,23 +1,18 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
+import useRedux from './redux/useRedux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {Provider} from 'react-redux';
 
 export default function App() {
+  const {store, persistor} = useRedux();
   return (
-    <SafeAreaView
-      style={{
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text
-        style={{
-          color: '#fff456',
-          fontWeight: 'bold',
-          fontSize: 20,
-        }}>
-        Ethan Pletcher
-      </Text>
-    </SafeAreaView>
+    <Provider store={store}>
+      <PersistGate loading={<></>} persistor={persistor}>
+        <SafeAreaView style={{flex: 1}}>
+          {/* <PutNavigatorComponentHere /> */}
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
 }
