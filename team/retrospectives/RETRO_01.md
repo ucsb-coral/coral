@@ -18,4 +18,7 @@
 
 * In leading this retro, I followed the template given in the assignment details page on Canvas
 * It went very well. We had similar ideas about what our group needed to do to improve and what are nexts steps were as a team. I think it was helpful to air some of the factors that were getting in the way of the project.
-* I would way to just think about the issues your group is having in getting work done efficiently, and try to think of ways to collaboratively brainstorm ways to solve them. 
+* I would way to just think about the issues your group is having in getting work done efficiently, and try to think of ways to collaboratively brainstorm ways to solve them.
+
+## Retro Experiment 
+* Outcome: We improved a little in assigning individual work, but we are still stuck with doing class assignments. We also haven't gotten much of a codebase yet, so it's harder to split up work. Since the start of the sprint, our throughput of issues from TODO to DONE has been low, with only ~2 issues, but we have split up larger issues into smaller tasks to improve this. Although the experiment was a failure, we should try to continue incorporating the experiment's practices in our workflow.
