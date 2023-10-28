@@ -1,15 +1,10 @@
 import React from 'react';
 import {View, Text, Button, Pressable} from 'react-native';
-import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
-import {signOut} from '../../../../auth/useAuth';
+//import {TabPageProps} from '../../navigation/navigators/TabNavigator';
+import {signOut} from '../../../auth/useAuth';
 import {useSelector} from 'react-redux';
 
-export type TabPage1Props = EmptyProps;
-
-export default function TabPage1({
-  route,
-  navigation,
-}: TabPageProps<'tabpage1'>) {
+export default function UserPage({}) {
   const googleUser = useSelector((state: ReduxState) => state.data.googleUser);
 
   return (
@@ -17,16 +12,16 @@ export default function TabPage1({
       style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
       <Text
         style={{
-          color: '#fff',
+          // color: '#fff',
           fontWeight: 'bold',
           fontSize: 20,
         }}>
-        {'Tab Page 1'}
+        {'User Page'}
       </Text>
       <Pressable onPress={signOut}>
         <Text
           style={{
-            color: '#fff',
+            // color: '#fff',
             fontWeight: 'bold',
             fontSize: 30,
           }}>
@@ -36,7 +31,7 @@ export default function TabPage1({
 
       <Text
         style={{
-          color: '#fff',
+          // color: '#fff',
           fontSize: 20,
         }}>
         {`${googleUser?.email}\n${googleUser?.givenName}\n${googleUser?.familyName}`}
