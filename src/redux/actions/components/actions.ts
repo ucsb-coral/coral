@@ -1,12 +1,21 @@
 import {ActionCreator} from 'redux';
 
-const setReduxTestAction: ActionCreator<SetReduxTestAction> = (
-  reduxTest: boolean,
+const setAuthStateAction: ActionCreator<SetAuthStateAction> = (
+  authState: AuthState,
 ) => {
   return {
-    type: 'SET_REDUX_TEST',
-    reduxTest,
+    type: 'SET_AUTH_STATE',
+    authState,
   };
 };
 
-export {setReduxTestAction};
+const setGoogleUserAction: ActionCreator<SetGoogleUserAction> = (
+  googleUser: GoogleUser | null,
+) => {
+  return {
+    type: 'SET_GOOGLE_USER',
+    googleUser,
+  };
+};
+
+export {setAuthStateAction, setGoogleUserAction};

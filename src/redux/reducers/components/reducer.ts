@@ -1,6 +1,7 @@
 function initializeState(): Data {
   return {
-    reduxTest: false,
+    authState: 'NONE',
+    googleUser: null,
     user: null,
   };
 }
@@ -10,8 +11,10 @@ export function reducer(
   action: ActionTypes,
 ): Data {
   switch (action.type) {
-    case 'SET_REDUX_TEST':
-      return {...state, reduxTest: action.reduxTest};
+    case 'SET_AUTH_STATE':
+      return {...state, authState: action.authState};
+    case 'SET_GOOGLE_USER':
+      return {...state, googleUser: action.googleUser};
     default:
       return state;
   }
