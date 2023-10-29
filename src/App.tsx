@@ -3,7 +3,6 @@ import {SafeAreaView, Text, View} from 'react-native';
 import useRedux from './redux/useRedux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
-import StackNavigator from './navigation/navigators/StackNavigator';
 import Navigation from './navigation/Navigation';
 
 export default function App() {
