@@ -1,57 +1,63 @@
 import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-elements';
+import {
+  BottomTabScreenProps,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
+import {Icon} from 'react-native-elements';
 // import Tabbar from '../components/Tabbar';
-import UserPage from '../../screens/user/UserPage';
-import ChatPage from '../../screens/chat/ChatPage';
-import SchedulePage from '../../screens/schedule/SchedulePage';
+import UserPage, {UserPageProps} from '../../screens/tab/user/UserPage';
+import ChatPage, {ChatPageProps} from '../../screens/tab/chat/ChatPage';
+import SchedulePage, {
+  SchedulePageProps,
+} from '../../screens/tab/schedule/SchedulePage';
+import {coral, grey} from '../../utilities/colors';
 
-// type TabNavigatorScreens = {
-//   User: UserPageProps;
-//   Chats: ChatPageProps;
-//   Schedule: SchedulePageProps;
-// };
+type TabNavigatorScreens = {
+  user: UserPageProps;
+  chats: ChatPageProps;
+  schedule: SchedulePageProps;
+};
 
-// type TabNavigatorPages = keyof TabNavigatorScreens;
+type TabNavigatorPages = keyof TabNavigatorScreens;
 
-const Tab = createBottomTabNavigator();
-
+const Tab = createBottomTabNavigator<TabNavigatorScreens>();
 
 export default function TabNavigator() {
   return (
     <Tab.Navigator
       id={'tab-navigator'}
-      initialRouteName={'Chats'}
-      screenOptions={({ route }) => ({
+      initialRouteName={'chats'}
+      screenOptions={({route}) => ({
         headerShown: false,
-        tabBarActiveTintColor: '#f88379',
-        tabBarInactiveTintColor: 'gray',
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarActiveTintColor: coral,
+        tabBarInactiveTintColor: grey,
+        tabBarIcon: ({focused, color, size}) => {
           let iconName: string;
-          if (route.name === 'Schedule') {
-            iconName = focused ? 'calendar' : 'calendar-outline';
-          } else if (route.name === 'Chats') {
-            iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
-          } else {
-            iconName = focused ? 'person' : 'person-outline';
+          switch (route.name) {
+            case 'schedule':
+              iconName = focused ? 'calendar' : 'calendar-outline';
+              break;
+            case 'chats':
+              iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+              break;
+            case 'user':
+              iconName = focused ? 'person' : 'person-outline';
+              break;
           }
-          let iconColor: string;
-          iconColor = focused ? '#f88379' : 'gray';
-          return <Icon name={iconName} type = 'ionicon' color = {iconColor}/>;
-        }
-      })}
 
-    >
-      <Tab.Screen name={'Schedule'} component={SchedulePage} />
-      <Tab.Screen name={'Chats'} component={ChatPage} />
-      <Tab.Screen name={'User'} component={UserPage} />
+          let iconColor: string = focused ? coral : grey;
+          return <Icon name={iconName} type="ionicon" color={iconColor} />;
+        },
+      })}>
+      <Tab.Screen name={'schedule'} component={SchedulePage} />
+      <Tab.Screen name={'chats'} component={ChatPage} />
+      <Tab.Screen name={'user'} component={UserPage} />
     </Tab.Navigator>
   );
 }
 
-
-// export type TabPageProps<Page extends TabNavigatorPages> = BottomTabScreenProps<
-//   TabNavigatorScreens,
-//   Page,
-//   'tab-navigator'
-// >;
+export type TabPageProps<Page extends TabNavigatorPages> = BottomTabScreenProps<
+  TabNavigatorScreens,
+  Page,
+  'tab-navigator'
+>;

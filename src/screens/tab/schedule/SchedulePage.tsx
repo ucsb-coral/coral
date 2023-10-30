@@ -1,12 +1,14 @@
 import React from 'react';
 import {View, Text, Button, Pressable} from 'react-native';
-//import {TabPageProps} from '../../navigation/navigators/TabNavigator';
-import {signOut} from '../../../auth/useAuth';
-import {useSelector} from 'react-redux';
+import {signOut} from '../../../../auth/useAuth';
+import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 
-export default function UserPage({}) {
-  const googleUser = useSelector((state: ReduxState) => state.data.googleUser);
+export type SchedulePageProps = EmptyProps;
 
+export default function SchedulePage({
+  route,
+  navigation,
+}: TabPageProps<'schedule'>) {
   return (
     <View
       style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
@@ -16,7 +18,7 @@ export default function UserPage({}) {
           fontWeight: 'bold',
           fontSize: 20,
         }}>
-        {'User Page'}
+        {'Schedule Page'}
       </Text>
       <Pressable onPress={signOut}>
         <Text
@@ -25,17 +27,9 @@ export default function UserPage({}) {
             fontWeight: 'bold',
             fontSize: 30,
           }}>
-          Sign Out
+          Different Info
         </Text>
       </Pressable>
-
-      <Text
-        style={{
-          // color: '#fff',
-          fontSize: 20,
-        }}>
-        {`${googleUser?.email}\n${googleUser?.givenName}\n${googleUser?.familyName}`}
-      </Text>
     </View>
   );
 }

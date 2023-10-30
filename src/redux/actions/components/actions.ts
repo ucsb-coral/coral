@@ -1,21 +1,31 @@
 import {ActionCreator} from 'redux';
 
-const setAuthStateAction: ActionCreator<SetAuthStateAction> = (
-  authState: AuthState,
-) => {
+type Action<T> = (props: Omit<T, 'type'>) => T;
+
+const setAuthStateAction: Action<SetAuthStateAction> = props => {
   return {
     type: 'SET_AUTH_STATE',
-    authState,
+    ...props,
   };
 };
 
-const setGoogleUserAction: ActionCreator<SetGoogleUserAction> = (
-  googleUser: GoogleUser | null,
-) => {
+const setMyUserAction: Action<SetMyUserAction> = props => {
   return {
-    type: 'SET_GOOGLE_USER',
-    googleUser,
+    type: 'SET_MY_USER',
+    ...props,
   };
 };
 
-export {setAuthStateAction, setGoogleUserAction};
+const signOutAction: Action<SignOutAction> = () => {
+  return {
+    type: 'SIGN_OUT',
+  };
+};
+
+const clearStoreAction: Action<ClearStoreAction> = () => {
+  return {
+    type: 'CLEAR_STORE',
+  };
+};
+
+export {setAuthStateAction, setMyUserAction, signOutAction, clearStoreAction};

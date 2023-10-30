@@ -12,6 +12,9 @@ import useAuth from '../../../auth/useAuth';
 import LoadingScreen, {
   LoadingScreenProps,
 } from '../../screens/loading/LoadingScreen';
+import ChatScreen, {
+  ChatScreenProps,
+} from '../../screens/stack/chatScreen/ChatScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -23,6 +26,7 @@ type AuthStackNavigatorPages = keyof AuthStackNavigatorScreens;
 
 type AppStackNavigatorScreens = {
   tabNavigator: EmptyProps;
+  chat: ChatScreenProps;
   // ADD more app screens here
 };
 
@@ -47,6 +51,7 @@ export default function StackNavigator() {
       {authState === 'AUTHENTICATED' ? (
         <>
           <Stack.Screen name={'tabNavigator'} component={TabNavigator} />
+          <Stack.Screen name={'chat'} component={ChatScreen} />
           {/* ADD more app stack screens here */}
         </>
       ) : authState === 'LOADING' ? (

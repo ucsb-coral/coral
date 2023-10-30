@@ -1,10 +1,13 @@
 import React from 'react';
 import {View, Text, Button, Pressable} from 'react-native';
 //import {TabPageProps} from '../../navigation/navigators/TabNavigator';
-import {signOut} from '../../../auth/useAuth';
+import {signOut} from '../../../../auth/useAuth';
 import {useSelector} from 'react-redux';
+import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 
-export default function SchedulePage({}) {
+export type ChatPageProps = EmptyProps;
+
+export default function ChatPage({route, navigation}: TabPageProps<'chats'>) {
   return (
     <View
       style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
@@ -14,7 +17,7 @@ export default function SchedulePage({}) {
           fontWeight: 'bold',
           fontSize: 20,
         }}>
-        {'Schedule Page'}
+        {'Chat Page'}
       </Text>
       <Pressable onPress={signOut}>
         <Text

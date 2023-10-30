@@ -3,37 +3,45 @@ declare type SetAuthStateAction = {
   authState: AuthState;
 };
 
-declare type SetGoogleUserAction = {
-  type: 'SET_GOOGLE_USER';
-  googleUser: GoogleUser | null;
+declare type SetMyUserAction = {
+  type: 'SET_MY_USER';
+  id: string;
+  user: User;
 };
 
-declare type ActionTypes = SetAuthStateAction | SetGoogleUserAction;
+declare type SignOutAction = {
+  type: 'SIGN_OUT';
+};
+
+declare type ClearStoreAction = {
+  type: 'CLEAR_STORE';
+};
+
+declare type ActionTypes =
+  | SetAuthStateAction
+  | SetMyUserAction
+  | SignOutAction
+  | ClearStoreAction;
 
 declare type Data = {
-  user: User | null;
-  googleUser: GoogleUser | null;
   authState: AuthState;
+  myUserId: string | null;
+  usermap: Usermap;
 };
 
 declare type ReduxState = {
   data: Data;
 };
 
-declare type User = {
-  id: string;
-  email: string;
-  perm: number;
-  firstName: string;
-  lastName: string;
-};
-
 declare type AuthState = 'NONE' | 'LOADING' | 'AUTHENTICATED';
 
-declare type GoogleUser = {
-  id: string;
+declare type Usermap = {
+  [id: string]: User;
+};
+
+declare type User = {
   email: string;
-  givenName: string | null;
-  familyName: string | null;
+  firstName: string | null;
+  lastName: string | null;
   photo: string | null;
 };

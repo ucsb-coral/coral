@@ -5,7 +5,14 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {useSelector} from 'react-redux';
 import {store} from '../src/redux/useRedux';
-import {setAuthStateAction, setGoogleUserAction} from '../src/redux/actions';
+import {
+  clearStoreAction,
+  setAuthStateAction,
+  setMyUserAction,
+  signOutAction,
+} from '../src/redux/actions';
+import {useEffect} from 'react';
+import {setMyUserFirebaseRedux} from '../src/firebaseReduxUtilities/useUserData';
 
 GoogleSignin.configure({
   webClientId:
@@ -16,7 +23,7 @@ GoogleSignin.configure({
 });
 
 export const signInWithGoogle = async () => {
-  store.dispatch(setAuthStateAction('LOADING'));
+  store.dispatch(setAuthStateAction({authState: 'LOADING'}));
   try {
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
 
@@ -29,14 +36,21 @@ export const signInWithGoogle = async () => {
 
     // // Sign-in the user with the credential
     const userCredential = await auth().signInWithCredential(googleCredential);
-    console.log('userCredential', idToken, user);
-    const idTokenResult = await userCredential.user.getIdTokenResult();
+    const id = `usr${userCredential.user.uid}`;
+    // const idTokenResult = await userCredential.user.getIdTokenResult();
+    console.log('IDS', id);
 
-    store.dispatch(setGoogleUserAction(user));
-    store.dispatch(setAuthStateAction('AUTHENTICATED'));
+    const myUser: User = {
+      firstName: user.givenName,
+      lastName: user.familyName,
+      email: user.email,
+      photo: user.photo,
+    };
+    setMyUserFirebaseRedux(id, myUser);
+    store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
   } catch (error: any) {
     console.warn(error);
-    store.dispatch(setAuthStateAction('NONE'));
+    store.dispatch(setAuthStateAction({authState: 'NONE'}));
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow
     } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -52,15 +66,19 @@ export const signInWithGoogle = async () => {
 export const signOut = async () => {
   try {
     await GoogleSignin.signOut();
-    store.dispatch(setAuthStateAction('NONE'));
-    store.dispatch(setGoogleUserAction(null));
+    store.dispatch(signOutAction({}));
   } catch (error) {
     console.error(error);
   }
 };
 
 export default function useAuth() {
+  const state = useSelector((state: ReduxState) => state);
   const authState = useSelector((state: ReduxState) => state.data.authState);
-  console.log(authState);
+
+  useEffect(() => {
+    console.log('STATE', state);
+  }, [state]);
+
   return {authState};
 }
