@@ -1,7 +1,8 @@
 const initialData: Data = {
   authState: 'NONE',
-  myUserId: null,
+  myUserId: '',
   usermap: {},
+  chatmap: {},
 };
 
 function initializeState(): Data {
@@ -17,15 +18,31 @@ export function reducer(
       return {...state, authState: action.authState};
     case 'SET_MY_USER': {
       const {id, user} = action;
-      const {usermap} = state;
+      const usermap = state.usermap;
       usermap[id] = user;
       return {...state, myUserId: id, usermap: {...usermap}};
+    }
+    case 'JOIN_CHAT': {
+      const {id, chat} = action;
+      const myUserId = state.myUserId;
+      const chatmap = state.chatmap;
+      const usermap = state.usermap;
+      const myUser = usermap[myUserId!];
+      if (!myUser.chats) myUser.chats = [];
+      myUser.chats.push(id);
+      chatmap[id] = chat;
+      return {
+        ...state,
+        myUserId: id,
+        chatmap: {...chatmap},
+        usermap: {...usermap},
+      };
     }
     case 'SIGN_OUT': {
       return {
         ...state,
         authState: 'NONE',
-        myUserId: null,
+        myUserId: '',
       };
     }
     case 'CLEAR_STORE': {

@@ -16,6 +16,13 @@ const setMyUserAction: Action<SetMyUserAction> = props => {
   };
 };
 
+const joinChatAction: Action<JoinChatAction> = props => {
+  return {
+    type: 'JOIN_CHAT',
+    ...props,
+  };
+};
+
 const signOutAction: Action<SignOutAction> = () => {
   return {
     type: 'SIGN_OUT',
@@ -28,4 +35,10 @@ const clearStoreAction: Action<ClearStoreAction> = () => {
   };
 };
 
-export {setAuthStateAction, setMyUserAction, signOutAction, clearStoreAction};
+export {
+  setAuthStateAction,
+  setMyUserAction,
+  joinChatAction,
+  signOutAction,
+  clearStoreAction,
+};
