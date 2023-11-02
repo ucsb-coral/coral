@@ -3,6 +3,7 @@ const initialData: Data = {
   myUserId: '',
   usermap: {},
   chatmap: {},
+  coursemap: {},
 };
 
 function initializeState(): Data {
@@ -33,7 +34,6 @@ export function reducer(
       chatmap[id] = chat;
       return {
         ...state,
-        myUserId: id,
         chatmap: {...chatmap},
         usermap: {...usermap},
       };
@@ -50,7 +50,6 @@ export function reducer(
         ...initialData,
       };
     }
-
     default:
       return state;
   }

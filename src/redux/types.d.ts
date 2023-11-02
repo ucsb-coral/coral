@@ -35,6 +35,7 @@ declare type Data = {
   myUserId: string;
   usermap: Usermap;
   chatmap: Chatmap;
+  coursemap: Coursemap;
 };
 
 declare type ReduxState = {
@@ -45,6 +46,10 @@ declare type AuthState = 'NONE' | 'LOADING' | 'AUTHENTICATED';
 
 declare type Usermap = {
   [id: string]: User;
+};
+
+declare type Coursemap = {
+  [id: string]: Course;
 };
 
 declare type Chatmap = {
@@ -64,7 +69,6 @@ declare type Message = {
 };
 
 declare type Chat = {
-  title: string;
   memberIds: string[];
   messages: Message[];
 };
@@ -85,7 +89,6 @@ declare type TimeLocation = {
 };
 
 declare type Course = {
-  courseId: string;
   quarter: string;
   enrollCode: string;
   gradingOptionCode: string;

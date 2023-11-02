@@ -9,9 +9,7 @@ import WelcomeScreen, {
 } from '../../screens/auth/welcomeScreen/WelcomeScreen';
 import TabNavigator from './TabNavigator';
 import useAuth from '../../../auth/useAuth';
-import LoadingScreen, {
-  LoadingScreenProps,
-} from '../../screens/loading/LoadingScreen';
+import LoadingScreen, {LoadingScreenProps} from '../../components/Loading';
 import ChatScreen, {
   ChatScreenProps,
 } from '../../screens/stack/chatScreen/ChatScreen';
@@ -68,10 +66,13 @@ export const authStackNavigate = (
   screen: AuthStackNavigatorPages,
 ) => navigation.navigate(screen);
 
-export const appStackNavigate = (
+export const appStackNavigate = <Page extends keyof AppStackNavigatorScreens>(
   navigation: NativeStackNavigationProp<any>,
-  screen: AppStackNavigatorPages,
-) => navigation.navigate(screen);
+  screen: Page,
+  params: AppStackNavigatorScreens[Page],
+) => navigation.navigate(screen as string, params);
+
+const foo = () => {};
 
 export type AuthStackPageProps<Page extends AuthStackNavigatorPages> =
   NativeStackScreenProps<AuthStackNavigatorScreens, Page, 'stack-navigator'>;
