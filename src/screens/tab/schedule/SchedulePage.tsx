@@ -82,7 +82,6 @@ export default function SchedulePage({route, navigation}: ScheduleScreenProps) {
     const title = `${courseId.replaceAll(/\s+/g, ' ').trim()}`;
     // const timeLocation = course.classSections['0100'].timeLocations[0];
     // const instructors = course.classSections['0100'].instructors[0];
-    console.log(chats, `crs${courseId}`);
     return (
       <View>
         <Text style={styles.courseTitle}>{course.courseTitle}</Text>
