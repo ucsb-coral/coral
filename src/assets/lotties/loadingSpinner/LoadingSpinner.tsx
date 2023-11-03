@@ -7,8 +7,9 @@ export type Props = {
 export default function LoadingSpinner({size}: Props) {
   return (
     <AnimatedLottieView
-      style={{height: size, opacity: 0.9}}
+      style={{height: size, width: size}}
       source={require('./loadingSpinner.json')}
+      autoPlay
       loop
     />
   );

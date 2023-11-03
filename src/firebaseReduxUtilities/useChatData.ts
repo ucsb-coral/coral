@@ -3,15 +3,7 @@ import {store} from '../redux/useRedux';
 import {useEffect} from 'react';
 import {joinChatAction, setMyUserAction} from '../redux/actions';
 
-const newChat = (title: string) =>
-  ({
-    title,
-    memberIds: [],
-    messages: [],
-  } as Chat);
-
-const joinCourseChat = async (course: Course) => {
-  const {courseId, courseTitle} = course;
+const joinCourseChat = async (courseId: string) => {
   const id = `crs${courseId}`;
   const myUserId = store.getState().data.myUserId;
   let chatToSet: Chat;
@@ -21,10 +13,14 @@ const joinCourseChat = async (course: Course) => {
     .get()
     .then(async docSnapshot => {
       if (docSnapshot.exists) {
-        const data = docSnapshot.data();
-        if (data) chatToSet = data as Chat;
+        const data = docSnapshot.data() as Chat;
+        data.memberIds.push(myUserId);
+        chatToSet = data;
       } else {
-        chatToSet = newChat(courseTitle);
+        chatToSet = {
+          memberIds: [myUserId],
+          messages: [],
+        };
         await firestore().collection('chats').doc(id).set(chatToSet);
       }
       firestore()
@@ -35,6 +31,7 @@ const joinCourseChat = async (course: Course) => {
           const user = docSnapshot.data() as User;
           if (!user.chats) user.chats = [];
           user.chats.push(id);
+          firestore().collection('users').doc(myUserId).set(user);
         });
       store.dispatch(joinChatAction({id, chat: chatToSet}));
     });
