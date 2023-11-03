@@ -1,40 +1,51 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, PixelRatio, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { AppStackPageProps } from '../../../navigation/navigators/StackNavigator';
-import { signInWithGoogle } from '../../../../auth/useAuth';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  PixelRatio,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+} from 'react-native';
+import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
+import {signInWithGoogle} from '../../../../auth/useAuth';
 
 import Loading from '../../../components/Loading';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import { styles } from './ChatScreenStyles';
+import {styles} from './ChatScreenStyles';
+import {coursemap} from '../../../redux/dummyData';
 
 const DEVICEPIXELRATIO = PixelRatio.get();
 
 export type ChatScreenProps = {
   id: string;
-  chatName: string;
 };
 
 export default function ChatScreen({
   route,
   navigation,
 }: AppStackPageProps<'chat'>) {
-  const { chatName } = route.params;
-  const { id } = route.params;
+  const {id} = route.params;
   const chat = useSelector((state: ReduxState) => state.data.chatmap[id]);
-  const course = useSelector((state: ReduxState) => state.data.coursemap[id]);
+  // const {courseTitle} = useSelector(
+  //   (state: ReduxState) => state.data.coursemap[id],
+  // );
+
+  const courseTitle = coursemap[id].courseTitle;
 
   return (
-    <Loading isReady>
+    <Loading isReady={!!chat}>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.backButton}>Back</Text>
           </TouchableOpacity>
           {/* chat name dont show here, need to fix later*/}
-          <Text style={styles.headerText}>{chatName}</Text>
+          <Text style={styles.headerText}>{courseTitle}</Text>
         </View>
 
         {/* Message List */}

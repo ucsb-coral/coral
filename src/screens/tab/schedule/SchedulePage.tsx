@@ -25,8 +25,8 @@ export type SchedulePageProps = EmptyProps;
 
 // workaround for navigating from tab page to app stack page - not sure if this actually works
 type ScheduleScreenProps = CompositeScreenProps<
-  AppStackPageProps<any>,
-  TabPageProps<any>
+  AppStackPageProps<'tabNavigator'>,
+  TabPageProps<'schedule'>
 >;
 
 export default function SchedulePage({route, navigation}: ScheduleScreenProps) {
@@ -103,9 +103,9 @@ export default function SchedulePage({route, navigation}: ScheduleScreenProps) {
           {/* Units: {course.courseInfo.unitsFixed} */}
         </Text>
         <Button
-          title={chats?.includes(`crs${courseId}`) ? 'Open Chat' : 'Join Chat'}
+          title={chats?.includes(courseId) ? 'Open Chat' : 'Join Chat'}
           onPress={
-            chats?.includes(`crs${courseId}`)
+            chats?.includes(courseId)
               ? () => {
                   setModalVisible(false);
                   appStackNavigate(navigation, 'chat', {id: courseId});

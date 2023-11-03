@@ -72,8 +72,6 @@ export const appStackNavigate = <Page extends keyof AppStackNavigatorScreens>(
   params: AppStackNavigatorScreens[Page],
 ) => navigation.navigate(screen as string, params);
 
-const foo = () => {};
-
 export type AuthStackPageProps<Page extends AuthStackNavigatorPages> =
   NativeStackScreenProps<AuthStackNavigatorScreens, Page, 'stack-navigator'>;
 

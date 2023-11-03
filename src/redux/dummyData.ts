@@ -1,7 +1,7 @@
-const courses = ['firebase_uid_1', 'firebase_uid_2', 'firebase_uid_3'];
+const courses = ['crsfirebase_uid_1', 'crsfirebase_uid_2', 'crsfirebase_uid_3'];
 
 const coursemap: Coursemap = {
-  firebase_uid_1: {
+  crsfirebase_uid_1: {
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -11,7 +11,7 @@ const coursemap: Coursemap = {
     repeatTypeCode: 'string',
     timeLocations: [],
   },
-  firebase_uid_2: {
+  crsfirebase_uid_2: {
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -21,7 +21,7 @@ const coursemap: Coursemap = {
     repeatTypeCode: 'string',
     timeLocations: [],
   },
-  firebase_uid_3: {
+  crsfirebase_uid_3: {
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
