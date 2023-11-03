@@ -51,9 +51,9 @@ export default function TabNavigator() {
           return <Icon name={iconName} type="ionicon" color={iconColor} />;
         },
       })}>
-      <Tab.Screen name={'schedule'} component={SchedulePage} />
-      <Tab.Screen name={'chats'} component={ChatPage} />
-      <Tab.Screen name={'user'} component={UserPage} />
+      <Tab.Screen name={'schedule'} component={SchedulePage as any} />
+      <Tab.Screen name={'chats'} component={ChatPage as any} />
+      <Tab.Screen name={'user'} component={UserPage as any} />
     </Tab.Navigator>
   );
 }

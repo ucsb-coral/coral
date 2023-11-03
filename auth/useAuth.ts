@@ -46,7 +46,7 @@ export const signInWithGoogle = async () => {
       email: user.email,
       photo: user.photo,
     };
-    setMyUserFirebaseRedux(id, myUser);
+    await setMyUserFirebaseRedux(id, myUser);
     store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
   } catch (error: any) {
     console.warn(error);
