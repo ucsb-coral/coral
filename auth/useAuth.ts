@@ -64,6 +64,7 @@ export const signInWithGoogle = async () => {
 };
 
 export const signOut = async () => {
+  store.dispatch(clearStoreAction({}));
   try {
     await GoogleSignin.signOut();
     store.dispatch(signOutAction({}));

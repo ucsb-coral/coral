@@ -7,6 +7,7 @@ import Navigation from './navigation/Navigation';
 
 export default function App() {
   const {store, persistor} = useRedux();
+
   return (
     <Provider store={store}>
       <PersistGate loading={<></>} persistor={persistor}>

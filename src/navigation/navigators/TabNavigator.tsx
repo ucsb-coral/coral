@@ -11,6 +11,7 @@ import SchedulePage, {
   SchedulePageProps,
 } from '../../screens/tab/schedule/SchedulePage';
 import {coral, grey} from '../../utilities/colors';
+import useChatData from '../../firebaseReduxUtilities/useChatData';
 
 type TabNavigatorScreens = {
   user: UserPageProps;
@@ -23,6 +24,7 @@ type TabNavigatorPages = keyof TabNavigatorScreens;
 const Tab = createBottomTabNavigator<TabNavigatorScreens>();
 
 export default function TabNavigator() {
+  useChatData();
   return (
     <Tab.Navigator
       id={'tab-navigator'}
