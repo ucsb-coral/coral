@@ -15,6 +15,11 @@ declare type JoinChatAction = {
   chat: Chat;
 };
 
+declare type SetChatsAction = {
+  type: 'SET_CHATS';
+  chatmap: Chatmap;
+};
+
 declare type SignOutAction = {
   type: 'SIGN_OUT';
 };
@@ -27,6 +32,7 @@ declare type ActionTypes =
   | SetAuthStateAction
   | SetMyUserAction
   | JoinChatAction
+  | SetChatsAction
   | SignOutAction
   | ClearStoreAction;
 

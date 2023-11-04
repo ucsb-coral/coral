@@ -38,6 +38,13 @@ export function reducer(
         usermap: {...usermap},
       };
     }
+    case 'SET_CHATS': {
+      const {chatmap} = action;
+      return {
+        ...state,
+        chatmap: {...state.chatmap, ...chatmap},
+      };
+    }
     case 'SIGN_OUT': {
       return {
         ...state,
