@@ -42,6 +42,39 @@ Only valid UCSB students will be able to login and use the app.
 - **Real-time Chat Functionality**: Considering using WebSockets for real-time chat functionality.
 - Firebase for Auth
 
+## Installation
+### Prerequisites
+- An Android device with Android 5.0 or higher, or an Android emulator
+
+### Dependencies
+- react-native-firebase: to connect with our firebase backend
+- react-native-google-signin: to implement google signin
+- react-navigation: for cross platform tab and stack navigation
+- react-native-bootsplash: for the splash screen
+- react-redux: for app state management
+- redux-persist: to persist the redux store on encrypted local device storage
+
+### Installation Steps
+1. Head to [releases](https://github.com/ucsb-cs184-f23/pj-react-04/releases) and download the .apk file from the latest release onto your Android device or Android emulator
+2. Open the file on your device and install the app
+   - There will likely be some warnings about security of the app, but ignore and install anyways
+3. Once installed open the app and log in with your UCSB google account
+
+## Functionality
+Once you have [installed](https://github.com/ucsb-cs184-f23/pj-react-04/edit/main/README.md#installation) the app and launched it, you will see a splash screen and then a login page. Click the Google signin button and follow the prompt instructions to sign in with your UCSB google email account (@ucsb.edu). The app will open to the Chats page initially where you can view the group chats you have joined (currently populated with dummy data). Navigate via the tabs on the bottom of the screen to the Schedule page to see a list of your enrolled courses (currently populated with dummy data). To join the chat corresponding to one of your courses, tap the course you want and tap "Join Chat". You will then see chat messages (currently populated with dummy data) and be able to send messages (not implemented). Navigating to the User page, you will see your information, links to GOLD and Canvas, as well as settings and a sign out button. 
+
+## Known Problems
+Currently, much of the functionality with regards to your personal course information and interacting in the chat windows is not implemented yet in the MVP. We plan to gain UCSB API access and complete these features in future releases.
+
+## Contributing
+Currently not accepting contributions while in early development. In the future follow these steps:
+1. Fork it!
+2. Create your feature branch: git checkout -b my-new-feature
+3. Commit your changes: git commit -am 'Add some feature'
+4. Push to the branch: git push origin my-new-feature
+5. Submit a pull request :D
+
+
 ## License
 MIT License
 
