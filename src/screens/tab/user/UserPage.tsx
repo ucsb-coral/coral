@@ -1,23 +1,22 @@
+//UserPage.tsx
 import React, {useState} from 'react';
 import {
   View,
   Text,
-  Button,
-  Pressable,
   SafeAreaView,
   Image,
   StatusBar,
   TouchableOpacity,
   Linking,
+  ScrollView,
 } from 'react-native';
-//import {TabPageProps} from '../../navigation/navigators/TabNavigator';
-import {signOut} from '../../../../auth/useAuth';
 import {Icon} from 'react-native-elements';
 import {styles} from '../user/UserPageStyle';
 import {useSelector} from 'react-redux';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 import {CompositeScreenProps} from '@react-navigation/native';
-import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
+import {AppStackPageProps,
+        appStackNavigate} from '../../../navigation/navigators/StackNavigator';
 
 export type UserPageProps = EmptyProps;
 
@@ -25,6 +24,7 @@ export type UserPageProps = EmptyProps;
 type UserScreenProps = CompositeScreenProps<
   AppStackPageProps<'tabNavigator'>,
   TabPageProps<'user'>
+  
 >;
 
 export default function UserPage({route, navigation}: UserScreenProps) {
@@ -35,13 +35,18 @@ export default function UserPage({route, navigation}: UserScreenProps) {
   const [boxHeight, setBoxHeight] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [isActive, setIsActive] = useState(false);
+ 
+  
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <SafeAreaView>
+        <ScrollView style={styles.ScrollView}>
         <View style={styles.headerWrapper}>
           <Image
-            source={require('../../../utilities/image/userImage.png')}
+            source={user && user.photo
+              ? { uri: user.photo }
+              : require('../../../utilities/image/userImage.png')}
             style={styles.profileImage}
           />
           <View style={styles.userInfoContainer}>
@@ -89,7 +94,11 @@ export default function UserPage({route, navigation}: UserScreenProps) {
               color="black"
             />
           </TouchableOpacity>
-          <View style={styles.longBox}>
+
+          <TouchableOpacity
+            style={styles.longBox}
+            activeOpacity={0.6}
+            onPress={() => appStackNavigate(navigation, 'userSetting', {})}>
             <Text style={styles.longBarText}>Settings</Text>
             <Icon
               style={styles.longBoxIcon}
@@ -97,21 +106,12 @@ export default function UserPage({route, navigation}: UserScreenProps) {
               type="ionicon"
               color="black"
             />
-          </View>
-          <TouchableOpacity
-            style={[styles.longBox, {borderBottomWidth: 0}]}
-            activeOpacity={0.6}
-            onPress={() => signOut()}>
-            <Text style={styles.longBarText}>Sign Out</Text>
-            <Icon
-              style={styles.longBoxIcon}
-              name="log-out-outline"
-              type="ionicon"
-              color="black"
-            />
           </TouchableOpacity>
+
         </View>
+        </ScrollView>
       </SafeAreaView>
+    
     </View>
   );
 }
