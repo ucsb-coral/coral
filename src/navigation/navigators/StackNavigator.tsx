@@ -13,6 +13,22 @@ import LoadingScreen, {LoadingScreenProps} from '../../components/Loading';
 import ChatScreen, {
   ChatScreenProps,
 } from '../../screens/stack/chatScreen/ChatScreen';
+import UserSettingPage, {
+  UserSettingScreenProps,
+} from '../../screens/stack/userInfo/UserSettingPage';
+import UserDisplayName, {
+  UserDisplayNameProps
+} from '../../screens/stack/userInfo/UserDisplayName';
+import QuitChats, {
+  QuitChatsProps
+} from '../../screens/stack/userInfo/QuitChats';
+import AboutCoral, {
+  AboutCoralProps
+} from '../../screens/stack/userInfo/AboutCoral';
+
+
+
+
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -25,6 +41,10 @@ type AuthStackNavigatorPages = keyof AuthStackNavigatorScreens;
 type AppStackNavigatorScreens = {
   tabNavigator: EmptyProps;
   chat: ChatScreenProps;
+  userSetting: UserSettingScreenProps;
+  userNaming: UserDisplayNameProps;
+  QuitChats: QuitChatsProps;
+  AboutCoral: AboutCoralProps;
   // ADD more app screens here
 };
 
@@ -50,6 +70,11 @@ export default function StackNavigator() {
         <>
           <Stack.Screen name={'tabNavigator'} component={TabNavigator} />
           <Stack.Screen name={'chat'} component={ChatScreen} />
+          <Stack.Screen name={'userSetting'} component={UserSettingPage} />
+          <Stack.Screen name={'userNaming'} component={UserDisplayName} />
+          <Stack.Screen name={'QuitChats'} component={QuitChats} />
+          <Stack.Screen name={'AboutCoral'} component={AboutCoral} />
+
           {/* ADD more app stack screens here */}
         </>
       ) : authState === 'LOADING' ? (
@@ -69,7 +94,7 @@ export const authStackNavigate = (
 export const appStackNavigate = <Page extends keyof AppStackNavigatorScreens>(
   navigation: NativeStackNavigationProp<any>,
   screen: Page,
-  params: AppStackNavigatorScreens[Page],
+  params?: AppStackNavigatorScreens[Page] | {},
 ) => navigation.navigate(screen as string, params);
 
 export type AuthStackPageProps<Page extends AuthStackNavigatorPages> =
