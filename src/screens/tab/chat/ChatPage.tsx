@@ -43,12 +43,13 @@ export default function ChatPage({route, navigation}: ChatScreenProps) {
         <Text style={styles.headerText}>CHAT LIST</Text>
       </View>
 
-      {/* Back Button */}
-      <Pressable style={styles.joinButton}>
-        <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14}}>
-          To Join
-        </Text>
-      </Pressable>
+      {/* Join Button */}
+      <TouchableOpacity
+          style={styles.joinButton}
+          onPress={() => appStackNavigate(navigation, 'ChatJoin', {})}
+          >
+          <Text style={styles.joinButtonText}>Join</Text>
+      </TouchableOpacity>
 
       {/* Current Class List*/}
       <Text style={styles.category}>Current Class</Text>

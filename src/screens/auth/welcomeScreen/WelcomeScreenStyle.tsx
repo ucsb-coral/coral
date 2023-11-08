@@ -8,7 +8,11 @@ import {white,
         darkGrey,
         GreyUseForButton,
         ButtonBackground,
-    } from '../../../utilities/colors';
+} from '../../../utilities/colors';
+import{buttonFont,
+       NameFont,
+       EmailFont,
+} from "../../../utilities/textfont";
 
 export const styles = StyleSheet.create({
 
@@ -38,6 +42,7 @@ export const styles = StyleSheet.create({
         color : coral,
         marginBottom : 35,
         fontWeight: '700',
+        fontFamily: NameFont,
     },
 
 });

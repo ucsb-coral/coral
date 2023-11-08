@@ -25,6 +25,10 @@ import QuitChats, {
 import AboutCoral, {
   AboutCoralProps
 } from '../../screens/stack/userInfo/AboutCoral';
+import ChatJoin ,{
+  ChatJoinProps
+} from '../../screens/stack/chatJoin/ChatJoin';
+
 
 
 
@@ -45,6 +49,7 @@ type AppStackNavigatorScreens = {
   userNaming: UserDisplayNameProps;
   QuitChats: QuitChatsProps;
   AboutCoral: AboutCoralProps;
+  ChatJoin: ChatJoinProps;
   // ADD more app screens here
 };
 
@@ -74,6 +79,7 @@ export default function StackNavigator() {
           <Stack.Screen name={'userNaming'} component={UserDisplayName} />
           <Stack.Screen name={'QuitChats'} component={QuitChats} />
           <Stack.Screen name={'AboutCoral'} component={AboutCoral} />
+          <Stack.Screen name={'ChatJoin'} component={ChatJoin} />
 
           {/* ADD more app stack screens here */}
         </>
