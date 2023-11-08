@@ -13,6 +13,7 @@ import { appStackNavigate } from '../../../navigation/navigators/StackNavigator'
 import {Icon} from 'react-native-elements';
 import{styles} from '../../../screens/tab/user/UserPageStyle'
 import {signOut} from '../../../../auth/useAuth';
+import { white } from '../../../utilities/colors';
 
 
 
@@ -27,9 +28,12 @@ export default function UserSettingPage({
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView style={styles.ScrollView}>
+      <StatusBar 
+        backgroundColor= {white} 
+        barStyle="dark-content" />
+      <ScrollView style={styles.ScrollView}>
+
+        {/* return button */}
         <View style={styles.gobackBox}>
           <TouchableOpacity 
           onPress={() => navigation.goBack()}>
@@ -38,7 +42,7 @@ export default function UserSettingPage({
           </TouchableOpacity>
         </View>
 
-
+        {/* go to different pages */}
         <View style={styles.settingBarContainer}>
           <TouchableOpacity
             onPress={() => appStackNavigate(navigation, 'userNaming',{})}
@@ -85,6 +89,7 @@ export default function UserSettingPage({
           </TouchableOpacity>
         </View>
 
+        
         <View style={styles.signOutContainer}>
         <TouchableOpacity
             style={[styles.signOutBox, {borderBottomWidth: 0}]}
@@ -98,10 +103,9 @@ export default function UserSettingPage({
               color="red"
             />
           </TouchableOpacity>
-        
         </View>
-        </ScrollView>
-      </SafeAreaView>
+
+      </ScrollView>   
     </View>
   );
 }
