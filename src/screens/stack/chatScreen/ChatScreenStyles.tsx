@@ -1,12 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, PixelRatio, TouchableOpacity, ScrollView } from 'react-native';
+import {white,
+    red,
+    black,
+    grey,
+    coral,
+    lightGrey,
+    darkGrey,
+    GreyUseForButton,
+    ButtonBackground,
+} from '../../../utilities/colors';
+import{buttonFont,
+   NameFont,
+   EmailFont,
+}from "../../../utilities/textfont";
 
 const DEVICEPIXELRATIO = PixelRatio.get();
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: white,
     },
     header: {
         height: 50,
@@ -14,16 +28,17 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        backgroundColor: '#4CAF50',
+        backgroundColor: coral,
     },
     backButton: {
-        color: '#FFFFFF',
+        color: white,
         fontSize: 18,
     },
     headerText: {
-        color: '#f88379',
+        color: white,
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: '700',
+        fontFamily: NameFont,
     },
     messageList: {
         flex: 1,
@@ -33,7 +48,7 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         borderRadius: 5,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: ButtonBackground,
     },
     inputArea: {
         flexDirection: 'row',
@@ -42,7 +57,7 @@ export const styles = StyleSheet.create({
         padding: 10,
         borderTopWidth: 1,
         borderTopColor: '#CCCCCC',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: white,
     },
     input: {
         flex: 1,
@@ -51,7 +66,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F5F5F5',
     },
     sendButton: {
-        color: '#f88379',
+        color: coral,
         fontSize: 18,
         marginLeft: 10,
     },

@@ -1,23 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, PixelRatio, TouchableOpacity, ScrollView } from 'react-native';
+import {white,
+    red,
+    black,
+    grey,
+    coral,
+    lightGrey,
+    darkGrey,
+    GreyUseForButton,
+    ButtonBackground,
+} from '../../../utilities/colors';
+import{buttonFont,
+   NameFont,
+   EmailFont,
+}from "../../../utilities/textfont";
 
 const DEVICEPIXELRATIO = PixelRatio.get();
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white'
-    },
-    backButton: {
-        position: 'absolute', // Position the button absolutely
-        top: 10, // Distance from the top of the container
-        left: 10,
-        paddingVertical: 5,
-        paddingHorizontal: 25,
-        backgroundColor: 'blue',
-        borderRadius: 45,
-        width: PixelRatio.getPixelSizeForLayoutSize(81 / DEVICEPIXELRATIO),
-        height: PixelRatio.getPixelSizeForLayoutSize(32 / DEVICEPIXELRATIO),
+        backgroundColor: white,
     },
     joinButton: {
         position: 'absolute', 
@@ -25,45 +28,56 @@ export const styles = StyleSheet.create({
         right: 10,
         paddingVertical: 5,
         paddingHorizontal: 17,
-        backgroundColor: '#4CAF50',
+        backgroundColor: coral,
         borderRadius: 45,
         width: PixelRatio.getPixelSizeForLayoutSize(81 / DEVICEPIXELRATIO),
         height: PixelRatio.getPixelSizeForLayoutSize(32 / DEVICEPIXELRATIO),
     },
+    joinButtonText: {   
+        color: white, 
+        fontWeight: 'bold', 
+        fontSize: 14,
+        textAlign: 'center'
+    },
     header: {
         height: 50,
-        backgroundColor: '#D9D9D9',
+        backgroundColor: white,
         alignItems: 'center',
         justifyContent: 'center'
     },
     headerText: {
-        fontSize: 25,
-        color: '#f88379',
-        fontWeight: 'bold'
+        fontSize: 23,
+        color: coral,
+        fontWeight: '700',
+        fontFamily: NameFont
     },
     chatList: {
         flex: 1,
         padding: 15
     },
     chatItem: {
-        backgroundColor: '#D9D9D9',
+        backgroundColor: ButtonBackground,
         borderRadius: 15,
         padding: 15,
         marginBottom: 10
     },
     category: {
         fontSize: 20,
-        color: 'black',
-        marginBottom: 5
+        color: darkGrey,
+        marginBottom: 5,
+        fontWeight: '600',
+        fontFamily: NameFont,
     },
     chatName: {
         fontSize: 18,
-        color: 'black',
-        marginBottom: 5
+        color: darkGrey,
+        marginBottom: 5,
+        fontWeight: '600',
+        fontFamily: NameFont,
     },
     chatMessage: {
         fontSize: 12,
-        color: 'black'
+        color: lightGrey
     },
     bottomBar: {
         height: 80,
@@ -72,7 +86,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-around',
         borderTopWidth: 1,
         borderTopColor: '#D9D9D9',
-        backgroundColor: 'white'
+        backgroundColor: white
     },
 });
 

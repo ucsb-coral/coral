@@ -133,7 +133,7 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 1.41,
         elevation: 2,
-        marginBottom: 5,
+        marginTop: 5,
     },
     UserNewNameBox: {
         flexDirection: 'row',
@@ -168,8 +168,6 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 1.41,
         elevation: 2,
-        marginBottom: 5,
-        
     },
     doneBox: {
         borderRadius: 20,
@@ -189,10 +187,8 @@ export const styles = StyleSheet.create({
     },
 
     signOutContainer: {
-
         bottom: 0,
-        padding: 40,
-        marginTop: 380,           
+        padding: 40,        
         flexDirection: 'row', 
         justifyContent: 'center', 
         alignItems: 'center',     
@@ -223,9 +219,5 @@ export const styles = StyleSheet.create({
         fontFamily: buttonFont,
         textAlign: 'center',     
     },
-
-    
-
-
 
 });

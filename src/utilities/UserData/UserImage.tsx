@@ -22,6 +22,12 @@ const images = [
         image: require("../images/unmute.png"),
         title: "unmute",
         select : true,
+    },
+    {
+        id: 5,
+        image: require("../images/Coral_pink.png"),
+        title: "Coral_pink",
+        select : true,
     }
 
 
