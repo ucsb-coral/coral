@@ -1,8 +1,12 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, 
+        Text, 
+        Image} from 'react-native';
 import {AuthStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 import {signInWithGoogle} from '../../../../auth/useAuth';
+import {styles} from './WelcomeScreenStyle';
+
 
 export type WelcomeScreenProps = EmptyProps;
 
@@ -12,19 +16,30 @@ export default function WelcomeScreen({
 }: AuthStackPageProps<'welcome'>) {
   return (
     <View
-      style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
-      <Text
-        style={{
-          color: '#000',
-          fontWeight: 'bold',
-          fontSize: 20,
-        }}>
-        Welcome
-      </Text>
+      style={
+        styles.container
+      }
+    >
+      <Image
+        source={require('../../../utilities/image/Coral_pink.png')}
+        style={
+          styles.image
+        }
+      />
       <GoogleSigninButton
+        style={
+          styles.button
+        }
         size={GoogleSigninButton.Size.Wide}
         onPress={signInWithGoogle}
       />
+      <Text 
+        style={
+          styles.text
+        }
+      >
+        Connect  Collaborate  Conquer
+      </Text>
     </View>
   );
 }
