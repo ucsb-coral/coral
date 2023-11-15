@@ -4,12 +4,18 @@
 - Evaluation: Wenjin Li
 - Documentation: Ethan Pletcher
 
-### Jinghan Zhang (reviewed by ):
+### Jinghan Zhang (reviewed by Sean Oh):
+- Feature to update profile pic, profile bio
 
-### Sean Oh(reviewed by ):
+### Sean Oh(reviewed by Binyu Zhong):
+- Course schedule view/calendar
 
-### Binyu Zhong(reviewed by ):
+### Binyu Zhong(reviewed by Ethan Pletcher):
+- update app to match Figma designs
+- fix styling issues throughout app
 
-### Wenjin Li(reviewed by ):
+### Ethan Pletcher(reviewed by Wenjin Li):
+- User manual draft
 
-### Ethan Pletcher(reviewed by ):
+### Wenjin Li(reviewed by Jinghan Zhang):
+- AB testing
