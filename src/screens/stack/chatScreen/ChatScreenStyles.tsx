@@ -1,19 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, PixelRatio, TouchableOpacity, ScrollView } from 'react-native';
-import {white,
-    red,
-    black,
-    grey,
-    coral,
-    lightGrey,
-    darkGrey,
-    GreyUseForButton,
-    ButtonBackground,
+import { View, Text, StyleSheet, PixelRatio } from 'react-native';
+import {
+    white, red, black, grey, coral,
+    lightGrey, darkGrey, GreyUseForButton, ButtonBackground,
 } from '../../../utilities/colors';
-import{buttonFont,
-   NameFont,
-   EmailFont,
-}from "../../../utilities/textfont";
+import {
+    buttonFont,
+    NameFont,
+    EmailFont,
+} from "../../../utilities/textfont";
 
 const DEVICEPIXELRATIO = PixelRatio.get();
 
@@ -44,11 +39,51 @@ export const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
     },
-    message: {
-        marginBottom: 10,
-        padding: 10,
-        borderRadius: 5,
+    // myMessage: {
+    //     alignSelf: 'flex-end',
+    //     backgroundColor: coral,
+    // },
+
+    // otherMessage: {
+    //     alignSelf: 'flex-start',
+    //     backgroundColor: 'lightgray',
+    // },
+    messageBlock: {
+        marginHorizontal: 10,
+        marginTop: 10,
+        marginBottom: 5,
+    },
+    mySenderId: {
+        fontWeight: 'bold',
+        fontSize: 12,
+        color: black,
+        alignSelf: 'flex-end',
+    },
+    otherSenderId: {
+        fontWeight: 'bold',
+        fontSize: 12,
+        color: black,
+        alignSelf: 'flex-start',
+    },
+    myMessageContainer: {
         backgroundColor: ButtonBackground,
+        borderRadius: 15,
+        maxWidth: '90%',
+        alignSelf: 'flex-end',
+    },
+    otherMessageContainer: {
+        backgroundColor: 'lightgray',
+        borderRadius: 15,
+        maxWidth: '90%',
+        alignSelf: 'flex-start',
+    },
+    message: {
+        fontSize: 14,
+        color: black,
+        paddingHorizontal: 10,
+        paddingVertical: 7,
+        borderRadius: 5,
+        // backgroundColor: ButtonBackground,
     },
     inputArea: {
         flexDirection: 'row',

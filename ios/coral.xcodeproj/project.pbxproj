@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* coralTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* coralTests.m */; };
+		056DAFC2EA245A85C001707E /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5399BD249B2788B97C7131BA /* ExpoModulesProvider.swift */; };
 		0AD69829E2C77CED7494EA04 /* Pods_coral_coralTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE95F04853FC3EB424E2E64 /* Pods_coral_coralTests.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		70E106AFE73D169371604A70 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507F36AB3DCF5E33638DD576 /* ExpoModulesProvider.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A289D4AEF2DC13212506FA34 /* Pods_coral.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B77BFE39EEF574410DD2085 /* Pods_coral.framework */; };
 		AAC1E1B62AE796F1006E3AB3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAC1E1B52AE796F1006E3AB3 /* GoogleService-Info.plist */; };
@@ -40,6 +42,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = coral/main.m; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-coral.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coral.debug.xcconfig"; path = "Target Support Files/Pods-coral/Pods-coral.debug.xcconfig"; sourceTree = "<group>"; };
 		3FE95F04853FC3EB424E2E64 /* Pods_coral_coralTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coral_coralTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		507F36AB3DCF5E33638DD576 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-coral/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		5399BD249B2788B97C7131BA /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-coral-coralTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-coral.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coral.release.xcconfig"; path = "Target Support Files/Pods-coral/Pods-coral.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-coral-coralTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coral-coralTests.debug.xcconfig"; path = "Target Support Files/Pods-coral-coralTests/Pods-coral-coralTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7B77BFE39EEF574410DD2085 /* Pods_coral.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coral.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +91,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		041DFF1A08EA0D86FF7DCCB1 /* coral */ = {
+			isa = PBXGroup;
+			children = (
+				507F36AB3DCF5E33638DD576 /* ExpoModulesProvider.swift */,
+			);
+			name = coral;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* coral */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +140,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				8E3A17FDA0EB4F60D4E49056 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -143,6 +156,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8E3A17FDA0EB4F60D4E49056 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				041DFF1A08EA0D86FF7DCCB1 /* coral */,
+				DE84EC227BE8E3D88CE08282 /* coralTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +176,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		DE84EC227BE8E3D88CE08282 /* coralTests */ = {
+			isa = PBXGroup;
+			children = (
+				5399BD249B2788B97C7131BA /* ExpoModulesProvider.swift */,
+			);
+			name = coralTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -162,6 +192,7 @@
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "coralTests" */;
 			buildPhases = (
 				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				8BB8E129649F626BBBDC44AA /* [Expo] Configure project */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -183,6 +214,7 @@
 			buildPhases = (
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
+				6A875B300F52520DD3E981EE /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -272,6 +304,44 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		6A875B300F52520DD3E981EE /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-coral/expo-configure-project.sh\"\n";
+		};
+		8BB8E129649F626BBBDC44AA /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-coral-coralTests/expo-configure-project.sh\"\n";
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -391,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* coralTests.m in Sources */,
+				056DAFC2EA245A85C001707E /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +471,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				70E106AFE73D169371604A70 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +496,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = coralTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -435,6 +507,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.app.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coral.app/coral";
@@ -448,7 +521,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = coralTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,6 +532,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.app.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coral.app/coral";
@@ -485,6 +559,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.app.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = coral;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -512,6 +587,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.app.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = coral;
 				SWIFT_VERSION = 5.0;
@@ -577,7 +653,7 @@
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -667,7 +743,7 @@
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

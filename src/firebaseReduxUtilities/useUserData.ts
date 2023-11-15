@@ -9,7 +9,6 @@ const getUserDocumentRef = (userId: string) =>
 const setMyUserFirebaseRedux = async (id: string, user: User) => {
   let userToSet: User = user;
   const myUserDocumentRef = getUserDocumentRef(id);
-
   const userDocSnapshot = await myUserDocumentRef.get();
   if (userDocSnapshot.exists) {
     const data = userDocSnapshot.data();

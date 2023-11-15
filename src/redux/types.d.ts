@@ -62,6 +62,10 @@ declare type Chatmap = {
   [id: string]: Chat;
 };
 
+declare type Messagemap = {
+  [id: string]: Message;
+};
+
 declare type User = {
   email: string;
   firstName?: string | null;
@@ -70,13 +74,22 @@ declare type User = {
   chats?: string[] | null;
 };
 
+declare type MessageType = 'TEXT';
+
+declare type TextMessageContent = string;
+declare type MessageContent = TextMessageContent;
+
 declare type Message = {
-  content: string;
+  type: MessageType;
+  content: MessageContent;
+  fromUserId: string;
+  createdAt: Date;
 };
 
 declare type Chat = {
   memberIds: string[];
-  messages: Message[];
+  messages: string[];
+  messagemap: Messagemap;
 };
 
 declare type TimeLocation = {

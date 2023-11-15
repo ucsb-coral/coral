@@ -1,7 +1,8 @@
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {
   GoogleSignin,
   statusCodes,
+  User as GoogleUser,
 } from '@react-native-google-signin/google-signin';
 import {useSelector} from 'react-redux';
 import {store} from '../src/redux/useRedux';
@@ -22,32 +23,24 @@ GoogleSignin.configure({
   offlineAccess: true,
 });
 
+const userFromGoogleUser = ({user}: GoogleUser): User => {
+  const {givenName, familyName, email, photo} = user;
+  return {firstName: givenName, lastName: familyName, email, photo};
+};
+
 export const signInWithGoogle = async () => {
   store.dispatch(setAuthStateAction({authState: 'LOADING'}));
   try {
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
 
-    const response = await GoogleSignin.signIn();
+    const response: GoogleUser = await GoogleSignin.signIn();
     const {user, idToken} = response;
 
-    console.log(idToken, user);
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     // // Sign-in the user with the credential
-    const userCredential = await auth().signInWithCredential(googleCredential);
-    const id = `usr${userCredential.user.uid}`;
-    // const idTokenResult = await userCredential.user.getIdTokenResult();
-    console.log('IDS', id);
-
-    const myUser: User = {
-      firstName: user.givenName,
-      lastName: user.familyName,
-      email: user.email,
-      photo: user.photo,
-    };
-    await setMyUserFirebaseRedux(id, myUser);
-    store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
+    await auth().signInWithCredential(googleCredential);
   } catch (error: any) {
     console.warn(error);
     store.dispatch(setAuthStateAction({authState: 'NONE'}));
@@ -63,10 +56,10 @@ export const signInWithGoogle = async () => {
   }
 };
 
-export const signOut = async () => {
+export const signOut = () => {
   try {
-    await GoogleSignin.signOut();
-    store.dispatch(signOutAction({}));
+    GoogleSignin.signOut();
+    auth().signOut();
   } catch (error) {
     console.error(error);
   }
@@ -75,6 +68,27 @@ export const signOut = async () => {
 export default function useAuth() {
   const state = useSelector((state: ReduxState) => state);
   const authState = useSelector((state: ReduxState) => state.data.authState);
+
+  useEffect(() => {
+    const onAuthStateChanged = async (
+      firebaseUser: FirebaseAuthTypes.User | null,
+    ) => {
+      if (!firebaseUser) store.dispatch(signOutAction({}));
+      else {
+        const {uid} = firebaseUser;
+        const user: GoogleUser | null = await GoogleSignin.getCurrentUser();
+        if (!user) store.dispatch(signOutAction({}));
+        else {
+          const id = `usr${uid}`;
+          const myUser: User = userFromGoogleUser(user);
+          await setMyUserFirebaseRedux(id, myUser);
+          store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
+        }
+      }
+    };
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   useEffect(() => {
     console.log('STATE', state);
