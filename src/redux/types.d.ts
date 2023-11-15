@@ -116,4 +116,5 @@ declare type Course = {
   session: string;
   repeatTypeCode: string;
   timeLocations: TimeLocation[];
+  waitlist: boolean;
 };

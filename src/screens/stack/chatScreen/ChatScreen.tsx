@@ -86,7 +86,7 @@ export default function ChatScreen({
     return () => unsubscribe(); // unsubscribe when unmount
   }, [id]);
 
-  console.log('messages:', messages);
+  // console.log('messages:', messages);
 
   return (
     <Loading isReady={!!chat}>

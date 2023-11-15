@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, PixelRatio, TouchableOpacity, ScrollView } from 'react-native';
-import {white,
+import { View, Text, Dimensions, StyleSheet, Pressable, PixelRatio, TouchableOpacity, ScrollView } from 'react-native';
+import {
+    white,
     red,
     black,
     grey,
@@ -10,10 +11,11 @@ import {white,
     GreyUseForButton,
     ButtonBackground,
 } from '../../../utilities/colors';
-import{buttonFont,
-   NameFont,
-   EmailFont,
-}from "../../../utilities/textfont";
+import {
+    buttonFont,
+    NameFont,
+    EmailFont,
+} from "../../../utilities/textfont";
 
 const DEVICEPIXELRATIO = PixelRatio.get();
 
@@ -23,8 +25,8 @@ export const styles = StyleSheet.create({
         backgroundColor: white,
     },
     joinButton: {
-        position: 'absolute', 
-        top: 10, 
+        position: 'absolute',
+        top: 10,
         right: 10,
         paddingVertical: 5,
         paddingHorizontal: 17,
@@ -33,9 +35,9 @@ export const styles = StyleSheet.create({
         width: PixelRatio.getPixelSizeForLayoutSize(81 / DEVICEPIXELRATIO),
         height: PixelRatio.getPixelSizeForLayoutSize(32 / DEVICEPIXELRATIO),
     },
-    joinButtonText: {   
-        color: white, 
-        fontWeight: 'bold', 
+    joinButtonText: {
+        color: white,
+        fontWeight: 'bold',
         fontSize: 14,
         textAlign: 'center'
     },
@@ -51,9 +53,10 @@ export const styles = StyleSheet.create({
         fontWeight: '700',
         fontFamily: NameFont
     },
-    chatList: {
+    CurrentClasschatList: {
         flex: 1,
-        padding: 15
+        padding: 15,
+        // height: screenHeight * 2 / 3,
     },
     chatItem: {
         backgroundColor: ButtonBackground,
@@ -89,4 +92,3 @@ export const styles = StyleSheet.create({
         backgroundColor: white
     },
 });
-
