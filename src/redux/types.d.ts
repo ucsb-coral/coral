@@ -82,6 +82,7 @@ declare type MessageContent = TextMessageContent;
 declare type Message = {
   type: MessageType;
   content: MessageContent;
+  fromUserName: string;
   fromUserId: string;
   createdAt: Date;
 };
