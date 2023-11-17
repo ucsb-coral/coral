@@ -53,7 +53,7 @@ export default function ChatJoin({
                 .includes(searchText.toLowerCase().replace(/\s/g, '').trim())     
         ){
             return (
-            <View style={styles.courseCard}>
+            <View key= {index} style={styles.courseCard}>
                 <Text style={styles.courseCardTitle}>{course.courseTitle}</Text>
                     <Pressable
                         style={

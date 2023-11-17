@@ -1,4 +1,4 @@
-const courses = ['crsfirebase_uid_1', 'crsfirebase_uid_2', 'crsfirebase_uid_3'];
+const courses = ['crsfirebase_uid_1', 'crsfirebase_uid_2', 'crsfirebase_uid_3', 'crsfirebase_uid_4', 'crsfirebase_uid_5', 'crsfirebase_uid_6', 'crsfirebase_uid_7'];
 
 const coursemap: Coursemap = {
   crsfirebase_uid_1: {
@@ -10,6 +10,7 @@ const coursemap: Coursemap = {
     session: 'string',
     repeatTypeCode: 'string',
     timeLocations: [],
+    waitlist: false,
   },
   crsfirebase_uid_2: {
     quarter: '2000F',
@@ -20,6 +21,7 @@ const coursemap: Coursemap = {
     session: 'string',
     repeatTypeCode: 'string',
     timeLocations: [],
+    waitlist: false,
   },
   crsfirebase_uid_3: {
     quarter: '2000F',
@@ -30,6 +32,51 @@ const coursemap: Coursemap = {
     session: 'string',
     repeatTypeCode: 'string',
     timeLocations: [],
+    waitlist: false,
+  },
+  crsfirebase_uid_4: {
+    quarter: '2000F',
+    enrollCode: 'string',
+    gradingOptionCode: 'string',
+    unitsAttempted: 4,
+    courseTitle: 'Test Course 4',
+    session: 'string',
+    repeatTypeCode: 'string',
+    timeLocations: [],
+    waitlist: false,
+  },
+  crsfirebase_uid_5: {
+    quarter: '2000F',
+    enrollCode: 'string',
+    gradingOptionCode: 'string',
+    unitsAttempted: 4,
+    courseTitle: 'Test Course 5',
+    session: 'string',
+    repeatTypeCode: 'string',
+    timeLocations: [],
+    waitlist: true,
+  },
+  crsfirebase_uid_6: {
+    quarter: '2000F',
+    enrollCode: 'string',
+    gradingOptionCode: 'string',
+    unitsAttempted: 4,
+    courseTitle: 'Test Course 6',
+    session: 'string',
+    repeatTypeCode: 'string',
+    timeLocations: [],
+    waitlist: true,
+  },
+  crsfirebase_uid_7: {
+    quarter: '2000F',
+    enrollCode: 'string',
+    gradingOptionCode: 'string',
+    unitsAttempted: 4,
+    courseTitle: 'Test Course 7',
+    session: 'string',
+    repeatTypeCode: 'string',
+    timeLocations: [],
+    waitlist: true,
   },
 };
 
