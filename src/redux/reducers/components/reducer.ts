@@ -30,12 +30,15 @@ export function reducer(
       const usermap = state.usermap;
       const myUser = usermap[myUserId!];
       if (!myUser.chats) myUser.chats = [];
-      myUser.chats.push(id);
       chatmap[id] = chat;
       return {
         ...state,
         chatmap: {...chatmap},
-        usermap: {...usermap},
+        usermap: {
+          ...usermap, 
+          [myUserId!]: {
+            ...myUser, 
+            chats: [...myUser.chats, id]}},
       };
     }
     case 'SET_CHATS': {

@@ -30,8 +30,6 @@ export default function ChatPage({ route, navigation }: ChatScreenProps) {
     (state: ReduxState) => state.data.usermap[myUserId!].chats,
   );
 
-  const usermap = useSelector((state: ReduxState) => state.data.usermap);
-
   let resolvedChats = chats ?? ['NONE'];
   console.log(resolvedChats);
 
@@ -43,7 +41,7 @@ export default function ChatPage({ route, navigation }: ChatScreenProps) {
   useEffect(() => {
     const filteredCourses = courses.filter(courseId => chats?.includes(courseId));
     setJoinedCourses(filteredCourses);
-  }, [usermap]);
+  }, [chats]);
   /// TODO: why not working here??
   console.log(joinedCourses);
 
