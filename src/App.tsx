@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import Navigation from './navigation/Navigation';
 import {loadFonts} from './utilities/textfont';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
+import {signOut} from '../auth/useAuth';
 
 export default function App() {
   const [isReady, setIsReady] = useState<boolean>(false);

@@ -1,15 +1,14 @@
 import {ImpactFeedbackStyle} from 'expo-haptics';
-import {Image, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
+import {Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {HapticFeedback, haptic} from '../../utilities/haptics';
-import {coral, white} from '../../utilities/colors';
-import {avenirBlack} from '../../utilities/textfont';
-import arrowPng from '../../assets/pngs/arrow';
+import {coral, grey, white} from '../../utilities/colors';
+import {avenirBlack, avenirBlackCentered} from '../../utilities/textfont';
 import {scale, standardMargin, width} from '../../utilities/scale';
+import {Icon} from 'react-native-elements';
 
-const headerHeight = scale(46);
-const arrowHeight = scale(26);
-const fontSize = scale(20);
-const textHeight = fontSize * 0.88;
+const headerHeight = scale(52);
+const activeOpacity = 0.5;
+const fontSize = scale(22);
 
 export type Props = {
   leftHandler?: () => void;
@@ -30,15 +29,7 @@ export default function Header({
 }: Props) {
   const leftElementResolved =
     leftElement || leftHandler ? (
-      <Image
-        source={arrowPng}
-        style={{
-          height: arrowHeight,
-          width: arrowHeight,
-          resizeMode: 'contain',
-          transform: [{rotate: '180deg'}],
-        }}
-      />
+      <Icon name="arrow-back" type="ionicon" color={grey} size={35} />
     ) : undefined;
 
   return (
@@ -50,7 +41,6 @@ export default function Header({
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
-          backgroundColor: white,
         },
         ...positionStyle,
       }}>
@@ -61,6 +51,7 @@ export default function Header({
             haptic(HapticFeedback.IMPACT, ImpactFeedbackStyle.Medium);
             leftHandler ? leftHandler() : null;
           }}
+          activeOpacity={activeOpacity}
           style={{
             height: '100%',
             width: scale(80),
@@ -90,8 +81,7 @@ export default function Header({
             style={{
               color: coral,
               fontSize,
-              height: textHeight,
-              fontFamily: avenirBlack,
+              fontFamily: avenirBlackCentered,
               maxWidth: width * 0.7,
             }}
             ellipsizeMode="tail"
@@ -113,6 +103,7 @@ export default function Header({
             haptic(HapticFeedback.IMPACT, ImpactFeedbackStyle.Medium);
             rightHandler ? rightHandler() : null;
           }}
+          activeOpacity={activeOpacity}
           style={{
             height: '100%',
             width: scale(70),
