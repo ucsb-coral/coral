@@ -12,4 +12,4 @@
 
 
 ## Retro Experiment 
-* Outcome: 
+* Outcome: We've discussed about keeping consistent styling, and have come up with some ways to solve this: modularization, more strict reviews. But, since the experiment duration was short, we haven't seen the full results yet. Our experiment is TBD.
