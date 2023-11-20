@@ -9,6 +9,7 @@ import {
   Pressable,
   Button,
   Modal,
+  TextInput,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
@@ -19,7 +20,8 @@ import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 import {styles} from './ChatJoinStyle';
 import Header from '../../../components/header/Header';
 import {FontAwesome} from '@expo/vector-icons';
-import {scale} from '../../../utilities/scale';
+import {scale, standardMargin} from '../../../utilities/scale';
+import SearchInput from '../../../components/searchInput/SearchInput';
 
 export type JoinChatsScreenProps = EmptyProps;
 
@@ -101,20 +103,17 @@ export default function JoinChatsScreen({
 
   return (
     <View style={styles.container}>
-      <Header leftHandler={navigation.goBack} centerElement={'Join Chat'} />
-      {/* <SearchBar
-      containerStyle={{
-        backgroundColor: 'transparent',
-        borderBottomColor: 'transparent',
-        borderTopColor: 'transparent',
-        width: '97%',
-      }}
-      inputContainerStyle={{backgroundColor: '#EEEEEE'}}
-      placeholder="Search by course name"
-      //@ts-ignore
-      onChangeText={text => setSearchText(text)}
-      value={searchText}
-    /> */}
+      <Header leftHandler={navigation.goBack} centerElement={'Join Chats'} />
+
+      <SearchInput
+        value={searchText}
+        onChangeText={setSearchText}
+        placeholder="Search by course name"
+        style={{
+          marginLeft: standardMargin,
+          marginRight: standardMargin,
+        }}
+      />
       <ScrollView
         style={styles.courseList}
         contentContainerStyle={styles.courseListContainer}>
