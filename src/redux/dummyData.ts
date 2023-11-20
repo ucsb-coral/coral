@@ -2,6 +2,7 @@ const courses = ['crsfirebase_uid_1', 'crsfirebase_uid_2', 'crsfirebase_uid_3', 
 
 const coursemap: Coursemap = {
   crsfirebase_uid_1: {
+    memberIds: [],
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -13,6 +14,7 @@ const coursemap: Coursemap = {
     waitlist: false,
   },
   crsfirebase_uid_2: {
+    memberIds: [],
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -24,6 +26,7 @@ const coursemap: Coursemap = {
     waitlist: false,
   },
   crsfirebase_uid_3: {
+    memberIds: [],
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -35,6 +38,7 @@ const coursemap: Coursemap = {
     waitlist: false,
   },
   crsfirebase_uid_4: {
+    memberIds: [],
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -46,6 +50,7 @@ const coursemap: Coursemap = {
     waitlist: false,
   },
   crsfirebase_uid_5: {
+    memberIds: [],
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -57,6 +62,7 @@ const coursemap: Coursemap = {
     waitlist: true,
   },
   crsfirebase_uid_6: {
+    memberIds: [],
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -68,6 +74,7 @@ const coursemap: Coursemap = {
     waitlist: true,
   },
   crsfirebase_uid_7: {
+    memberIds: [],
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
