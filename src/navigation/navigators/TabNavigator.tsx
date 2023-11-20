@@ -3,20 +3,24 @@ import {
   BottomTabScreenProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import {Icon} from 'react-native-elements';
-// import Tabbar from '../components/Tabbar';
-import UserPage, {UserPageProps} from '../../screens/tab/user/UserPage';
-import ChatPage, {ChatPageProps} from '../../screens/tab/chat/ChatPage';
-import SchedulePage, {
-  SchedulePageProps,
-} from '../../screens/tab/schedule/SchedulePage';
+import ProfileScreen, {
+  ProfileScreenProps,
+} from '../../screens/tab/profile/ProfileScreen';
+import ChatsScreen, {
+  ChatsScreenProps,
+} from '../../screens/tab/chats/ChatsScreen';
+import ScheduleScreen, {
+  ScheduleScreenProps,
+} from '../../screens/tab/schedule/ScheduleScreen';
 import {coral, grey} from '../../utilities/colors';
 import useChatData from '../../firebaseReduxUtilities/useChatData';
+import {Ionicons} from '@expo/vector-icons';
+import {scale} from '../../utilities/scale';
 
 type TabNavigatorScreens = {
-  user: UserPageProps;
-  chats: ChatPageProps;
-  schedule: SchedulePageProps;
+  profile: ProfileScreenProps;
+  chats: ChatsScreenProps;
+  schedule: ScheduleScreenProps;
 };
 
 type TabNavigatorPages = keyof TabNavigatorScreens;
@@ -42,18 +46,24 @@ export default function TabNavigator() {
             case 'chats':
               iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
               break;
-            case 'user':
+            case 'profile':
               iconName = focused ? 'person' : 'person-outline';
               break;
           }
 
           let iconColor: string = focused ? coral : grey;
-          return <Icon name={iconName} type="ionicon" color={iconColor} />;
+          return (
+            <Ionicons
+              name={iconName as any}
+              size={scale(25)}
+              color={iconColor}
+            />
+          );
         },
       })}>
-      <Tab.Screen name={'schedule'} component={SchedulePage as any} />
-      <Tab.Screen name={'chats'} component={ChatPage as any} />
-      <Tab.Screen name={'user'} component={UserPage as any} />
+      <Tab.Screen name={'schedule'} component={ScheduleScreen as any} />
+      <Tab.Screen name={'chats'} component={ChatsScreen as any} />
+      <Tab.Screen name={'profile'} component={ProfileScreen as any} />
     </Tab.Navigator>
   );
 }

@@ -20,6 +20,8 @@ export default function App() {
     prepare();
   }, []);
 
+  // signOut();
+
   return (
     <Provider store={store}>
       <PersistGate loading={<></>} persistor={persistor}>

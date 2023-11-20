@@ -4,7 +4,7 @@ import {HapticFeedback, haptic} from '../../utilities/haptics';
 import {coral, grey, white} from '../../utilities/colors';
 import {avenirBlack, avenirBlackCentered} from '../../utilities/textfont';
 import {scale, standardMargin, width} from '../../utilities/scale';
-import {Icon} from 'react-native-elements';
+import {AntDesign, Ionicons} from '@expo/vector-icons';
 
 const headerHeight = scale(52);
 const activeOpacity = 0.5;
@@ -28,9 +28,16 @@ export default function Header({
   positionStyle,
 }: Props) {
   const leftElementResolved =
-    leftElement || leftHandler ? (
-      <Icon name="arrow-back" type="ionicon" color={grey} size={35} />
-    ) : undefined;
+    leftElement ||
+    (leftHandler ? (
+      <AntDesign name="arrowleft" size={scale(35)} color={grey} />
+    ) : undefined);
+
+  const rightElementResolved =
+    rightElement ||
+    (rightHandler ? (
+      <Ionicons name="menu" size={scale(35)} color={grey} />
+    ) : undefined);
 
   return (
     <View
@@ -114,7 +121,7 @@ export default function Header({
             justifyContent: 'flex-end',
             flexDirection: 'row',
           }}>
-          {rightElement}
+          {rightElementResolved}
         </TouchableOpacity>
       ) : null}
     </View>

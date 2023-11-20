@@ -13,26 +13,21 @@ import LoadingScreen, {LoadingScreenProps} from '../../components/Loading';
 import ChatScreen, {
   ChatScreenProps,
 } from '../../screens/stack/chatScreen/ChatScreen';
-import UserSettingPage, {
-  UserSettingScreenProps,
-} from '../../screens/stack/userInfo/UserSettingPage';
-import UserDisplayName, {
-  UserDisplayNameProps
-} from '../../screens/stack/userInfo/UserDisplayName';
-import QuitChats, {
-  QuitChatsProps
-} from '../../screens/stack/userInfo/QuitChats';
-import AboutCoral, {
-  AboutCoralProps
-} from '../../screens/stack/userInfo/AboutCoral';
-import ChatJoin ,{
-  ChatJoinProps
-} from '../../screens/stack/chatJoin/ChatJoin';
-
-
-
-
-
+import ChatSettings, {
+  ChatSettingsProps,
+} from '../../screens/stack/chatSettings/ChatSettings';
+import AboutScreen, {
+  AboutScreenProps,
+} from '../../screens/stack/about/AboutScreen';
+import JoinChatsScreen, {
+  JoinChatsScreenProps,
+} from '../../screens/stack/joinChats/JoinChatsScreen';
+import EditProfileScreen, {
+  EditProfileScreenProps,
+} from '../../screens/stack/editProfile/EditProfileScreen';
+import SettingsScreen, {
+  SettingsScreenProps,
+} from '../../screens/stack/settings/SettingsScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -45,11 +40,11 @@ type AuthStackNavigatorPages = keyof AuthStackNavigatorScreens;
 type AppStackNavigatorScreens = {
   tabNavigator: EmptyProps;
   chat: ChatScreenProps;
-  userSetting: UserSettingScreenProps;
-  userNaming: UserDisplayNameProps;
-  QuitChats: QuitChatsProps;
-  AboutCoral: AboutCoralProps;
-  ChatJoin: ChatJoinProps;
+  editProfile: EditProfileScreenProps;
+  chatSettings: ChatSettingsProps;
+  settings: SettingsScreenProps;
+  about: AboutScreenProps;
+  joinChats: JoinChatsScreenProps;
   // ADD more app screens here
 };
 
@@ -75,12 +70,11 @@ export default function StackNavigator() {
         <>
           <Stack.Screen name={'tabNavigator'} component={TabNavigator} />
           <Stack.Screen name={'chat'} component={ChatScreen} />
-          <Stack.Screen name={'userSetting'} component={UserSettingPage} />
-          <Stack.Screen name={'userNaming'} component={UserDisplayName} />
-          <Stack.Screen name={'QuitChats'} component={QuitChats} />
-          <Stack.Screen name={'AboutCoral'} component={AboutCoral} />
-          <Stack.Screen name={'ChatJoin'} component={ChatJoin} />
-
+          <Stack.Screen name={'chatSettings'} component={ChatSettings} />
+          <Stack.Screen name={'editProfile'} component={EditProfileScreen} />
+          <Stack.Screen name={'about'} component={AboutScreen} />
+          <Stack.Screen name={'joinChats'} component={JoinChatsScreen} />
+          <Stack.Screen name={'settings'} component={SettingsScreen} />
           {/* ADD more app stack screens here */}
         </>
       ) : authState === 'LOADING' ? (
@@ -92,16 +86,17 @@ export default function StackNavigator() {
   );
 }
 
-export const authStackNavigate = (
+export const authStackNavigate = <Page extends keyof AuthStackNavigatorScreens>(
   navigation: NativeStackNavigationProp<any>,
   screen: AuthStackNavigatorPages,
-) => navigation.navigate(screen);
+  params?: AuthStackNavigatorScreens[Page] | {},
+) => navigation.navigate(screen, params);
 
 export const appStackNavigate = <Page extends keyof AppStackNavigatorScreens>(
   navigation: NativeStackNavigationProp<any>,
-  screen: Page,
+  screen: AppStackNavigatorPages,
   params?: AppStackNavigatorScreens[Page] | {},
-) => navigation.navigate(screen as string, params);
+) => navigation.navigate(screen, params);
 
 export type AuthStackPageProps<Page extends AuthStackNavigatorPages> =
   NativeStackScreenProps<AuthStackNavigatorScreens, Page, 'stack-navigator'>;

@@ -27,14 +27,14 @@ import {avenirBlack, avenirBlackCentered} from '../../../utilities/textfont';
 import {coursemap, courses} from '../../../redux/dummyData';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 
-export type ChatPageProps = EmptyProps;
+export type ChatsScreenProps = EmptyProps;
 
-type ChatScreenProps = CompositeScreenProps<
+type ChatsPageProps = CompositeScreenProps<
   AppStackPageProps<'tabNavigator'>,
   TabPageProps<'chats'>
 >;
 
-export default function ChatPage({route, navigation}: ChatScreenProps) {
+export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats,
@@ -58,39 +58,15 @@ export default function ChatPage({route, navigation}: ChatScreenProps) {
   console.log(joinedCourses);
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1}}>
       <Header
         centerElement={'Chat List'}
-        rightHandler={() => appStackNavigate(navigation, 'ChatJoin', {})}
-        rightElement={
-          <View
-            style={{
-              backgroundColor: coral,
-              height: scale(32),
-              width: scale(66),
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: scale(28),
-            }}>
-            <Text
-              style={{
-                color: white,
-                textAlign: 'center',
-                fontFamily: avenirBlackCentered,
-                fontSize: scale(15),
-                includeFontPadding: false,
-                textAlignVertical: 'center',
-                // backgroundColor: red,
-              }}>
-              Join
-            </Text>
-          </View>
-        }
+        rightHandler={() => appStackNavigate(navigation, 'joinChats', {})}
+        rightElement={joinButton}
       />
 
       {/* Current Class List*/}
-      <Text style={styles.category}>Current Class</Text>
+      <Text style={styles.category}>Current Classes</Text>
 
       <ScrollView style={styles.CurrentClasschatList}>
         {joinedCourses.map(chatId => (
@@ -113,3 +89,28 @@ export default function ChatPage({route, navigation}: ChatScreenProps) {
     </View>
   );
 }
+
+const joinButton = (
+  <View
+    style={{
+      backgroundColor: coral,
+      height: scale(32),
+      width: scale(66),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: scale(28),
+    }}>
+    <Text
+      style={{
+        color: white,
+        textAlign: 'center',
+        fontFamily: avenirBlackCentered,
+        fontSize: scale(15),
+        includeFontPadding: false,
+        textAlignVertical: 'center',
+      }}>
+      Join
+    </Text>
+  </View>
+);

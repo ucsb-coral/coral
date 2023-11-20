@@ -13,19 +13,19 @@ import {
 import {useSelector} from 'react-redux';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {appStackNavigate} from '../../../navigation/navigators/StackNavigator';
-import {Icon, SearchBar} from 'react-native-elements';
 import {coral, grey} from '../../../utilities/colors';
 import {coursemap, courses} from '../../../redux/dummyData';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 import {styles} from './ChatJoinStyle';
 import Header from '../../../components/header/Header';
+import {FontAwesome} from '@expo/vector-icons';
 
-export type ChatJoinProps = EmptyProps;
+export type JoinChatsScreenProps = EmptyProps;
 
-export default function ChatJoin({
+export default function JoinChatsScreen({
   route,
   navigation,
-}: AppStackPageProps<'ChatJoin'>) {
+}: AppStackPageProps<'joinChats'>) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats,
@@ -102,7 +102,7 @@ export default function ChatJoin({
     <View style={styles.container}>
       <Header leftHandler={navigation.goBack} centerElement={'Join Chat'} />
 
-      <SearchBar
+      {/*   <SearchBar
         containerStyle={{
           backgroundColor: 'transparent',
           borderBottomColor: 'transparent',
@@ -114,7 +114,7 @@ export default function ChatJoin({
         //@ts-ignore
         onChangeText={text => setSearchText(text)}
         value={searchText}
-      />
+      /> */}
 
       <ScrollView
         style={styles.courseList}
@@ -133,9 +133,8 @@ export default function ChatJoin({
           <View style={styles.modalContent}>
             <View>{generateCourseModal(modalData)}</View>
             <Pressable onPress={() => setModalVisible(false)} style={{}}>
-              <Icon
+              <FontAwesome
                 name="close"
-                type="font-awesome"
                 color={coral}
                 style={{alignSelf: 'flex-end'}}
               />
