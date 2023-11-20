@@ -21,12 +21,12 @@ import { loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 
 
 
-export type CourseJoinProps = EmptyProps;
+export type JoinCoursesScreenProps = EmptyProps;
 
-export default function CourseJoin({ 
+export default function JoinCoursesScreen({ 
     route,
     navigation 
-}: AppStackPageProps<'CourseJoin'>) {
+}: AppStackPageProps<'joinCourses'>) {
 
     const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
     const myCourseIds = useSelector(

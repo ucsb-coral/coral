@@ -28,7 +28,7 @@ import AboutCoral, {
 import ChatJoin ,{
   ChatJoinProps
 } from '../../screens/stack/chatJoin/ChatJoin';
-import CourseJoin, { CourseJoinProps } from '../../screens/stack/courseJoin/CourseJoin';
+import JoinCoursesScreen, { JoinCoursesScreenProps } from '../../screens/stack/joinCourses/JoinCoursesScreen';
 
 
 
@@ -51,7 +51,7 @@ type AppStackNavigatorScreens = {
   QuitChats: QuitChatsProps;
   AboutCoral: AboutCoralProps;
   ChatJoin: ChatJoinProps;
-  CourseJoin: CourseJoinProps;
+  joinCourses: JoinCoursesScreenProps;
   // ADD more app screens here
 };
 
@@ -82,7 +82,7 @@ export default function StackNavigator() {
           <Stack.Screen name={'QuitChats'} component={QuitChats} />
           <Stack.Screen name={'AboutCoral'} component={AboutCoral} />
           <Stack.Screen name={'ChatJoin'} component={ChatJoin} />
-          <Stack.Screen name={'CourseJoin'} component={CourseJoin} />
+          <Stack.Screen name={'joinCourses'} component={JoinCoursesScreen} />
 
           {/* ADD more app stack screens here */}
         </>

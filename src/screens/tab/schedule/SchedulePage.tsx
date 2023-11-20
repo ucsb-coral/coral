@@ -1,4 +1,4 @@
-import React, {Key, useState} from 'react';
+import React, {Key, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,40 +9,34 @@ import {
   Linking,
   Button,
 } from 'react-native';
-import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 import {
-  AppStackPageProps,
   appStackNavigate,
 } from '../../../navigation/navigators/StackNavigator';
-import {CompositeScreenProps} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {coral, grey} from '../../../utilities/colors';
 import {Icon} from 'react-native-elements';
 import {coursemap, courses} from '../../../redux/dummyData';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
+import { loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 
 export type SchedulePageProps = EmptyProps;
 
-// workaround for navigating from tab page to app stack page - not sure if this actually works
-type ScheduleScreenProps = CompositeScreenProps<
-  AppStackPageProps<'tabNavigator'>,
-  TabPageProps<'schedule'>
->;
+export default function SchedulePage({route, navigation}: SchedulePageProps) {
+  const dummyCoursemap = coursemap;
+  const dummyCourses = courses;
 
-export default function SchedulePage({route, navigation}: ScheduleScreenProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats,
   );
+  const userCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
 
-  // get user courses from usermap
-  // const userCourseIds = user.courses
-  // temp data
+  // load user courses into coursemap
+  useEffect(() => {
+    loadCoursesData(userCourses)
+  }, [userCourses])
 
-  // map user course uids to course data from firebase
-  // const courses = useCourseData()
-  // currently, this pulls dummy data from fixtures
-
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>(courses[0]);
 

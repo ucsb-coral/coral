@@ -14,6 +14,7 @@ import {
 } from '../src/redux/actions';
 import {useEffect} from 'react';
 import {setMyUserFirebaseRedux} from '../src/firebaseReduxUtilities/useUserData';
+import { loadCoursesData } from '../src/firebaseReduxUtilities/useCourseData';
 
 GoogleSignin.configure({
   webClientId:
@@ -82,6 +83,7 @@ export default function useAuth() {
           const id = `usr${uid}`;
           const myUser: User = userFromGoogleUser(user);
           await setMyUserFirebaseRedux(id, myUser);
+          await loadCoursesData(myUser.courses);
           store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
         }
       }

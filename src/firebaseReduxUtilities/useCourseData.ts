@@ -3,10 +3,9 @@ import { store } from '../redux/useRedux';
 import { joinCourseAction, leaveCourseAction, loadCoursesAction, setMyUserAction } from '../redux/actions';
 import { getUserDocumentRef } from './useUserData';
 
+/* load course data into coursemap from courses list */
 const loadCoursesData = async (courseIds: string[] | null | undefined) => {
   if(!courseIds) return;
-  const myUserId = store.getState().data.myUserId;
-  const user = store.getState().data.usermap[myUserId!];
   const courseCollectionRef = firestore().collection('courses');
   const courseDocs = (await courseCollectionRef.where(firestore.FieldPath.documentId(), 'in', courseIds).get()).docs;
   const coursemap: Coursemap = {};
