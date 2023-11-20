@@ -14,6 +14,7 @@ import {
   white,
 } from '../../../../../utilities/colors';
 import InputFooterButton from './components/InputFooterButton';
+import {platform} from '../../../../../utilities/platform';
 
 export type Props = {
   message: string;
@@ -37,7 +38,8 @@ export default function InputFooter({
   const inputRef = useRef<TextInput | null>(null);
   const MAX_BASE_HEIGHT = BASE_HEIGHT * 2.5;
   const INPUT_LINE_HEIGHT = BASE_HEIGHT * 0.32;
-  const INPUT_PADDING_VERTICAL = INPUT_LINE_HEIGHT * 0.45;
+  const INPUT_PADDING_VERTICAL = INPUT_LINE_HEIGHT * 0.56;
+  const INPUT_MARGIN_VERTICAL = INPUT_LINE_HEIGHT * 0.45;
   const INPUT_PADDING_SIDE = INPUT_LINE_HEIGHT * 0.64;
   const SIDE_PADDING = standardMargin;
   const PADDING = SIDE_PADDING / 2;
@@ -109,13 +111,18 @@ export default function InputFooter({
               backgroundColor: grey3,
               borderRadius: INPUT_LINE_HEIGHT + INPUT_PADDING_VERTICAL,
               flex: 1,
-              paddingTop: INPUT_PADDING_VERTICAL,
-              paddingBottom: INPUT_PADDING_VERTICAL,
+              paddingTop:
+                platform === 'ios' ? INPUT_PADDING_VERTICAL : undefined,
+              paddingBottom:
+                platform === 'ios' ? INPUT_PADDING_VERTICAL : undefined,
+              // paddingTop: INPUT_PADDING_VERTICAL,
+              // paddingBottom: INPUT_PADDING_VERTICAL,
               paddingLeft: INPUT_PADDING_SIDE,
               paddingRight: INPUT_PADDING_SIDE,
-              marginTop: INPUT_PADDING_VERTICAL,
-              marginBottom: INPUT_PADDING_VERTICAL,
+              marginTop: INPUT_MARGIN_VERTICAL,
+              marginBottom: INPUT_MARGIN_VERTICAL,
               overflow: 'hidden',
+              maxHeight: MAX_BASE_HEIGHT - INPUT_PADDING_VERTICAL * 2,
             }}>
             <TextInput
               ref={inputRef}
@@ -123,7 +130,7 @@ export default function InputFooter({
                 fontSize: INPUT_LINE_HEIGHT,
                 fontFamily: 'SFProTextRegular',
                 color: black,
-                paddingTop: 0,
+                paddingTop: platform === 'ios' ? 0 : undefined,
               }}
               selectionColor={coral}
               value={message}
@@ -132,12 +139,9 @@ export default function InputFooter({
               onFocus={() => setSelectedInput(INPUT_FOOTER_NAME)}
               placeholder={`Send a chat...`}
               placeholderTextColor={opacity(white, 0.8)}
-              numberOfLines={10}
               multiline
             />
           </View>
-
-          {/* {!!message?.length && ( */}
           <InputFooterButton
             size={BASE_HEIGHT}
             onPress={handleSendMessage}
@@ -145,7 +149,6 @@ export default function InputFooter({
             paddingRight={SIDE_PADDING}>
             <Image source={sendPng} style={{height: BASE_HEIGHT * 0.44}} />
           </InputFooterButton>
-          {/* )} */}
         </View>
       </Pressable>
     </View>

@@ -16,7 +16,7 @@ import { Icon, SearchBar} from 'react-native-elements';
 import {coral, grey} from '../../../utilities/colors';
 import {coursemap, courses} from '../../../redux/dummyData';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
-import { styles } from '../chatJoin/ChatJoinStyle';
+import { styles } from '../joinChats/ChatJoinStyle';
 import { loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 
 
