@@ -2,30 +2,22 @@ import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  Button,
-  Pressable,
-  PixelRatio,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {signOut} from '../../../../auth/useAuth';
 import {useSelector} from 'react-redux';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 
 import {styles} from './ChatPageStyles';
-import ChatScreen from '../../stack/chatScreen/ChatScreen';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {
   AppStackPageProps,
   appStackNavigate,
 } from '../../../navigation/navigators/StackNavigator';
 import Header from '../../../components/header/Header';
-import {coral, red, white} from '../../../utilities/colors';
+import {coral, white} from '../../../utilities/colors';
 import {scale} from '../../../utilities/scale';
-import {avenirBlack, avenirBlackCentered} from '../../../utilities/textfont';
-import {coursemap, courses} from '../../../redux/dummyData';
-import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
+import { avenirBlackCentered} from '../../../utilities/textfont';
 
 export type ChatsScreenProps = EmptyProps;
 
@@ -39,6 +31,9 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats,
   );
+  const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
+  const courses: string[] = tempCourses ? tempCourses : [];
+  const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
 
   let resolvedChats = chats ?? ['NONE'];
   console.log(resolvedChats);
@@ -47,15 +42,13 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   // const joinedCourses = resolvedChats.filter((chatId) => {
   //   return coursemap[chatId]?.courseTitle;
   // });
-  const [joinedCourses, setJoinedCourses] = useState<string[]>([]);
+  const [joinedChats, setJoinedChats] = useState<string[]>([]);
   useEffect(() => {
-    const filteredCourses = courses.filter(courseId =>
+    const filteredChats = courses.filter(courseId =>
       chats?.includes(courseId),
     );
-    setJoinedCourses(filteredCourses);
+    setJoinedChats(filteredChats);
   }, [chats]);
-  /// TODO: why not working here??
-  console.log(joinedCourses);
 
   return (
     <View style={{flex: 1}}>
@@ -67,9 +60,15 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
 
       {/* Current Class List*/}
       <Text style={styles.category}>Current Classes</Text>
+      
+      {joinedChats.length === 0 ? 
+      <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
+        You have not joined any chats
+      </Text>
+       : null}
 
       <ScrollView style={styles.CurrentClasschatList}>
-        {joinedCourses.map(chatId => (
+        {joinedChats.map(chatId => (
           <TouchableOpacity
             key={chatId}
             style={styles.chatItem}

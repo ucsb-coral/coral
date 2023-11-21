@@ -131,6 +131,7 @@ declare type TimeLocation = {
 
 declare type Course = {
   memberIds: string[];
+  courseId: string;
   quarter: string;
   enrollCode: string;
   gradingOptionCode: string;

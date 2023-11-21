@@ -1,161 +1,145 @@
-import React, {useState} from 'react';
-import {View,
-        Text,
-        SafeAreaView,
-        TouchableOpacity,
-        StatusBar,
-        ScrollView,
-        Pressable,
-        Button,
-        Modal,
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  Modal,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { AppStackPageProps } from '../../../navigation/navigators/StackNavigator';
-import { appStackNavigate } from '../../../navigation/navigators/StackNavigator';
-import { Icon, SearchBar} from 'react-native-elements';
-import {coral, grey} from '../../../utilities/colors';
-import {coursemap, courses} from '../../../redux/dummyData';
-import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
-import { styles } from '../joinChats/ChatJoinStyle';
-import { loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
-
-
+import {useSelector} from 'react-redux';
+import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
+import {coral} from '../../../utilities/colors';
+import { courses} from '../../../redux/dummyData';
+import {styles} from '../joinChats/ChatJoinStyle';
+import Header from '../../../components/header/Header';
+import {FontAwesome} from '@expo/vector-icons';
+import { joinCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 
 export type JoinCoursesScreenProps = EmptyProps;
 
-export default function JoinCoursesScreen({ 
-    route,
-    navigation 
+export default function JoinCoursesScreen({
+  route,
+  navigation,
 }: AppStackPageProps<'joinCourses'>) {
+  const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
+  const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
+  const userCourses: string[] = tempCourses ? tempCourses : [];
+  const userCoursemap = useSelector((state: ReduxState) => state.data.coursemap);
 
-    const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
-    const myCourseIds = useSelector(
-        (state: ReduxState) => state.data.usermap[myUserId!].courses,
-    );
-    loadCoursesData(myCourseIds);
-    const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalData, setModalData] = useState<string>(userCourses[0]);
+  const [searchText, setSearchText] = useState<string>('');
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalData, setModalData] = useState<string>('');
-    const [searchText, setSearchText] = useState<string>('');
+  // loads dummy courses into coursemap
+  useEffect(() => {
+    loadCoursesData(courses);
+  }, [courses]);
 
-    const openCourseModal = (id: string) => {
-        setModalData(id);
-        setModalVisible(true);
-    };
+  const openCourseModal = (id: string) => {
+    setModalData(id);
+    setModalVisible(true);
+  };
 
-    function generateCourseCards(courseId: string, index: number) {
-        const course: Course = coursemap[courseId];
-        if (
-            course.courseTitle
-                .toLowerCase()
-                .replace(/\s/g, '')
-                .includes(searchText.toLowerCase().replace(/\s/g, '').trim())     
-        ){
-            return (
-            <View key= {index} style={styles.courseCard}>
-                <Text style={styles.courseCardTitle}>{course.courseTitle}</Text>
-                    <Pressable
-                        style={
-                            myCourseIds?.includes(courseId) 
-                            ? styles.courseCardButtonDisabled 
-                            : styles.courseCardButton
-                        }
-                        disabled = {myCourseIds?.includes(courseId)}
-                        onPress={() => openCourseModal(courseId)}>
-                        <Text 
-                            style={
-                                myCourseIds?.includes(courseId) 
-                                ? styles.courseCardButtonTextDisabled 
-                                : styles.courseCardButtonText}
-                        > {myCourseIds?.includes(courseId) ? 'Joined' : 'Join Course'}</Text>
-                    </Pressable>
-            </View>
-            );
-        }
-    }
-    
-    function generateCourseModal(courseId: string) {
-        const course = coursemap[courseId];
-        // const title = `${courseId.replaceAll(/\s+/g, ' ').trim()}`;
-        return (
-        <View style = {styles.courseModalContainer}>
-            <Text style = {styles.courseModalText}>
-                Join {course.courseTitle} chat?
+  function generateCourseCards(courseId: string, index: number) {
+    const course: Course = userCoursemap[courseId];
+
+    if (
+      course?.courseTitle
+        .toLowerCase()
+        .replace(/\s/g, '')
+        .includes(searchText.toLowerCase().replace(/\s/g, '').trim())
+    ) {
+      return (
+        <View key={index} style={styles.courseCard}>
+          <Text style={styles.courseCardTitle}>{course?.courseTitle}</Text>
+          <Pressable
+            style={
+              userCourses?.includes(courseId)
+                ? styles.courseCardButtonDisabled
+                : styles.courseCardButton
+            }
+            disabled={userCourses?.includes(courseId)}
+            onPress={() => openCourseModal(courseId)}>
+            <Text
+              style={
+                userCourses?.includes(courseId)
+                  ? styles.courseCardButtonTextDisabled
+                  : styles.courseCardButtonText
+              }>
+              {' '}
+              {userCourses?.includes(courseId) ? 'Joined' : 'Join Course'}
             </Text>
-                <Pressable
-                        style={styles.courseModalButton}
-                        onPress={() => {
-                            joinCourseChat(courseId);
-                            setModalVisible(false);
-                            appStackNavigate(navigation, 'chat', {id: courseId});
-                            }
-                        }>
-                        <Text style={styles.courseModalButtonText}> {'Yes!!!'}</Text>
-                </Pressable>
+          </Pressable>
         </View>
-        );
+      );
     }
+  }
 
+  function generateCourseModal(courseId: string) {
+    const course = userCoursemap[courseId];
+    return (
+      <View style={styles.courseModalContainer}>
+        <Text style={styles.courseModalText}>
+          Join {course?.courseTitle}?
+        </Text>
+        <Pressable
+          style={styles.courseModalButton}
+          onPress={() => {
+            joinCourse(courseId);
+            setModalVisible(false);
+            navigation.goBack();
+          }}>
+          <Text style={styles.courseModalButtonText}> {'Yes!!!'}</Text>
+        </Pressable>
+      </View>
+    );
+  }
 
-
-return (
+  return (
     <View style={styles.container}>
-        <View style={styles.header}>
-            <View>
-                <TouchableOpacity 
-                    style = {{justifyContent: 'flex-start'}}
-                    onPress={() => navigation.goBack()}>
-                        <Icon 
-                        name='arrow-back' type="ionicon" color={grey} size={35} />
-                </TouchableOpacity>
-            </View>
-            <Text style={styles.headerText}>Join Chat</Text>
-            <View style={{width: 40}}></View>
+      <Header leftHandler={navigation.goBack} centerElement={'Join Courses'} />
+
+      {/*   <SearchBar
+        containerStyle={{
+          backgroundColor: 'transparent',
+          borderBottomColor: 'transparent',
+          borderTopColor: 'transparent',
+          width: '97%',
+        }}
+        inputContainerStyle={{backgroundColor: '#EEEEEE'}}
+        placeholder="Search by course name"
+        //@ts-ignore
+        onChangeText={text => setSearchText(text)}
+        value={searchText}
+      /> */}
+
+      <ScrollView
+        style={styles.courseList}
+        contentContainerStyle={styles.courseListContainer}>
+        {/* currently, users can only see and join courses from the dummy data */}
+        {courses.map(generateCourseCards)}
+      </ScrollView>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <View>{generateCourseModal(modalData)}</View>
+            <Pressable onPress={() => setModalVisible(false)} style={{}}>
+              <FontAwesome
+                name="close"
+                color={coral}
+                style={{alignSelf: 'flex-end'}}
+              />
+            </Pressable>
+          </View>
         </View>
-
-        <SearchBar 
-            containerStyle={{
-                backgroundColor: 'transparent',
-                borderBottomColor: 'transparent',
-                borderTopColor: 'transparent',
-                width: '97%',
-            }}
-            inputContainerStyle={{ backgroundColor: '#EEEEEE' }}
-            placeholder='Search by course name'
-            //@ts-ignore
-            onChangeText={(text) => setSearchText(text)}
-            value={searchText} 
-        />
-
-        <ScrollView
-            style={styles.courseList}
-            contentContainerStyle={styles.courseListContainer}>
-            {courses.map(generateCourseCards)}
-        </ScrollView>
-
-
-        <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-                setModalVisible(!modalVisible);
-            }}>
-            <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                    <View>{generateCourseModal(modalData)}</View>
-                    <Pressable onPress={() => setModalVisible(false)} style={{}}>
-                        <Icon
-                        name="close"
-                        type="font-awesome"
-                        color={coral}
-                        style={{alignSelf: 'flex-end'}}
-                        />
-                    </Pressable>
-                </View>
-            </View>
-        </Modal>
+      </Modal>
     </View>
-);
+  );
 }

@@ -3,18 +3,33 @@ const courses = ['crsfirebase_uid_1', 'crsfirebase_uid_2', 'crsfirebase_uid_3', 
 const coursemap: Coursemap = {
   crsfirebase_uid_1: {
     memberIds: [],
-    quarter: '2000F',
-    enrollCode: 'string',
-    gradingOptionCode: 'string',
+    courseId: 'CMPSC    16  ',
+    quarter: '20234',
+    enrollCode: '07724',
+    gradingOptionCode: 'L',
     unitsAttempted: 4,
-    courseTitle: 'Test Course 1',
-    session: 'string',
+    courseTitle: 'PROBLEM SOLVING I',
+    session: '',
     repeatTypeCode: 'string',
-    timeLocations: [],
+    timeLocations: [{
+      "section": "0100",
+      "instructionTypeCode": "LEC",
+      "buildingRoom": "ILP 2302",
+      "days": "M W    ",
+      "beginTime": "11:00",
+      "endTime": "12:15",
+      "instructors": [
+        {
+            "name": "Maryam Majedi",
+            "functionCode": "Teaching and in charge"
+        }
+    ]
+  }],
     waitlist: false,
   },
   crsfirebase_uid_2: {
     memberIds: [],
+    courseId: '',
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -27,6 +42,7 @@ const coursemap: Coursemap = {
   },
   crsfirebase_uid_3: {
     memberIds: [],
+    courseId: '',
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -39,6 +55,7 @@ const coursemap: Coursemap = {
   },
   crsfirebase_uid_4: {
     memberIds: [],
+    courseId: '',
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -51,6 +68,7 @@ const coursemap: Coursemap = {
   },
   crsfirebase_uid_5: {
     memberIds: [],
+    courseId: '',
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -63,6 +81,7 @@ const coursemap: Coursemap = {
   },
   crsfirebase_uid_6: {
     memberIds: [],
+    courseId: '',
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
@@ -75,6 +94,7 @@ const coursemap: Coursemap = {
   },
   crsfirebase_uid_7: {
     memberIds: [],
+    courseId: '',
     quarter: '2000F',
     enrollCode: 'string',
     gradingOptionCode: 'string',

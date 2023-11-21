@@ -61,14 +61,19 @@ export function reducer(
       const coursemap = state.coursemap;
       const usermap = state.usermap;
       const myUser = usermap[myUserId!];
-      if (!myUser.courses) myUser.courses = [];
+      if (!myUser.courses) {
+        myUser.courses = [];
+      } else if (!myUser.courses.includes(id)) {
+        myUser.courses = [...myUser.courses, id];
+      }
+      const newCourses = myUser.courses
       return {
         ...state,
         usermap: {
           ...usermap, 
           [myUserId!]: {
             ...myUser, 
-            courses: [...myUser.courses, id]}},
+            courses: newCourses}},
         coursemap: {...coursemap, [id]: course},
       }
     }
