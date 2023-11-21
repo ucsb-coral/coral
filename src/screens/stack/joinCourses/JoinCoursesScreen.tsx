@@ -14,6 +14,8 @@ import {styles} from '../joinChats/ChatJoinStyle';
 import Header from '../../../components/header/Header';
 import {FontAwesome} from '@expo/vector-icons';
 import { joinCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
+import SearchInput from '../../../components/searchInput/SearchInput';
+import { standardMargin } from '../../../utilities/scale';
 
 export type JoinCoursesScreenProps = EmptyProps;
 
@@ -99,19 +101,15 @@ export default function JoinCoursesScreen({
     <View style={styles.container}>
       <Header leftHandler={navigation.goBack} centerElement={'Join Courses'} />
 
-      {/*   <SearchBar
-        containerStyle={{
-          backgroundColor: 'transparent',
-          borderBottomColor: 'transparent',
-          borderTopColor: 'transparent',
-          width: '97%',
-        }}
-        inputContainerStyle={{backgroundColor: '#EEEEEE'}}
-        placeholder="Search by course name"
-        //@ts-ignore
-        onChangeText={text => setSearchText(text)}
+      <SearchInput
         value={searchText}
-      /> */}
+        onChangeText={setSearchText}
+        placeholder="Search by course name"
+        style={{
+          marginLeft: standardMargin,
+          marginRight: standardMargin,
+        }}
+      />
 
       <ScrollView
         style={styles.courseList}
