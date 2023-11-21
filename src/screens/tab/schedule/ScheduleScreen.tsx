@@ -50,6 +50,8 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   // uncomment this and refresh to reset/load dummy data into firebase
   // addCourses(courses)
 
+  // leaveCourse(userCourses[0])
+
   // load user.courses list into coursemap
   useEffect(() => {
     loadCoursesData(userCourses);

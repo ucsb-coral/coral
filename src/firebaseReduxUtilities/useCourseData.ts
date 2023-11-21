@@ -93,6 +93,7 @@ const joinCourse = async (courseId: string) => {
   }
 };
 
+// removes user from course, not currently used in app besides debugging
 const leaveCourse = async (courseId: string) => {
   const myUserId = store.getState().data.myUserId;
   const myUserDocumentRef = getUserDocumentRef(myUserId);
