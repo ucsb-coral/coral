@@ -45,6 +45,7 @@ type CourseInfo = {
 };
 
 type Course = {
+    memberIds: string[];
     courseInfo: CourseInfo;
     classSections: Record<string,ClassSection>;
 };
@@ -53,6 +54,7 @@ type Courses = Record<string, Course>;
 
 const courses: Courses = {
     "firebase_uid_1": {
+        "memberIds": [],
         "courseInfo": {
             "courseId": "CMPSC    16  ",
             "quarter": "20234",
@@ -100,6 +102,7 @@ const courses: Courses = {
         }
     },
     "firebase_uid_2": {
+        "memberIds": [],
         "courseInfo": {
             "courseId": "CMPSC    24  ",
             "quarter": "20234",
@@ -147,6 +150,7 @@ const courses: Courses = {
         }
     },
     "firebase_uid_3": {
+        "memberIds": [],
         "courseInfo": {
             "courseId": "CMPSC    32  ",
             "quarter": "20234",
@@ -194,6 +198,7 @@ const courses: Courses = {
         }
     },
     "firebase_uid_4": {
+        "memberIds": [],
         "courseInfo": {
             "courseId": "CMPSC   130A ",
             "quarter": "20234",
@@ -241,6 +246,7 @@ const courses: Courses = {
         }
     },
     "firebase_uid_5": {
+        "memberIds": [],
         "courseInfo": {
             "courseId": "CMPSC   184  ",
             "quarter": "20234",

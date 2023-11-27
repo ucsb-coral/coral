@@ -48,6 +48,52 @@ export function reducer(
         chatmap: {...state.chatmap, ...chatmap},
       };
     }
+    case 'LOAD_COURSES': {
+      const {coursemap} = action;
+      return {
+        ...state,
+        coursemap: {...state.coursemap, ...coursemap},
+      };
+    }
+    case 'JOIN_COURSE': {
+      const {id, course} = action;
+      const myUserId = state.myUserId;
+      const coursemap = state.coursemap;
+      const usermap = state.usermap;
+      const myUser = usermap[myUserId!];
+      if (!myUser.courses) {
+        myUser.courses = [];
+      } else if (!myUser.courses.includes(id)) {
+        myUser.courses = [...myUser.courses, id];
+      }
+      const newCourses = myUser.courses
+      return {
+        ...state,
+        usermap: {
+          ...usermap, 
+          [myUserId!]: {
+            ...myUser, 
+            courses: newCourses}},
+        coursemap: {...coursemap, [id]: course},
+      }
+    }
+    case 'LEAVE_COURSE': {
+      const {id, course} = action;
+      const myUserId = state.myUserId;
+      const coursemap = state.coursemap;
+      const usermap = state.usermap;
+      const myUser = usermap[myUserId!];
+      const newCourses = myUser.courses?.filter(courseId => courseId !== id);
+      return {
+        ...state,
+        usermap: {
+          ...usermap, 
+          [myUserId!]: {
+            ...myUser, 
+            courses: newCourses}},
+        coursemap: {...coursemap, [id]: course},
+      }
+    }
     case 'SIGN_OUT': {
       return {
         ...state,

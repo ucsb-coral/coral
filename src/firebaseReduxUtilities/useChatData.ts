@@ -28,6 +28,7 @@ const joinCourseChat = async (courseId: string) => {
     chatToSet = {
       memberIds: [myUserId],
       messages: [],
+      messagemap: {}
     };
     await chatDocumentRef.set(chatToSet);
   }

@@ -28,6 +28,7 @@ import EditProfileScreen, {
 import SettingsScreen, {
   SettingsScreenProps,
 } from '../../screens/stack/settings/SettingsScreen';
+import JoinCoursesScreen, { JoinCoursesScreenProps } from '../../screens/stack/joinCourses/JoinCoursesScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -45,6 +46,7 @@ type AppStackNavigatorScreens = {
   settings: SettingsScreenProps;
   about: AboutScreenProps;
   joinChats: JoinChatsScreenProps;
+  joinCourses: JoinCoursesScreenProps;
   // ADD more app screens here
 };
 
@@ -75,6 +77,7 @@ export default function StackNavigator() {
           <Stack.Screen name={'about'} component={AboutScreen} />
           <Stack.Screen name={'joinChats'} component={JoinChatsScreen} />
           <Stack.Screen name={'settings'} component={SettingsScreen} />
+          <Stack.Screen name={'joinCourses'} component={JoinCoursesScreen} />
           {/* ADD more app stack screens here */}
         </>
       ) : authState === 'LOADING' ? (

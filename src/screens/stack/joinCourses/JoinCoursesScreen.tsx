@@ -1,46 +1,41 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
-  TouchableOpacity,
-  StatusBar,
   ScrollView,
   Pressable,
-  Button,
   Modal,
-  TextInput,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
-import {appStackNavigate} from '../../../navigation/navigators/StackNavigator';
-import {coral, grey} from '../../../utilities/colors';
-// import {coursemap, courses} from '../../../redux/dummyData';
-import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
-import {styles} from './ChatJoinStyle';
+import {coral} from '../../../utilities/colors';
+import { courses} from '../../../redux/dummyData';
+import {styles} from '../joinChats/ChatJoinStyle';
 import Header from '../../../components/header/Header';
 import {FontAwesome} from '@expo/vector-icons';
-import { avenirBlackCentered } from '../../../utilities/textfont';
-import {scale, standardMargin} from '../../../utilities/scale';
+import { joinCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 import SearchInput from '../../../components/searchInput/SearchInput';
+import { standardMargin } from '../../../utilities/scale';
 
-export type JoinChatsScreenProps = EmptyProps;
+export type JoinCoursesScreenProps = EmptyProps;
 
-export default function JoinChatsScreen({
+export default function JoinCoursesScreen({
   route,
   navigation,
-}: AppStackPageProps<'joinChats'>) {
+}: AppStackPageProps<'joinCourses'>) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
-  const chats = useSelector(
-    (state: ReduxState) => state.data.usermap[myUserId!].chats,
-  );
   const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
-  const courses: string[] = tempCourses ? tempCourses : [];
-  const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
+  const userCourses: string[] = tempCourses ? tempCourses : [];
+  const userCoursemap = useSelector((state: ReduxState) => state.data.coursemap);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalData, setModalData] = useState<string>(courses[0]);
+  const [modalData, setModalData] = useState<string>(userCourses[0]);
   const [searchText, setSearchText] = useState<string>('');
+
+  // loads dummy courses into coursemap
+  useEffect(() => {
+    loadCoursesData(courses);
+  }, [courses]);
 
   const openCourseModal = (id: string) => {
     setModalData(id);
@@ -48,35 +43,33 @@ export default function JoinChatsScreen({
   };
 
   function generateCourseCards(courseId: string, index: number) {
-    const course: Course = coursemap[courseId];
-    // const title = `${courseId.replaceAll(/\s+/g, ' ').trim()} - ${
-    // course.courseTitle
-    // }`;
+    const course: Course = userCoursemap[courseId];
+
     if (
-      course.courseTitle
+      course?.courseTitle
         .toLowerCase()
         .replace(/\s/g, '')
         .includes(searchText.toLowerCase().replace(/\s/g, '').trim())
     ) {
       return (
         <View key={index} style={styles.courseCard}>
-          <Text style={styles.courseCardTitle}>{course.courseTitle}</Text>
+          <Text style={styles.courseCardTitle}>{course?.courseTitle}</Text>
           <Pressable
             style={
-              chats?.includes(courseId)
+              userCourses?.includes(courseId)
                 ? styles.courseCardButtonDisabled
                 : styles.courseCardButton
             }
-            disabled={chats?.includes(courseId)}
+            disabled={userCourses?.includes(courseId)}
             onPress={() => openCourseModal(courseId)}>
             <Text
               style={
-                chats?.includes(courseId)
+                userCourses?.includes(courseId)
                   ? styles.courseCardButtonTextDisabled
                   : styles.courseCardButtonText
               }>
               {' '}
-              {chats?.includes(courseId) ? 'Joined' : 'Join Chat'}
+              {userCourses?.includes(courseId) ? 'Joined' : 'Join Course'}
             </Text>
           </Pressable>
         </View>
@@ -85,19 +78,18 @@ export default function JoinChatsScreen({
   }
 
   function generateCourseModal(courseId: string) {
-    const course = coursemap[courseId];
-    // const title = `${courseId.replaceAll(/\s+/g, ' ').trim()}`;
+    const course = userCoursemap[courseId];
     return (
       <View style={styles.courseModalContainer}>
         <Text style={styles.courseModalText}>
-          Join {course?.courseTitle} chat?
+          Join {course?.courseTitle}?
         </Text>
         <Pressable
           style={styles.courseModalButton}
           onPress={() => {
-            joinCourseChat(courseId);
+            joinCourse(courseId);
             setModalVisible(false);
-            appStackNavigate(navigation, 'chat', {id: courseId});
+            navigation.goBack();
           }}>
           <Text style={styles.courseModalButtonText}> {'Yes!!!'}</Text>
         </Pressable>
@@ -107,7 +99,7 @@ export default function JoinChatsScreen({
 
   return (
     <View style={styles.container}>
-      <Header leftHandler={navigation.goBack} centerElement={'Join Chats'} />
+      <Header leftHandler={navigation.goBack} centerElement={'Join Courses'} />
 
       <SearchInput
         value={searchText}
@@ -119,15 +111,10 @@ export default function JoinChatsScreen({
         }}
       />
 
-      {courses.length === 0 ? 
-      <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
-        You are not enrolled in any courses
-      </Text>
-       : null}
-
       <ScrollView
         style={styles.courseList}
         contentContainerStyle={styles.courseListContainer}>
+        {/* currently, users can only see and join courses from the dummy data */}
         {courses.map(generateCourseCards)}
       </ScrollView>
 
@@ -141,14 +128,13 @@ export default function JoinChatsScreen({
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View>{generateCourseModal(modalData)}</View>
-            <TouchableOpacity onPress={() => setModalVisible(false)}>
+            <Pressable onPress={() => setModalVisible(false)} style={{}}>
               <FontAwesome
                 name="close"
-                size={scale(24)}
                 color={coral}
                 style={{alignSelf: 'flex-end'}}
               />
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </Modal>

@@ -30,6 +30,27 @@ const setChatsAction: Action<SetChatsAction> = props => {
   };
 };
 
+const loadCoursesAction: Action<LoadCoursesAction> = props => {
+  return {
+    type: 'LOAD_COURSES',
+    ...props,
+  };
+}
+
+const joinCourseAction: Action<JoinCourseAction> = props => {
+  return {
+    type: 'JOIN_COURSE',
+    ...props,
+  };
+};
+
+const leaveCourseAction: Action<LeaveCourseAction> = props => {
+  return {
+    type: 'LEAVE_COURSE',
+    ...props,
+  };
+};
+
 const signOutAction: Action<SignOutAction> = () => {
   return {
     type: 'SIGN_OUT',
@@ -47,6 +68,9 @@ export {
   setMyUserAction,
   joinChatAction,
   setChatsAction,
+  loadCoursesAction,
+  joinCourseAction,
+  leaveCourseAction,
   signOutAction,
   clearStoreAction,
 };

@@ -20,6 +20,23 @@ declare type SetChatsAction = {
   chatmap: Chatmap;
 };
 
+declare type LoadCoursesAction = {
+  type: 'LOAD_COURSES';
+  coursemap: Coursemap;
+};
+
+declare type JoinCourseAction = {
+  type: 'JOIN_COURSE';
+  id: string;
+  course: Course;
+};
+
+declare type LeaveCourseAction = {
+  type: 'LEAVE_COURSE';
+  id: string;
+  course: Course;
+};
+
 declare type SignOutAction = {
   type: 'SIGN_OUT';
 };
@@ -33,6 +50,9 @@ declare type ActionTypes =
   | SetMyUserAction
   | JoinChatAction
   | SetChatsAction
+  | LoadCoursesAction
+  | JoinCourseAction
+  | LeaveCourseAction
   | SignOutAction
   | ClearStoreAction;
 
@@ -72,6 +92,7 @@ declare type User = {
   lastName?: string | null;
   photo?: string | null;
   chats?: string[] | null;
+  courses?: string[] | null;
 };
 
 declare type MessageType = 'TEXT';
@@ -109,6 +130,8 @@ declare type TimeLocation = {
 };
 
 declare type Course = {
+  memberIds: string[];
+  courseId: string;
   quarter: string;
   enrollCode: string;
   gradingOptionCode: string;
