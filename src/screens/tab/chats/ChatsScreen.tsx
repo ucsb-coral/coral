@@ -18,6 +18,7 @@ import Header from '../../../components/header/Header';
 import {coral, white} from '../../../utilities/colors';
 import {scale} from '../../../utilities/scale';
 import { avenirBlackCentered} from '../../../utilities/textfont';
+import { loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 
 export type ChatsScreenProps = EmptyProps;
 
@@ -34,6 +35,11 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
   const courses: string[] = tempCourses ? tempCourses : [];
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
+
+  // load user.courses list into coursemap
+  useEffect(() => {
+    loadCoursesData(courses);
+  }, [courses]);
 
   let resolvedChats = chats ?? ['NONE'];
   console.log(resolvedChats);
