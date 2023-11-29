@@ -15,5 +15,4 @@
 ## src/screens/tab/schedule/ScheduleScreen.tsx
 
 # are the style I changed and in the add some need layout for ChatSettings.tsx
- ![Uploading 11241701253201_.pic.jpg…]()
- ![Alt text]( 11241701253201_.pic.jpg)
+![Model](01.jpg)
