@@ -15,4 +15,33 @@
 ## src/screens/tab/schedule/ScheduleScreen.tsx
 
 # are the style I changed and in the add some need layout for ChatSettings.tsx
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/1.jpg)
+
 ![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/01.jpg)
+
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/2.jpg)
+
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/02.jpg)
+
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/3.jpg)
+
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/03.jpg)
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/4.jpg)
+
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/04.jpg)
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/5.jpg)
+
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/05.jpg)
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/7.jpg)
+
+
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/07.jpg)
