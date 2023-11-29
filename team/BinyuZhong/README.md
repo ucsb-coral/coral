@@ -15,4 +15,4 @@
 ## src/screens/tab/schedule/ScheduleScreen.tsx
 
 # are the style I changed and in the add some need layout for ChatSettings.tsx
-![Model](01.jpg)
+![Test Image 2](https://github.com/ucsb-cs184-f23/pj-react-04/blob/binyu-HW3/team/HW04_image/01.jpg)
