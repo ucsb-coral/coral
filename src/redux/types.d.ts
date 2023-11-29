@@ -93,6 +93,7 @@ declare type User = {
   photo?: string | null;
   chats?: string[] | null;
   courses?: string[] | null;
+  bio?: string | null;
 };
 
 declare type MessageType = 'TEXT';
