@@ -23,6 +23,7 @@ import {styles} from './ChatScreenStyles';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
+import { black, white } from '../../../utilities/colors';
 
 export type ChatScreenProps = {
   id: string;
@@ -111,7 +112,7 @@ export default function ChatScreen({
           setSelectedInput={setSelectedInput}
           handleSendMessage={sendMessage}
         />
-        <View style={{flex: 1}}>
+        <View style={{flex: 1,backgroundColor:white}}>
           <Header
             centerElement={courseTitle}
             leftHandler={navigation.goBack}

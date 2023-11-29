@@ -12,10 +12,11 @@ import {coral} from '../../../utilities/colors';
 import { courses} from '../../../redux/dummyData';
 import {styles} from '../joinChats/ChatJoinStyle';
 import Header from '../../../components/header/Header';
+
 import {FontAwesome} from '@expo/vector-icons';
 import { joinCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 import SearchInput from '../../../components/searchInput/SearchInput';
-import { standardMargin } from '../../../utilities/scale';
+import { scale, standardMargin } from '../../../utilities/scale';
 
 export type JoinCoursesScreenProps = EmptyProps;
 
@@ -131,6 +132,7 @@ export default function JoinCoursesScreen({
             <Pressable onPress={() => setModalVisible(false)} style={{}}>
               <FontAwesome
                 name="close"
+                size={scale(24)}
                 color={coral}
                 style={{alignSelf: 'flex-end'}}
               />

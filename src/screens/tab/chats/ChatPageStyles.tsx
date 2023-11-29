@@ -67,6 +67,7 @@ export const styles = StyleSheet.create({
   },
   category: {
     fontSize: 20,
+    paddingLeft: 15,
     color: darkGrey,
     marginBottom: 5,
     fontWeight: '600',
@@ -74,9 +75,9 @@ export const styles = StyleSheet.create({
   },
   chatName: {
     fontSize: 18,
-    color: darkGrey,
+    color: black,
     marginBottom: 5,
-    fontWeight: '600',
+    fontWeight: '700',
     fontFamily: NameFont,
   },
   chatMessage: {

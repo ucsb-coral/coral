@@ -14,7 +14,7 @@ import {
   appStackNavigate,
 } from '../../../navigation/navigators/StackNavigator';
 import { useSelector } from 'react-redux';
-import { black, coral, grey, opacity } from '../../../utilities/colors';
+import { black, coral, grey, opacity, white ,ButtonBackground,} from '../../../utilities/colors';
 import { joinCourseChat } from '../../../firebaseReduxUtilities/useChatData';
 import { addCourses, joinCourse, leaveCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 import { FontAwesome } from '@expo/vector-icons';
@@ -24,6 +24,10 @@ import { CompositeScreenProps } from '@react-navigation/native';
 import { TabPageProps } from '../../../navigation/navigators/TabNavigator';
 import { avenirBlackCentered } from '../../../utilities/textfont';
 import { courses } from '../../../redux/dummyData';
+import{buttonFont,
+  NameFont,
+  EmailFont,
+}from "../../../utilities/textfont";
 
 export type ScheduleScreenProps = EmptyProps;
 
@@ -90,16 +94,17 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
           width: '100%',
           height: 'auto',
           padding: 8,
-          borderRadius: 20,
-          backgroundColor: opacity(coral, 0.2),
+          borderRadius: 15,
+          backgroundColor:ButtonBackground,
           marginBottom: standardMargin,
         }}
         onPress={() => openCourseModal(courseId)}>
         <Text
           style={{
             color: 'black',
-            fontWeight: 'bold',
-            fontSize: 16,
+            fontFamily:buttonFont,
+            fontWeight: '700',
+            fontSize: 18,
           }}>
           {title}
         </Text>
@@ -150,10 +155,13 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
             {timeLocation?.buildingRoom}
           </Text>
           <Text style={styles.courseText}>{instructors?.name}</Text>
+          <View style={{ paddingTop: 10 }}>
           <Button
+            
             title={chats?.includes(courseId) ? 'Open Chat' : 'Join Chat'}
             color={coral}
             onPress={
+            
               chats?.includes(courseId)
                 ? () => {
                   setIsOpen(false);
@@ -166,6 +174,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
                 }
             }
           />
+          </View>
         </View>
       );
     }
@@ -212,9 +221,10 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     <View
       style={{
         flex: 1,
+        backgroundColor: white,
       }}>
       <Header centerElement={'Your Courses'} />
-      <View style={{ flex: 1, width: '100%' }}>
+      <View style={{ flex: 1, width: '100%' , backgroundColor:white }}>
 
         {userCourses.length == 0 ?
           <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
@@ -249,17 +259,20 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#F883791A',
-          borderRadius: 50,
+          backgroundColor: ButtonBackground,
+          borderRadius: 15,
           padding: 10,
+          margin: 10,
         }}
         onPress={() =>
           appStackNavigate(navigation, 'joinCourses', { id: 'joinCourses' })
         }>
         <Text
           style={{
-            color: 'black',
-            fontWeight: 'bold',
+            color: black,
+            fontFamily:buttonFont,
+            fontWeight: '700',
+            fontSize: 18,
           }}>
           Manage Courses
         </Text>

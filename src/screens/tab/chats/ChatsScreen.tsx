@@ -51,7 +51,7 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   }, [chats]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1 , backgroundColor:white}}>
       <Header
         centerElement={'Chat List'}
         rightHandler={() => appStackNavigate(navigation, 'joinChats', {})}
