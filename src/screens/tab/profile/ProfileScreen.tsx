@@ -38,7 +38,7 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
   const user = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
-  setMyUserBio(myUserId, user, 'This is my bio!');
+  // setMyUserBio(myUserId, user, 'This is my bio!');
   const bio = useSelector((state: ReduxState) => state.data.usermap[myUserId!].bio);
   const [boxHeight, setBoxHeight] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
@@ -59,7 +59,9 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
               style={styles.profileImage}
             />
             <View style={styles.userInfoContainer}>
-              <Text style={styles.userName}>{user?.firstName}</Text>
+              <Text style={styles.userName}>
+                {user?.preferredName ? user?.preferredName : user?.firstName}
+              </Text>
               <Text style={styles.userEmail}>{user?.email}</Text>
             </View>
           </View>
