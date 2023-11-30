@@ -45,9 +45,6 @@ const styles = StyleSheet.create({
 
 export default function ScheduleScreen({ route, navigation }: SchedulePageProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
-  const chats = useSelector(
-    (state: ReduxState) => state.data.usermap[myUserId!].chats,
-  );
   const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
   const userCourses: string[] = tempCourses ? tempCourses : [];
 
@@ -81,8 +78,8 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
 
   function renderItem({ item: courseId, index }: { item: string; index: number; }) {
     const course: Course = userCoursemap[courseId];
-    const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${course.courseTitle}`;
-    const timeLocation = course?.timeLocations?.find((timeloc) => timeloc.instructionTypeCode === 'LEC');
+    const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${course?.courseTitle}`;
+    const timeLocation = course?.timeLocations?.find((timeloc) => timeloc?.instructionTypeCode === 'LEC');
     const instructors = timeLocation?.instructors[0];
     return (
       <Pressable
@@ -119,21 +116,17 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     modalData: string;
-    chats: string[] | null | undefined;
-    openCoursePage: (id: string) => void;
   };
 
   function CourseInfoModal({
     isOpen,
     setIsOpen,
     modalData,
-    chats,
-    openCoursePage,
   }: CourseInfoModalProps) {
     function generateCourseModal(courseId: string) {
       const course = userCoursemap[courseId];
       const title = `${course?.courseId.replaceAll(/\s+/g, ' ').trim()}`;
-      const timeLocation = course?.timeLocations?.find((timeloc) => timeloc.instructionTypeCode === 'LEC');
+      const timeLocation = course?.timeLocations?.find((timeloc) => timeloc?.instructionTypeCode === 'LEC');
       const instructors = timeLocation?.instructors[0];
 
       return (
@@ -155,26 +148,6 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
             {timeLocation?.buildingRoom}
           </Text>
           <Text style={styles.courseText}>{instructors?.name}</Text>
-          <View style={{ paddingTop: 10 }}>
-          <Button
-            
-            title={chats?.includes(courseId) ? 'Open Chat' : 'Join Chat'}
-            color={coral}
-            onPress={
-            
-              chats?.includes(courseId)
-                ? () => {
-                  setIsOpen(false);
-                  openCoursePage(courseId);
-                }
-                : () => {
-                  joinCourseChat(courseId);
-                  setIsOpen(false);
-                  openCoursePage(courseId);
-                }
-            }
-          />
-          </View>
         </View>
       );
     }
@@ -250,10 +223,6 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
         isOpen={modalVisible}
         setIsOpen={setModalVisible}
         modalData={modalData}
-        chats={chats}
-        openCoursePage={(id: string) =>
-          appStackNavigate(navigation, 'chat', { id })
-        }
       />
       <Pressable
         style={{
