@@ -15,7 +15,7 @@ import {appStackNavigate} from '../../../navigation/navigators/StackNavigator';
 import {styles} from '../../tab/profile/UserPageStyle';
 import Header from '../../../components/header/Header';
 import { coral } from '../../../utilities/colors';
-import { setMyUserPreferredName } from '../../../firebaseReduxUtilities/useUserData';
+import { setMyUserPreferredName, setMyUserBio} from '../../../firebaseReduxUtilities/useUserData';
 
 export type EditProfileScreenProps = {};
 export default function EditProfileScreen({
@@ -27,6 +27,7 @@ export default function EditProfileScreen({
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
   const [newName, setNewName] = useState('');
+  const [newBio, setNewBio] = useState('');
 
   return (
     <View style={styles.container}>
@@ -40,12 +41,21 @@ export default function EditProfileScreen({
 
           <View style={styles.settingBarContainer}>
             <View style={styles.UserNewNameBox}>
-              <Text style={styles.UserNewNameText}>Nick name:</Text>
+              <Text style={styles.UserNewNameText}>New name:</Text>
               <TextInput
                 style={styles.UserNewName}
                 placeholder="Enter your new name"
                 value = {newName}
                 onChangeText = {(text) => setNewName(text)}
+              />
+            </View>
+            <View style={styles.UserNewNameBox}>
+              <Text style={styles.UserNewNameText}>New bio:</Text>
+              <TextInput
+                style={styles.UserNewName}
+                placeholder="Enter your new bio"
+                value = {newBio}
+                onChangeText = {(text) => setNewBio(text)}
               />
             </View>
 
@@ -74,7 +84,12 @@ export default function EditProfileScreen({
 
           <TouchableOpacity
             onPress={() => {
-              setMyUserPreferredName(myUserId, user, newName);
+              if (newName != '') {
+                setMyUserPreferredName(myUserId, user, newName);
+              }
+              if (newBio != '') {
+                setMyUserBio(myUserId, user, newBio);
+              }
               navigation.goBack();
               navigation.goBack();
             }}
