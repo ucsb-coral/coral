@@ -31,8 +31,48 @@ const setMyUserFirebaseRedux = async (id: string, user: User) => {
   store.dispatch(setMyUserAction({id, user: userToSet}));
 };
 
+const setMyUserBio = async (id: string, user: User, bio: string) => {
+  let UserToSet: User = user;
+  const myUserDocumentRef = getUserDocumentRef(id);
+  const userDocSnapshot = await myUserDocumentRef.get();
+  if (userDocSnapshot.exists) {
+    const data = userDocSnapshot.data();
+    if (data) UserToSet = data as User;
+    UserToSet.bio = bio;
+    await myUserDocumentRef.set(UserToSet);
+    store.dispatch(setMyUserAction({id, user: UserToSet}));
+  }
+}
+
+const setMyUserPreferredName = async (id: string, user: User, name: string) => {
+  let UserToSet: User = user;
+  const myUserDocumentRef = getUserDocumentRef(id);
+  const userDocSnapshot = await myUserDocumentRef.get();
+  if (userDocSnapshot.exists) {
+    const data = userDocSnapshot.data();
+    if (data) UserToSet = data as User;
+    UserToSet.preferredName = name;
+    UserToSet.showName = true;
+    await myUserDocumentRef.set(UserToSet);
+    store.dispatch(setMyUserAction({id, user: UserToSet}));
+  }
+}
+
+const setMyUserShowName = async (id: string, user: User, showName: boolean) => {
+  let UserToSet: User = user;
+  const myUserDocumentRef = getUserDocumentRef(id);
+  const userDocSnapshot = await myUserDocumentRef.get();
+  if (userDocSnapshot.exists) {
+    const data = userDocSnapshot.data();
+    if (data) UserToSet = data as User;
+    UserToSet.showName = showName;
+    await myUserDocumentRef.set(UserToSet);
+    store.dispatch(setMyUserAction({id, user: UserToSet}));
+  }
+}
+
 export default function useUserData() {
   return {};
 }
 
-export {getUserDocumentRef, setMyUserFirebaseRedux};
+export {getUserDocumentRef, setMyUserFirebaseRedux, setMyUserBio, setMyUserPreferredName, setMyUserShowName};

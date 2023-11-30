@@ -90,6 +90,8 @@ declare type User = {
   email: string;
   firstName?: string | null;
   lastName?: string | null;
+  preferredName?: string | null;
+  showName?: boolean | false; // true if want to show preferredName instead of firstName
   photo?: string | null;
   chats?: string[] | null;
   courses?: string[] | null;

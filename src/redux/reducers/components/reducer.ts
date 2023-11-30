@@ -20,7 +20,7 @@ export function reducer(
     case 'SET_MY_USER': {
       const {id, user} = action;
       const usermap = state.usermap;
-      usermap[id] = user;
+      usermap[id] = {...usermap[id],...user};
       return {...state, myUserId: id, usermap: {...usermap}};
     }
     case 'JOIN_CHAT': {

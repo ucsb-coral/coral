@@ -23,6 +23,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../../utilities/scale';
 import {black} from '../../../utilities/colors';
 import ReadMore from '@fawazahmed/react-native-read-more';
+import { setMyUserBio } from '../../../firebaseReduxUtilities/useUserData';
 
 export type ProfileScreenProps = EmptyProps;
 
@@ -37,6 +38,8 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
   const user = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
+  setMyUserBio(myUserId, user, 'This is my bio!');
+  const bio = useSelector((state: ReduxState) => state.data.usermap[myUserId!].bio);
   const [boxHeight, setBoxHeight] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -70,7 +73,9 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
                     seeLessText='hide'
                     seeLessStyle={{color: coral}}
                   >
-                    {"I'm a junior at UCSB studying Computer Science. I'm interested in software engineering and web development. Looking for a summer internship."}
+                    {
+                      bio ? bio : 'Do not have a bio yet?\nGo to Settings >> Edit Profile to add one!'
+                    }
                   </ReadMore>
               </View>
           </View>
