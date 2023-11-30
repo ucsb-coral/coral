@@ -87,6 +87,16 @@ export default function EditProfileScreen({
               if (newName != '') {
                 setMyUserPreferredName(myUserId, user, newName);
               }
+              navigation.goBack();
+              navigation.goBack();
+            }}
+            style={styles.longBox}
+            activeOpacity={0.6}>
+            <Text style={styles.longBarText}>Submit Name</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
               if (newBio != '') {
                 setMyUserBio(myUserId, user, newBio);
               }
@@ -95,7 +105,7 @@ export default function EditProfileScreen({
             }}
             style={styles.longBox}
             activeOpacity={0.6}>
-            <Text style={styles.longBarText}>Submit</Text>
+            <Text style={styles.longBarText}>Submit Bio</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
