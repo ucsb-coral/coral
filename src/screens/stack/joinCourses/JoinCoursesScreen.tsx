@@ -46,7 +46,7 @@ export default function JoinCoursesScreen({
     const course: Course = userCoursemap[courseId];
 
     if (
-        course?.courseId
+      course?.courseId
         .toLowerCase()
         .replace(/\s/g, '')
         .includes(searchText.toLowerCase().replace(/\s/g, '').trim())
@@ -76,26 +76,6 @@ export default function JoinCoursesScreen({
       );
     }
   }
-
-  // function generateCourseModal(courseId: string) {
-  //   const course = userCoursemap[courseId];
-  //   return (
-  //     <View style={styles.courseModalContainer}>
-  //       <Text style={styles.courseModalText}>
-  //         Join {course?.courseId}?
-  //       </Text>
-  //       <Pressable
-  //         style={styles.courseModalButton}
-  //         onPress={() => {
-  //           joinCourse(courseId);
-  //           setModalVisible(false);
-  //           navigation.goBack();
-  //         }}>
-  //         <Text style={styles.courseModalButtonText}> {'Yes!!!'}</Text>
-  //       </Pressable>
-  //     </View>
-  //   );
-  // }
 
   function generateCourseModal(courseId: string) {
     const course = userCoursemap[courseId];
