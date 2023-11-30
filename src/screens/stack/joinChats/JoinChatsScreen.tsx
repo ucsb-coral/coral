@@ -90,7 +90,7 @@ export default function JoinChatsScreen({
     return (
       <View style={styles.courseModalContainer}>
         <Text style={styles.courseModalText}>
-          Join {course?.courseTitle} chat?
+          Join {course?.courseId} chat?
         </Text>
         <Pressable
           style={styles.courseModalButton}
