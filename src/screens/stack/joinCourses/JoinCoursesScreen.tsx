@@ -79,11 +79,10 @@ export default function JoinCoursesScreen({
 
   function generateCourseModal(courseId: string) {
     const course = userCoursemap[courseId];
-    // const title = `${courseId.replaceAll(/\s+/g, ' ').trim()}`;
     return (
       <View style={styles.courseModalContainer}>
         <Text style={styles.courseModalText}>
-          Join {course?.courseId} chat?
+          Join {course?.courseId}?
         </Text>
         <Pressable
           style={styles.courseModalButton}
