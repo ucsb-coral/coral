@@ -107,4 +107,14 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 10,
     },
+    fullScreenContainer: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      fullScreenImage: {
+        width: '100%',
+        height: '100%',
+      },
 });

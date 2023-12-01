@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef} from 'react';
-import { Text, View, Image } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, View, Image, Modal, TouchableWithoutFeedback } from 'react-native';
 import Video, { VideoRef, ResizeMode } from 'react-native-video';
 import { styles } from '../../../../ChatScreenStyles';
 // import { red } from '../../../../../../../utilities/colors';
@@ -13,6 +13,10 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
   const MAX_WIDTH = 200; // if image width is greater than this, scale down
   const MAX_HEIGHT = 200; // otherwise, the image will be too big and the layout will be messed up
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const [isImageViewVisible, setImageViewVisible] = useState(false);
+  const handleImagePress = () => {
+    setImageViewVisible(true);
+  };
   const videoRef = useRef<VideoRef>(null);
   useEffect(() => {
     if (type === 'IMAGE' && contentURL) {
@@ -43,18 +47,41 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
       </Text>
       <View style={fromUserId === myUserId ? styles.myMessageContainer : styles.otherMessageContainer}>
         {type === 'TEXT' && <Text style={styles.message}>{content}</Text>}
-        {type === 'IMAGE' && <Image source={{ uri: contentURL }} style={{ width: imageSize.width, height: imageSize.height }} />}
+        {/* {type === 'IMAGE' && <Image source={{ uri: contentURL }} style={{ width: imageSize.width, height: imageSize.height }} />} */}
+        {type === 'IMAGE' && (
+          <TouchableWithoutFeedback onPress={handleImagePress}>
+            <Image
+              source={{ uri: contentURL }}
+              style={{ width: imageSize.width, height: imageSize.height }}
+            />
+          </TouchableWithoutFeedback>
+        )}
         {type === 'VIDEO' && contentURL && (
           <Video
-          source={{ uri: contentURL }}
-          ref={videoRef}
-          style={{ width: imageSize.width, height: imageSize.height }}
-          resizeMode={"contain" as ResizeMode} // resizeMode= {"cover" as ResizeMode}
-          controls={true} 
-          paused={true}
+            source={{ uri: contentURL }}
+            ref={videoRef}
+            style={{ width: imageSize.width, height: imageSize.height }}
+            resizeMode={"contain" as ResizeMode} // resizeMode= {"cover" as ResizeMode}
+            controls={true}
+            paused={true}
           />
         )}
       </View>
+      <Modal
+        visible={isImageViewVisible}
+        transparent={true}
+        onRequestClose={() => setImageViewVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setImageViewVisible(false)}>
+          <View style={styles.fullScreenContainer}>
+            <Image
+              source={{ uri: contentURL }}
+              style={styles.fullScreenImage}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 }
