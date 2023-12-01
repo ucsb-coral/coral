@@ -65,15 +65,15 @@ From the schedule page, press a course to open an info modal. Then click "join c
 
 ### 7.1 Screen 1
 
-![Screen 1](link-to-screenshot.png)
+![Test Image 2](/team/HW04_image/03.jpg)
 
 ### 7.2 Screen 2
 
-![Screen 2](link-to-screenshot.png)
+![Test Image 2](/team/HW04_image/02.jpg)
 
 ### 7.3 Screen 3
 
-![Screen 3](link-to-screenshot.png)
+![Screen 3](image.png)
 
 ## 8. Troubleshooting
 

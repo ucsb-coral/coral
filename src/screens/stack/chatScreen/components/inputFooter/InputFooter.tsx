@@ -5,7 +5,7 @@ import plusPng from '../../../../../assets/pngs/plus';
 import { scale, standardMargin } from '../../../../../utilities/scale';
 import useCustomActionSheet from '../../../../../utilities/useCustomActionSheet';
 import {
-  black, coral, grey0, grey3, lightGrey, opacity, white,
+  black, coral, grey0, grey3, lightGrey, opacity, white, grey5
 } from '../../../../../utilities/colors';
 import InputFooterButton from './components/InputFooterButton';
 import { platform } from '../../../../../utilities/platform';
@@ -219,7 +219,11 @@ export default function InputFooter({
   }, [selectedInput]);
 
   return (
-    <View style={{ backgroundColor: white }}>
+    <View style={{backgroundColor: white,
+                borderTopWidth: 1,
+                borderTopColor: grey5,
+    
+    }}>
       <Pressable
         onPress={() => setSelectedInput(INPUT_FOOTER_NAME)}
         style={{
@@ -240,7 +244,10 @@ export default function InputFooter({
             onPress={openPlusAlert}>
             <Image
               source={plusPng}
-              style={{ width: BASE_HEIGHT * 0.44, height: BASE_HEIGHT * 0.44 }}
+              style={{width: BASE_HEIGHT * 0.44,
+                 height: BASE_HEIGHT * 0.44,
+                 marginBottom: BASE_HEIGHT * 0.44 / 2,
+                }}
             />
           </InputFooterButton>
           <View
@@ -284,7 +291,7 @@ export default function InputFooter({
             onPress={handleSendMessage}
             paddingLeft={PADDING}
             paddingRight={SIDE_PADDING}>
-            <Image source={sendPng} style={{ height: BASE_HEIGHT * 0.44 }} />
+            <Image source={sendPng} style={{height: BASE_HEIGHT * 0.44 ,  marginBottom: BASE_HEIGHT * 0.44 / 2,}} />
           </InputFooterButton>
         </View>
       </Pressable>

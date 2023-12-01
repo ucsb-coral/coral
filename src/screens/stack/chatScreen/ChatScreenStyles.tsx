@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, PixelRatio } from 'react-native';
 import {
     white, red, black, grey, coral,
-    lightGrey, darkGrey, GreyUseForButton, ButtonBackground,
+    lightGrey, darkGrey, GreyUseForButton, ButtonBackground, grey5,
 } from '../../../utilities/colors';
 import {
     buttonFont,
@@ -72,7 +72,9 @@ export const styles = StyleSheet.create({
         alignSelf: 'flex-end',
     },
     otherMessageContainer: {
-        backgroundColor: 'lightgray',
+        backgroundColor: grey5,
+        borderWidth: 1,
+        borderColor: grey5,
         borderRadius: 15,
         maxWidth: '90%',
         alignSelf: 'flex-start',

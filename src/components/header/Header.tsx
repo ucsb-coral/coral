@@ -1,7 +1,7 @@
 import {ImpactFeedbackStyle} from 'expo-haptics';
 import {Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {HapticFeedback, haptic} from '../../utilities/haptics';
-import {coral, grey, white} from '../../utilities/colors';
+import {coral, grey, grey5, white} from '../../utilities/colors';
 import {avenirBlack, avenirBlackCentered} from '../../utilities/textfont';
 import {scale, standardMargin, width} from '../../utilities/scale';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
@@ -44,10 +44,15 @@ export default function Header({
       pointerEvents={'box-none'}
       style={{
         ...{
+          backgroundColor: white,
+          paddingBottom: scale(5),
+          marginBottom: scale(5),
           width: '100%',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
+          borderBottomWidth: 1,
+          borderBottomColor: grey5,
         },
         ...positionStyle,
       }}>
@@ -60,6 +65,7 @@ export default function Header({
           }}
           activeOpacity={activeOpacity}
           style={{
+          
             height: '100%',
             width: scale(80),
             left: 0,
@@ -97,6 +103,7 @@ export default function Header({
           </Text>
         ) : (
           <View
+          
             pointerEvents="box-none"
             style={{width: '100%', height: '100%'}}>
             {centerElement}

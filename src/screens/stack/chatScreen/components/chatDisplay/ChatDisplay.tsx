@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {height} from '../../../../../utilities/scale';
 import MessageBubble from './components/messageBubble/MessageBubble';
+import { red ,lightGrey, grey0, grey1, grey2, grey3, grey4, grey5} from '../../../../../utilities/colors';
 
 const emptyMap = {};
 const SHOULD_PAGINATE_RATIO = 0.6;

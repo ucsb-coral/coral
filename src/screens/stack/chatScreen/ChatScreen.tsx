@@ -8,6 +8,8 @@ import Header from '../../../components/header/Header';
 import InputFooter from './components/inputFooter/InputFooter';
 import ChatDisplay from './components/chatDisplay/ChatDisplay';
 import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import {styles} from './ChatScreenStyles';
+import { black, white } from '../../../utilities/colors';
 
 export type ChatScreenProps = {
   id: string;
@@ -96,7 +98,7 @@ export default function ChatScreen({
           handleSendMessage={sendMessage}
           chatId={id}
         />
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1,backgroundColor:white}}>
           <Header
             centerElement={courseTitle}
             leftHandler={navigation.goBack}

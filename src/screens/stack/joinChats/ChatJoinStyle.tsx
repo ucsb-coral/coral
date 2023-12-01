@@ -120,9 +120,10 @@ export const styles = StyleSheet.create({
   },
   courseModalText: {
     color: grey,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     marginTop: 5,
+    marginLeft: 25,
   },
   courseModalButton: {
     backgroundColor: coral,
