@@ -10,6 +10,7 @@ import {
   Linking,
   ScrollView,
 } from 'react-native';
+import { coral } from '../../../utilities/colors';
 import {styles} from './UserPageStyle';
 import {useSelector} from 'react-redux';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
@@ -21,6 +22,8 @@ import {
 import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../../utilities/scale';
 import {black} from '../../../utilities/colors';
+import ReadMore from '@fawazahmed/react-native-read-more';
+import { setMyUserBio } from '../../../firebaseReduxUtilities/useUserData';
 
 export type ProfileScreenProps = EmptyProps;
 
@@ -35,6 +38,8 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
   const user = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
+  // setMyUserBio(myUserId, user, 'This is my bio!');
+  const bio = useSelector((state: ReduxState) => state.data.usermap[myUserId!].bio);
   const [boxHeight, setBoxHeight] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -54,9 +59,27 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
               style={styles.profileImage}
             />
             <View style={styles.userInfoContainer}>
-              <Text style={styles.userName}>{user?.firstName}</Text>
+              <Text style={styles.userName}>
+                {user?.preferredName ? user?.preferredName : user?.firstName}
+              </Text>
               <Text style={styles.userEmail}>{user?.email}</Text>
             </View>
+          </View>
+          <View
+            style={styles.userBioContainer}>
+              <View style={styles.userBioTextContainer}>
+                  <ReadMore
+                    numberOfLines={3}
+                    seeMoreText='more'
+                    seeMoreStyle={{color: coral}}
+                    seeLessText='hide'
+                    seeLessStyle={{color: coral}}
+                  >
+                    {
+                      bio ? bio : 'Do not have a bio yet?\nGo to Settings >> Edit Profile to add one!'
+                    }
+                  </ReadMore>
+              </View>
           </View>
           <View
             style={styles.userLinksContainer}
