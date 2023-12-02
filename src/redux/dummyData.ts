@@ -3,7 +3,7 @@ const courses = ['crsfirebase_uid_1', 'crsfirebase_uid_2', 'crsfirebase_uid_3', 
 const coursemap: Coursemap = {
   crsfirebase_uid_1: {
     memberIds: [],
-    courseId: 'CMPSC    16  ',
+    courseId: 'CMPSC 16',
     quarter: '20234',
     enrollCode: '07724',
     gradingOptionCode: 'L',
@@ -15,7 +15,7 @@ const coursemap: Coursemap = {
       "section": "0100",
       "instructionTypeCode": "LEC",
       "buildingRoom": "ILP 2302",
-      "days": "M W    ",
+      "days": "M W",
       "beginTime": "11:00",
       "endTime": "12:15",
       "instructors": [
@@ -29,15 +29,28 @@ const coursemap: Coursemap = {
   },
   crsfirebase_uid_2: {
     memberIds: [],
-    courseId: '',
-    quarter: '2000F',
+    courseId: 'CMPSC 24',
+    quarter: '20234',
     enrollCode: 'string',
     gradingOptionCode: 'string',
     unitsAttempted: 4,
-    courseTitle: 'Test Course 2',
+    courseTitle: 'PROBLEM SOLVING II',
     session: 'string',
     repeatTypeCode: 'string',
-    timeLocations: [],
+    timeLocations: [{
+      "section": "0101",
+      "instructionTypeCode": "LEC",
+      "buildingRoom": "Phelps 0000",
+      "days": "M W",
+      "beginTime": "14:00",
+      "endTime": "15:15",
+      "instructors": [
+        {
+            "name": "teacher of24",
+            "functionCode": "Teaching and in charge"
+        }
+    ]
+  }],
     waitlist: false,
   },
   crsfirebase_uid_3: {

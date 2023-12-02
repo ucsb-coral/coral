@@ -47,14 +47,14 @@ export default function JoinCoursesScreen({
     const course: Course = userCoursemap[courseId];
 
     if (
-      course?.courseTitle
+      course?.courseId
         .toLowerCase()
         .replace(/\s/g, '')
         .includes(searchText.toLowerCase().replace(/\s/g, '').trim())
     ) {
       return (
         <View key={index} style={styles.courseCard}>
-          <Text style={styles.courseCardTitle}>{course?.courseTitle}</Text>
+          <Text style={styles.courseCardTitle}>{course?.courseId}</Text>
           <Pressable
             style={
               userCourses?.includes(courseId)
@@ -83,7 +83,7 @@ export default function JoinCoursesScreen({
     return (
       <View style={styles.courseModalContainer}>
         <Text style={styles.courseModalText}>
-          Join {course?.courseTitle}?
+          Join {course?.courseId}?
         </Text>
         <Pressable
           style={styles.courseModalButton}

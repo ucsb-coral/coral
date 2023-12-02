@@ -90,9 +90,11 @@ declare type User = {
   email: string;
   firstName?: string | null;
   lastName?: string | null;
+  preferredName?: string | null;
   photo?: string | null;
   chats?: string[] | null;
   courses?: string[] | null;
+  bio?: string | null;
 };
 
 declare type MessageType = 'TEXT';
