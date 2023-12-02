@@ -97,14 +97,18 @@ declare type User = {
   bio?: string | null;
 };
 
-declare type MessageType = 'TEXT';
+declare type MessageType_TEXT = 'TEXT';
+declare type MessageType_IMAGE = 'IMAGE';
+declare type MessageType_VIDEO = 'VIDEO';
+declare type MessageType_FILE = 'FILE';
 
 declare type TextMessageContent = string;
 declare type MessageContent = TextMessageContent;
 
 declare type Message = {
-  type: MessageType;
-  content: MessageContent;
+  type: MessageType_TEXT | MessageType_IMAGE | MessageType_VIDEO | MessageType_FILE;
+  content?: MessageContent;
+  contentURL? : string;
   fromUserName: string;
   fromUserId: string;
   createdAt: Date;

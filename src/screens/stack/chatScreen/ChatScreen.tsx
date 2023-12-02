@@ -1,28 +1,14 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-  FlatList,
-  KeyboardAvoidingView,
-} from 'react-native';
-import {
-  AppStackPageProps,
-  appStackNavigate,
-} from '../../../navigation/navigators/StackNavigator';
-
+import React, { useState, useEffect, useRef } from 'react';
+import { View, FlatList, KeyboardAvoidingView } from 'react-native';
+import { AppStackPageProps, appStackNavigate } from '../../../navigation/navigators/StackNavigator';
 import Loading from '../../../components/Loading';
-import {useSelector} from 'react-redux';
-import {coursemap} from '../../../redux/dummyData';
+import { useSelector } from 'react-redux';
+import { coursemap } from '../../../redux/dummyData';
 import Header from '../../../components/header/Header';
 import InputFooter from './components/inputFooter/InputFooter';
 import ChatDisplay from './components/chatDisplay/ChatDisplay';
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import {styles} from './ChatScreenStyles';
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore';
 import { black, white } from '../../../utilities/colors';
 
 export type ChatScreenProps = {
@@ -33,7 +19,7 @@ export default function ChatScreen({
   route,
   navigation,
 }: AppStackPageProps<'chat'>) {
-  const {id} = route.params;
+  const { id } = route.params;
   const chat = useSelector((state: ReduxState) => state.data.chatmap[id]);
   const [message, setMessage] = useState<string>('');
   const [selectedInput, setSelectedInput] = useState<string>('');
@@ -70,7 +56,7 @@ export default function ChatScreen({
           fromUserName: userName?.firstName + ' ' + userName?.lastName,
           fromUserId: myUserId,
           content: message,
-          createdAt: firestore.FieldValue.serverTimestamp(),
+          createdAt: new Date().toISOString(),
         });
 
       setMessage(''); // clear message input when message is sent
@@ -88,29 +74,29 @@ export default function ChatScreen({
       .onSnapshot(snapshot => {
         const messages = snapshot.docs.map(
           doc =>
-            ({
-              ...doc.data(),
-            } as Message),
+          ({
+            ...doc.data(),
+          } as Message),
         );
         setMessages([...messages]);
-        flatListRef.current?.scrollToEnd({animated: true});
+        flatListRef.current?.scrollToEnd({ animated: true });
       });
 
     return () => unsubscribe(); // unsubscribe when unmount
   }, [id]);
 
   // console.log('messages:', messages);
-
   return (
     <Loading isReady={!!chat}>
       <KeyboardAvoidingView
-        style={{flex: 1, display: 'flex', flexDirection: 'column-reverse'}}>
+        style={{ flex: 1, display: 'flex', flexDirection: 'column-reverse' }}>
         <InputFooter
           message={message}
           setMessage={setMessage}
           selectedInput={selectedInput}
           setSelectedInput={setSelectedInput}
           handleSendMessage={sendMessage}
+          chatId={id}
         />
         <View style={{flex: 1,backgroundColor:white}}>
           <Header
