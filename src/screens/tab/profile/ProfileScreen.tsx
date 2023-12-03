@@ -55,6 +55,20 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [userPhoto, setUserPhoto] = useState(user?.photo || '');
 
+const userStatus = async () => {
+  const newSatatus = isMuted;
+  try {
+    await firestore()
+      .collection('users')
+      .doc(myUserId)
+      .update({
+        status: isMuted,
+      });
+    console.log('User status updated successfully.');
+  } catch (error) {
+    console.error('Error updating user status:', error);
+  }
+  }
 
 
 
@@ -209,7 +223,11 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
               activeOpacity={0.6}
               onPressIn={() => setIsActive(true)}
               onPressOut={() => setIsActive(false)}
-              onPress={() => setIsMuted(!isMuted)}>
+              onPress={() => {
+                setIsMuted(!isMuted); 
+                userStatus(); 
+              }}>
+          
               <Text style={styles.longBarText}>Status</Text>
               <Ionicons
                 name={isMuted ? 'book-outline' : 'bed-outline'}

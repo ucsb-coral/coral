@@ -95,6 +95,7 @@ declare type User = {
   chats?: string[] | null;
   courses?: string[] | null;
   bio?: string | null;
+  status?: boolean | null;
 };
 
 declare type MessageType_TEXT = 'TEXT';
