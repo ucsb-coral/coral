@@ -57,6 +57,7 @@ export default function InputFooter({
     }
     let fileName = '';
     let contentType = '';
+    let filePath = '';
     if (type === 'IMAGE') {
       console.log('uploading image');
       fileName = `${myUserId}/${Date.now()}.jpg`;  // change this later if there is a better way to name/store files
@@ -70,9 +71,12 @@ export default function InputFooter({
     else if (type === 'FILE') {
       console.log('uploading file');
       const fileExtension = sourceURL.split('.').pop(); // get the file extension
-      fileName = `${myUserId}/${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
+      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      
       contentType = `file/${fileExtension}`;
-      console.log("File name" + fileName);
+      console.log("File name: " + fileName);
+      console.log("File path: " + filePath);
     }
     else {
       console.log('trying to upload unknown type, rejected');
@@ -82,7 +86,7 @@ export default function InputFooter({
       // it works for now, but it could work better using `async/await` or `Promise.then()`
       // console.log(fileName);
       const uploadTimestamp = new Date().toISOString();
-      const reference = storage().ref(fileName);
+      const reference = storage().ref(filePath);
       const metadata = {
         contentType: contentType,
         customMetadata: {
