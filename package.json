@@ -24,6 +24,7 @@
     "@react-navigation/native-stack": "^6.9.14",
     "@reduxjs/toolkit": "^1.9.7",
     "expo": "^49.0.0",
+    "expo-document-picker": "^11.7.0",
     "expo-haptics": "~12.4.0",
     "expo-image-picker": "^14.5.0",
     "lottie-react-native": "^6.3.1",
