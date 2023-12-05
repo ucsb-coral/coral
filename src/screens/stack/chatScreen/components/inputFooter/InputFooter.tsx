@@ -115,7 +115,8 @@ export default function InputFooter({
           fromUserId: myUserId,
           contentURL: downloadURL,
           createdAt: uploadTimestamp,
-          ...(type === 'FILE' && { fileName: fileName }),
+          fileName: fileName,
+          // ...(type === 'FILE' && { fileName: fileName }),
         });
     } catch (error) {
       console.error('Upload failed', error);
