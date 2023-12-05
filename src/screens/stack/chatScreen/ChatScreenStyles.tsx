@@ -79,6 +79,23 @@ export const styles = StyleSheet.create({
         maxWidth: '90%',
         alignSelf: 'flex-start',
     },
+    fileContainer: {
+        backgroundColor: white,
+        borderWidth: 1, 
+        borderColor: grey5,
+        borderRadius: 15, 
+        padding: 10,
+        maxWidth: '90%',
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 5,
+        shadowColor: black,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2,
+    },
     message: {
         fontSize: 14,
         color: black,
@@ -112,9 +129,9 @@ export const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.9)',
         justifyContent: 'center',
         alignItems: 'center',
-      },
-      fullScreenImage: {
+    },
+    fullScreenImage: {
         width: '100%',
         height: '100%',
-      },
+    },
 });

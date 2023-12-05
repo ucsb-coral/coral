@@ -113,6 +113,7 @@ declare type Message = {
   fromUserName: string;
   fromUserId: string;
   createdAt: Date;
+  fileName?: string;
 };
 
 declare type Chat = {
