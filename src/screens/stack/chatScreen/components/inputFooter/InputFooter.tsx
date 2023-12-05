@@ -58,22 +58,28 @@ export default function InputFooter({
     let fileName = '';
     let contentType = '';
     let filePath = '';
+    const fileExtension = sourceURL.split('.').pop(); // get the file extension
+    console.log("File Extension: " + fileExtension);
     if (type === 'IMAGE') {
       console.log('uploading image');
-      fileName = `${myUserId}/${Date.now()}.jpg`;  // change this later if there is a better way to name/store files
-      contentType = 'image/jpg';
+      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      contentType = `file/${fileExtension}`;
+      console.log("File name: " + fileName);
+      console.log("File path: " + filePath);
     }
     else if (type === 'VIDEO') {
       console.log('uploading video');
-      fileName = `${myUserId}/${Date.now()}.mp4`;  // change this later if there is a better way to name/store files
-      contentType = 'video/mp4';
+      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      contentType = `file/${fileExtension}`;
+      console.log("File name: " + fileName);
+      console.log("File path: " + filePath);
     }
     else if (type === 'FILE') {
       console.log('uploading file');
-      const fileExtension = sourceURL.split('.').pop(); // get the file extension
       fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
       filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
-      
       contentType = `file/${fileExtension}`;
       console.log("File name: " + fileName);
       console.log("File path: " + filePath);
