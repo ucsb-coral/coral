@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
         borderColor: grey5,
         borderRadius: 15, 
         padding: 10,
-        maxWidth: '90%',
+        maxWidth: '99%',
         alignSelf: 'flex-start',
         flexDirection: 'row',
         alignItems: 'center',
