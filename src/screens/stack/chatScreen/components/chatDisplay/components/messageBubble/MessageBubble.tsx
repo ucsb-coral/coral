@@ -148,16 +148,29 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
   }, [contentURL, type]);
   return (
     <View style={[styles.messageBlock]}>
-      <Text style={fromUserId === myUserId ? styles.mySenderId : styles.otherSenderId}>
-        {fromUserName}
-      </Text>
+      <View style={fromUserId === myUserId ? styles.myUserNameAndIconContainer : styles.otherUserNameAndIconContainer}>
+        {fromUserId !== myUserId && (
+          <Ionicons
+            name={isMuted ? 'book-outline' : 'bed-outline'}
+            size={scale(20)}
+            color={black}
+            style={{ marginRight: 5 }}
+          />
+        )}
+        <Text style={fromUserId === myUserId ? styles.mySenderId : styles.otherSenderId}>
+          {fromUserName}
+        </Text>
+        {fromUserId === myUserId && (
+          <Ionicons
+            name={isMuted ? 'book-outline' : 'bed-outline'}
+            size={scale(20)}
+            color={black}
+            style={{ marginLeft: 5 }}
+          />
+        )}
+      </View>
       <View style={fromUserId === myUserId ? styles.myMessageContainer : styles.otherMessageContainer}>
-        <Ionicons
-          name={isMuted ? 'book-outline' : 'bed-outline'}
-          size={scale(25)}
-          color={black}
-          style={styles.longBoxIcon}
-        />
+
         {type === 'TEXT' && <Text style={styles.message}>{content}</Text>}
         {/* {type === 'IMAGE' && <Image source={{ uri: contentURL }} style={{ width: imageSize.width, height: imageSize.height }} />} */}
         {type === 'IMAGE' && (
@@ -204,5 +217,6 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
         </TouchableWithoutFeedback>
       </Modal>
     </View>
+    // </View>
   );
 }
