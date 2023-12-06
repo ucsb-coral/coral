@@ -51,7 +51,7 @@ export default function ProfileScreen({ route, navigation }: ProfilePageProps) {
   const bio = useSelector((state: ReduxState) => state.data.usermap[myUserId!].bio);
   const status = useSelector((state: ReduxState) => state.data.usermap[myUserId!].status); 
   const [boxHeight, setBoxHeight] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState();
   const [isActive, setIsActive] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [userPhoto, setUserPhoto] = useState(user?.photo || '');
