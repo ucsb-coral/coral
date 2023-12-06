@@ -28,8 +28,12 @@ import EditNameScreen, {
 import SettingsScreen, {
   SettingsScreenProps,
 } from '../../screens/stack/settings/SettingsScreen';
-import JoinCoursesScreen, { JoinCoursesScreenProps } from '../../screens/stack/joinCourses/JoinCoursesScreen';
-import EditBioScreen, { EditBioScreenProps } from '../../screens/stack/editProfile/EditBioScreen';
+import JoinCoursesScreen, { 
+  JoinCoursesScreenProps, 
+} from '../../screens/stack/joinCourses/JoinCoursesScreen';
+import EditBioScreen, { 
+  EditBioScreenProps,
+} from '../../screens/stack/editProfile/EditBioScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -54,7 +58,7 @@ type AppStackNavigatorScreens = {
 
 type AppStackNavigatorPages = keyof AppStackNavigatorScreens;
 
-type StackNavigatorScreens = AuthStackNavigatorScreens &
+export type StackNavigatorScreens = AuthStackNavigatorScreens &
   AppStackNavigatorScreens;
 
 type StackNavigatorPages = keyof StackNavigatorScreens;

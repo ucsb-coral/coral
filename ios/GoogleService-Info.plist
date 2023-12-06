@@ -2,24 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>1030381352952-hq42sa324f7e2mt26qr6sm207b90oau8.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1030381352952-hq42sa324f7e2mt26qr6sm207b90oau8</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>1030381352952-dv39gse13utu2a52cancthiatrj4bopj.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDekl65bTlZqvHRwecvD3iJ1HempCmvYw4</string>
+	<string>AIzaSyBaGrnclnu3II3Iu3hxV08wOFfQHFxJ_HE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1030381352952</string>
+	<string>44210895544</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.app.coral</string>
 	<key>PROJECT_ID</key>
-	<string>ucsb-coral</string>
+	<string>coral-406419</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ucsb-coral.appspot.com</string>
+	<string>coral-406419.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1030381352952:ios:bf93fe50a7e77d142a880d</string>
+	<string>1:44210895544:ios:35377a93ad57cf1349124d</string>
 </dict>
 </plist>

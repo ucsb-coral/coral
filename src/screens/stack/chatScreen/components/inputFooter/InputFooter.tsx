@@ -15,6 +15,7 @@ import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
 // import RNFS from 'react-native-fs';
+import * as DocumentPicker from 'expo-document-picker';
 
 export type Props = {
   message: string;
@@ -50,27 +51,48 @@ export default function InputFooter({
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
 
-  const uploadImage = async (sourceURL: string, type: string) => {
-    if (sourceURL === '') {
+  const uploader = async (sourceURL: string, type: string) => {
+    if (sourceURL === '' || type === '') {
       return;
     }
     let fileName = '';
     let contentType = '';
+    let filePath = '';
+    const fileExtension = sourceURL.split('.').pop(); // get the file extension
+    console.log("File Extension: " + fileExtension);
     if (type === 'IMAGE') {
       console.log('uploading image');
-      fileName = `${myUserId}/${Date.now()}.jpg`;  // change this later if there is a better way to name/store files
-      contentType = 'image/jpg';
+      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      contentType = `file/${fileExtension}`;
+      console.log("File name: " + fileName);
+      console.log("File path: " + filePath);
     }
     else if (type === 'VIDEO') {
       console.log('uploading video');
-      fileName = `${myUserId}/${Date.now()}.mp4`;  // change this later if there is a better way to name/store files
-      contentType = 'video/mp4';
+      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      contentType = `file/${fileExtension}`;
+      console.log("File name: " + fileName);
+      console.log("File path: " + filePath);
+    }
+    else if (type === 'FILE') {
+      console.log('uploading file');
+      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      contentType = `file/${fileExtension}`;
+      console.log("File name: " + fileName);
+      console.log("File path: " + filePath);
+    }
+    else {
+      console.log('trying to upload unknown type, rejected');
+      return;
     }
     try {
       // it works for now, but it could work better using `async/await` or `Promise.then()`
       // console.log(fileName);
       const uploadTimestamp = new Date().toISOString();
-      const reference = storage().ref(fileName);
+      const reference = storage().ref(filePath);
       const metadata = {
         contentType: contentType,
         customMetadata: {
@@ -93,6 +115,8 @@ export default function InputFooter({
           fromUserId: myUserId,
           contentURL: downloadURL,
           createdAt: uploadTimestamp,
+          fileName: fileName,
+          // ...(type === 'FILE' && { fileName: fileName }),
         });
     } catch (error) {
       console.error('Upload failed', error);
@@ -143,7 +167,7 @@ export default function InputFooter({
     }
     const imageUri = pictureResult.assets[0].uri;
     // console.log(imageUri);
-    uploadImage(imageUri, 'IMAGE');
+    uploader(imageUri, 'IMAGE');
   };
 
   const handleUploadImage = async () => {
@@ -166,7 +190,7 @@ export default function InputFooter({
     }
     const imageUri = pickerResult.assets[0].uri;
     // console.log(imageUri);
-    uploadImage(imageUri, 'IMAGE');
+    uploader(imageUri, 'IMAGE');
   };
 
   const handleUploadVideo = async () => {
@@ -184,10 +208,24 @@ export default function InputFooter({
       return;
     }
     const videoUri = pickerResult.assets[0].uri;
-    uploadImage(videoUri, 'VIDEO');
+    uploader(videoUri, 'VIDEO');
   };
 
-  const handleUploadFile = async () => { };
+  const handleUploadFile = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "*/*", // all files allowed for now
+    });
+    if (result.canceled || !result.assets || result.assets.length === 0) {
+      return;
+    }
+    const firstFile = result.assets[0];
+    // console.log('Uploading file:', firstFile.name);
+    const fileUri = firstFile.uri;
+    // console.log("File URL:" + fileUri);
+    uploader(fileUri, 'FILE');
+  };
+
+
 
   const openPlusAlert = () =>
     showCustomActionSheet({
@@ -219,10 +257,11 @@ export default function InputFooter({
   }, [selectedInput]);
 
   return (
-    <View style={{backgroundColor: white,
-                borderTopWidth: 1,
-                borderTopColor: grey5,
-    
+    <View style={{
+      backgroundColor: white,
+      borderTopWidth: 1,
+      borderTopColor: grey5,
+
     }}>
       <Pressable
         onPress={() => setSelectedInput(INPUT_FOOTER_NAME)}
@@ -244,10 +283,11 @@ export default function InputFooter({
             onPress={openPlusAlert}>
             <Image
               source={plusPng}
-              style={{width: BASE_HEIGHT * 0.44,
-                 height: BASE_HEIGHT * 0.44,
-                 marginBottom: BASE_HEIGHT * 0.44 / 2,
-                }}
+              style={{
+                width: BASE_HEIGHT * 0.44,
+                height: BASE_HEIGHT * 0.44,
+                marginBottom: BASE_HEIGHT * 0.44 / 2,
+              }}
             />
           </InputFooterButton>
           <View
@@ -291,7 +331,7 @@ export default function InputFooter({
             onPress={handleSendMessage}
             paddingLeft={PADDING}
             paddingRight={SIDE_PADDING}>
-            <Image source={sendPng} style={{height: BASE_HEIGHT * 0.44 ,  marginBottom: BASE_HEIGHT * 0.44 / 2,}} />
+            <Image source={sendPng} style={{ height: BASE_HEIGHT * 0.44, marginBottom: BASE_HEIGHT * 0.44 / 2, }} />
           </InputFooterButton>
         </View>
       </Pressable>

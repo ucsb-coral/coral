@@ -20,6 +20,7 @@ import {Ionicons, FontAwesome5, FontAwesome} from '@expo/vector-icons';
 import {coral} from '../../../utilities/colors';
 
 import {scale, standardMargin} from '../../../utilities/scale';
+import {withTokens} from '../../../firebaseReduxUtilities/tokens';
 
 export type SettingsScreenProps = {};
 export default function SettingsScreen({
@@ -68,7 +69,7 @@ export default function SettingsScreen({
           <TouchableOpacity
             style={[styles.signOutBox, {borderBottomWidth: 0}]}
             activeOpacity={0.6}
-            onPress={() => signOut()}>
+            onPress={signOut}>
             <Text style={styles.signOutText}>{'Sign Out'}</Text>
             <Ionicons
               name="log-out-outline"

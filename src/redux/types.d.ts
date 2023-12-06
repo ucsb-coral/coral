@@ -37,6 +37,17 @@ declare type LeaveCourseAction = {
   course: Course;
 };
 
+declare type SetTokenDataAction = {
+  type: 'SET_TOKEN_DATA';
+  data: TokenData;
+};
+
+declare type RefreshTokenDataAction = {
+  type: 'REFRESH_TOKEN_DATA';
+  newExpiry: number;
+  data: TokenData;
+};
+
 declare type SignOutAction = {
   type: 'SIGN_OUT';
 };
@@ -53,6 +64,8 @@ declare type ActionTypes =
   | LoadCoursesAction
   | JoinCourseAction
   | LeaveCourseAction
+  | SetTokenDataAction
+  | RefreshTokenDataAction
   | SignOutAction
   | ClearStoreAction;
 
@@ -62,6 +75,7 @@ declare type Data = {
   usermap: Usermap;
   chatmap: Chatmap;
   coursemap: Coursemap;
+  tokenData: TokenData | null;
 };
 
 declare type ReduxState = {
@@ -86,6 +100,16 @@ declare type Messagemap = {
   [id: string]: Message;
 };
 
+declare type TokenData = {
+  accessToken: string;
+  idToken: string;
+};
+
+declare type RefreshData = {
+  refreshToken: string;
+  expiry: number;
+};
+
 declare type User = {
   email: string;
   firstName?: string | null;
@@ -94,6 +118,7 @@ declare type User = {
   photo?: string | null;
   chats?: string[] | null;
   courses?: string[] | null;
+  refreshData: RefreshData;
   bio?: string | null;
   status?: boolean | null;
 };
@@ -107,12 +132,17 @@ declare type TextMessageContent = string;
 declare type MessageContent = TextMessageContent;
 
 declare type Message = {
-  type: MessageType_TEXT | MessageType_IMAGE | MessageType_VIDEO | MessageType_FILE;
+  type:
+    | MessageType_TEXT
+    | MessageType_IMAGE
+    | MessageType_VIDEO
+    | MessageType_FILE;
   content?: MessageContent;
-  contentURL? : string;
+  contentURL?: string;
   fromUserName: string;
   fromUserId: string;
   createdAt: Date;
+  fileName?: string;
 };
 
 declare type Chat = {

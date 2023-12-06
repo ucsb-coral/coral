@@ -1,68 +1,117 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {
-  GoogleSignin,
-  statusCodes,
-  User as GoogleUser,
-} from '@react-native-google-signin/google-signin';
+// import {
+//   GoogleSignin,
+//   statusCodes,
+//   User as GoogleUser,
+// } from '@react-native-google-signin/google-signin';
 import {useSelector} from 'react-redux';
 import {store} from '../src/redux/useRedux';
 import {
+  setTokenDataAction,
   clearStoreAction,
   setAuthStateAction,
+  setChatsAction,
   setMyUserAction,
   signOutAction,
 } from '../src/redux/actions';
 import {useEffect} from 'react';
-import {setMyUserFirebaseRedux} from '../src/firebaseReduxUtilities/useUserData';
-import { loadCoursesData } from '../src/firebaseReduxUtilities/useCourseData';
-
-GoogleSignin.configure({
-  webClientId:
-    '1030381352952-ee9ti00cphj8j3blqiu4epcf95101dai.apps.googleusercontent.com',
-  hostedDomain: 'ucsb.edu',
-  forceCodeForRefreshToken: true,
-  offlineAccess: true,
-});
-
-const userFromGoogleUser = ({user}: GoogleUser): User => {
-  const {givenName, familyName, email, photo} = user;
-  return {firstName: givenName, lastName: familyName, email, photo};
-};
-
-export const signInWithGoogle = async () => {
-  store.dispatch(setAuthStateAction({authState: 'LOADING'}));
-  try {
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-
-    const response: GoogleUser = await GoogleSignin.signIn();
-    const {user, idToken} = response;
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // // Sign-in the user with the credential
-    await auth().signInWithCredential(googleCredential);
-  } catch (error: any) {
-    console.warn(error);
-    store.dispatch(setAuthStateAction({authState: 'NONE'}));
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (e.g. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      // play services not available or outdated
-    } else {
-      // some other error happened
-    }
-  }
-};
+import {
+  getUserDocumentRef,
+  setMyUserFirebaseRedux,
+} from '../src/firebaseReduxUtilities/useUserData';
+import * as WebBrowser from 'expo-web-browser';
+import firestore from '@react-native-firebase/firestore';
+import {
+  getCurrentCourses,
+  loadCoursesData,
+} from '../src/firebaseReduxUtilities/useCourseData';
+import {Linking} from 'react-native';
+import {getChatDocumentRef} from '../src/firebaseReduxUtilities/useChatData';
+import {platform} from '../src/utilities/platform';
 
 export const signOut = () => {
   try {
-    GoogleSignin.signOut();
     auth().signOut();
   } catch (error) {
     console.error(error);
+  }
+};
+
+const abortSignIn = () => {
+  store.dispatch(setAuthStateAction({authState: 'NONE'}));
+  signOut();
+};
+
+export const handleSignIn = async (url: string) => {
+  try {
+    const urlObject = new URL(url);
+    const userId = urlObject.searchParams.get('userId');
+    const authToken = urlObject.searchParams.get('authToken');
+    const accessToken = urlObject.searchParams.get('accessToken');
+    const idToken = urlObject.searchParams.get('idToken');
+    if (!userId || !authToken || !accessToken || !idToken)
+      throw new Error('Missing params');
+    auth()
+      .signInWithCustomToken(authToken)
+      .then(async () => {
+        const myUserDocumentRef = getUserDocumentRef(userId);
+        const userData = (await myUserDocumentRef.get()).data() as
+          | User
+          | undefined;
+        if (!userData) throw new Error('User does not exist');
+        if (userData.chats) {
+          const chatPromises: Promise<void>[] = [];
+          const chatmapToSet: Chatmap = {};
+          userData.chats.forEach(id => {
+            const add = async () => {
+              const chatRef = getChatDocumentRef(id);
+              const data = (await chatRef.get()).data() as Chat;
+              chatmapToSet[id] = data;
+            };
+            chatPromises.push(add());
+          });
+          await Promise.all(chatPromises);
+          store.dispatch(setChatsAction({chatmap: chatmapToSet}));
+        }
+        store.dispatch(setMyUserAction({id: userId, user: userData}));
+        store.dispatch(
+          setTokenDataAction({
+            data: {accessToken, idToken},
+          }),
+        );
+        await getCurrentCourses(idToken);
+        store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
+      });
+  } catch (error) {
+    abortSignIn();
+  }
+};
+
+// currently handles android auth redirect in linking.ts
+export const signIn = async () => {
+  store.dispatch(setAuthStateAction({authState: 'LOADING'}));
+  try {
+    const request = await fetch(
+      `https://us-central1-coral-406419.cloudfunctions.net/api/authlink`,
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+      },
+    );
+    const data = await request.json();
+    const {authlink, redirectUri} = data;
+    if (!authlink || !redirectUri) return;
+    const result = (await WebBrowser.openAuthSessionAsync(
+      authlink,
+      redirectUri,
+    )) as WebBrowser.WebBrowserRedirectResult;
+    console.log('WEFVEFWVFE', result);
+    if (platform === 'ios') {
+      if (!result?.url) throw new Error('No url returned');
+      handleSignIn(result.url);
+    }
+  } catch (error) {
+    // abortSignIn();
   }
 };
 
@@ -74,18 +123,9 @@ export default function useAuth() {
     const onAuthStateChanged = async (
       firebaseUser: FirebaseAuthTypes.User | null,
     ) => {
-      if (!firebaseUser) store.dispatch(signOutAction({}));
-      else {
-        const {uid} = firebaseUser;
-        const user: GoogleUser | null = await GoogleSignin.getCurrentUser();
-        if (!user) store.dispatch(signOutAction({}));
-        else {
-          const id = `usr${uid}`;
-          const myUser: User = userFromGoogleUser(user);
-          await setMyUserFirebaseRedux(id, myUser);
-          await loadCoursesData(myUser.courses);
-          store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
-        }
+      if (!firebaseUser) {
+        if (store.getState().data.authState !== 'NONE')
+          store.dispatch(signOutAction({}));
       }
     };
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

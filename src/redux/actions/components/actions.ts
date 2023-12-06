@@ -35,7 +35,7 @@ const loadCoursesAction: Action<LoadCoursesAction> = props => {
     type: 'LOAD_COURSES',
     ...props,
   };
-}
+};
 
 const joinCourseAction: Action<JoinCourseAction> = props => {
   return {
@@ -47,6 +47,20 @@ const joinCourseAction: Action<JoinCourseAction> = props => {
 const leaveCourseAction: Action<LeaveCourseAction> = props => {
   return {
     type: 'LEAVE_COURSE',
+    ...props,
+  };
+};
+
+const setTokenDataAction: Action<SetTokenDataAction> = props => {
+  return {
+    type: 'SET_TOKEN_DATA',
+    ...props,
+  };
+};
+
+const refreshTokenDataAction: Action<RefreshTokenDataAction> = props => {
+  return {
+    type: 'REFRESH_TOKEN_DATA',
     ...props,
   };
 };
@@ -71,6 +85,8 @@ export {
   loadCoursesAction,
   joinCourseAction,
   leaveCourseAction,
+  setTokenDataAction,
+  refreshTokenDataAction,
   signOutAction,
   clearStoreAction,
 };
