@@ -1,5 +1,5 @@
 // UserSettingPage.tsx
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,15 +7,17 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  Modal,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {appStackNavigate} from '../../../navigation/navigators/StackNavigator';
 import {styles} from '../../tab/profile/UserPageStyle';
 import {signOut} from '../../../../auth/useAuth';
-import {white} from '../../../utilities/colors';
+import {red, white} from '../../../utilities/colors';
 import Header from '../../../components/header/Header';
-import {Ionicons, FontAwesome5} from '@expo/vector-icons';
+import {Ionicons, FontAwesome5, FontAwesome} from '@expo/vector-icons';
+import {coral} from '../../../utilities/colors';
 
 import {scale, standardMargin} from '../../../utilities/scale';
 import {withTokens} from '../../../firebaseReduxUtilities/tokens';
@@ -25,6 +27,9 @@ export default function SettingsScreen({
   route,
   navigation,
 }: AppStackPageProps<'settings'>) {
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={white} barStyle="dark-content" />
@@ -34,7 +39,7 @@ export default function SettingsScreen({
         {/* go to different pages */}
         <View style={styles.settingBarContainer}>
           <TouchableOpacity
-            onPress={() => appStackNavigate(navigation, 'editProfile')}
+            onPress={() => {setModalVisible(true);}}
             style={styles.longBox}
             activeOpacity={0.6}>
             <Text style={styles.longBarText}>Edit Profile</Text>
@@ -75,6 +80,45 @@ export default function SettingsScreen({
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={[styles.modalContainer]}>
+          <View style={[styles.modalContent,{height:'23%',width:'60%'}]}>
+            <View>
+              <TouchableOpacity
+                style={[styles.courseModalButton,{marginLeft:'20%',width:'93%'}]}
+                onPress={() => {
+                  setModalVisible(false);
+                  appStackNavigate(navigation, 'editName');
+                }}>
+                <Text style={styles.courseModalButtonText}> {'Name'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.courseModalButton,{marginTop:10,marginLeft:'20%',width:'93%'}]}
+                onPress={() => {
+                  setModalVisible(false);
+                  appStackNavigate(navigation, 'editBio');
+                }}>
+                <Text style={styles.courseModalButtonText}> {'Bio'}</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={() => setModalVisible(false)} style={{paddingLeft:10,paddingBottom:15}}>
+              <FontAwesome
+                name="close"
+                size={scale(24)}
+                color={coral}
+                style={{alignSelf: 'flex-end'}}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

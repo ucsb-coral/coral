@@ -26,7 +26,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../../utilities/scale';
 import {black} from '../../../utilities/colors';
 import ReadMore from '@fawazahmed/react-native-read-more';
-import { setMyUserBio } from '../../../firebaseReduxUtilities/useUserData';
+import { setMyUserStatus } from '../../../firebaseReduxUtilities/useUserData';
 
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
@@ -49,6 +49,7 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
   );
   // setMyUserBio(myUserId, user, 'This is my bio!');
   const bio = useSelector((state: ReduxState) => state.data.usermap[myUserId!].bio);
+  const status = useSelector((state: ReduxState) => state.data.usermap[myUserId!].status); 
   const [boxHeight, setBoxHeight] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -215,7 +216,7 @@ const userStatus = async () => {
             </TouchableOpacity>
           </View>
           <View style={styles.settingBarContainer}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={[
                 styles.longBox,
                 isActive ? {backgroundColor: '#F883793D'} : {},
@@ -231,6 +232,35 @@ const userStatus = async () => {
               <Text style={styles.longBarText}>Status</Text>
               <Ionicons
                 name={isMuted ? 'book-outline' : 'bed-outline'}
+                size={scale(25)}
+                color={black}
+                style={styles.longBoxIcon}
+              />
+            </TouchableOpacity> */}
+
+            <TouchableOpacity
+              style={[
+                styles.longBox,
+                isActive ? {backgroundColor: '#F883793D'} : {},
+              ]}
+              activeOpacity={0.6}
+              // onPressIn={() => setIsActive(true)}
+              // onPressOut={() => setIsActive(false)}
+              onPress={() => {
+                setMyUserStatus(myUserId, user);
+                userStatus(); 
+              }}>
+          
+              <Text style={styles.longBarText}>Status</Text>
+              <Ionicons
+                name={
+                  status === 0 ? 'book-outline' : 
+                  status === 1 ? 'bed-outline' :
+                  status === 2 ? 'fast-food-outline' :
+                  status === 3 ? 'airplane-outline' :
+                  status === 4 ? 'barbell-outline' :
+                  'musical-notes-outline'
+                }
                 size={scale(25)}
                 color={black}
                 style={styles.longBoxIcon}

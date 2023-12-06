@@ -19,16 +19,15 @@ import {scale} from '../../../utilities/scale';
 import { coral ,black} from '../../../utilities/colors';
 import { setMyUserPreferredName, setMyUserBio} from '../../../firebaseReduxUtilities/useUserData';
 
-export type EditProfileScreenProps = {};
-export default function EditProfileScreen({
+export type EditNameScreenProps = {};
+export default function EditNameScreen({
   route,
   navigation,
-}: AppStackPageProps<'editProfile'>) {
+}: AppStackPageProps<'editName'>) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const user = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
-  const [newBio, setNewBio] = useState('');
   const [newName, setNewName] = useState(''); 
 
 
@@ -41,7 +40,7 @@ export default function EditProfileScreen({
         <ScrollView style={styles.ScrollView}>
           <Header
             leftHandler={navigation.goBack}
-            centerElement={'Edit Profile'}
+            centerElement={'Edit Name'}
           />
 
           <View style={styles.settingBarContainer}>
@@ -70,48 +69,6 @@ export default function EditProfileScreen({
             
           </View>
 
-            <View style={styles.UserNewBioBox}>
-              <View style={{ flexDirection: 'row', alignItems: 'flex-start'}}>
-                <Text style={styles.UserNewBioText}>New bio:</Text>
-                <TextInput
-                  style={styles.UserNewBioInput}                                                   
-                  placeholder="Enter your new bio"
-                  value = {newBio}
-                  onChangeText = {(text) => setNewBio(text)}
-                  multiline={true} // Allow multiline input
-                  numberOfLines={4} // You can adjust this number as needed
-                  maxLength={150} 
-                />
-              </View>
-              <Text style={styles.characterCountText}>
-                {150 - newBio.length} 
-              </Text>
-            </View>
-            
-
-            {/* <TouchableOpacity
-            onPress={() => {
-              // TODO
-              // get the text from the text input
-              setMyUserPreferredName(myUserId, user, newName);
-              navigation.goBack();
-              navigation.goBack();
-            }}
-            style={{
-              marginTop: 20,
-              marginBottom: 20,
-              backgroundColor: '#F88379AA',
-              width: '30%',
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 10,
-            }}
-            activeOpacity={0.6}>
-
-            <Text style={styles.longBarText}>Submit</Text>
-            </TouchableOpacity> */}
-
           <TouchableOpacity
             onPress={() => {
               if (newName != '') {
@@ -125,25 +82,6 @@ export default function EditProfileScreen({
             <Text style={styles.longBarText}>Submit Name</Text>
             <Ionicons
                 name={'file-tray-stacked-outline'}
-                size={scale(25)}
-                color={black}
-                style={styles.longBoxIcon}
-              />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              if (newBio != '') {
-                setMyUserBio(myUserId, user, newBio);
-              }
-              navigation.goBack();
-              navigation.goBack();
-            }}
-            style={styles.longBox}
-            activeOpacity={0.6}>
-            <Text style={styles.longBarText}>Submit Bio</Text>
-            <Ionicons
-                name={'receipt-outline'}
                 size={scale(25)}
                 color={black}
                 style={styles.longBoxIcon}

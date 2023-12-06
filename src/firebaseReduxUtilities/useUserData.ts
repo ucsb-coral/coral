@@ -57,8 +57,22 @@ const setMyUserPreferredName = async (id: string, user: User, name: string) => {
   }
 }
 
+const setMyUserStatus = async (id: string, user: User) => {
+  let UserToSet: User = user;
+  const myUserDocumentRef = getUserDocumentRef(id);
+  const userDocSnapshot = await myUserDocumentRef.get();
+  if (userDocSnapshot.exists) {
+    const data = userDocSnapshot.data();
+    if (data) UserToSet = data as User;
+    if (UserToSet.status == null) UserToSet.status = 0; 
+    UserToSet.status = (UserToSet.status + 1) % 6;
+    await myUserDocumentRef.set(UserToSet);
+    store.dispatch(setMyUserAction({id, user: UserToSet}));
+  }
+}
+
 export default function useUserData() {
   return {};
 }
 
-export {getUserDocumentRef, setMyUserFirebaseRedux, setMyUserBio, setMyUserPreferredName};
+export {getUserDocumentRef, setMyUserFirebaseRedux, setMyUserBio, setMyUserPreferredName, setMyUserStatus};

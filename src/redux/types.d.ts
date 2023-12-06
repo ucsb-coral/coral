@@ -120,7 +120,7 @@ declare type User = {
   courses?: string[] | null;
   refreshData: RefreshData;
   bio?: string | null;
-  status?: boolean | null;
+  status?: number | 0;
 };
 
 declare type MessageType_TEXT = 'TEXT';
