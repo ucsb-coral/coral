@@ -28,7 +28,7 @@ export default function ChatSettings({
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
   const [isSelected, setIsSelected] = useState(false);
-
+  
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -39,14 +39,28 @@ export default function ChatSettings({
             centerElement={'Chat Settings'}
           />
           <View style={styles.settingBarContainer}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={[styles.UserNewNameBox]}
               activeOpacity={0.6}
               onPress={() => setIsSelected(!isSelected)}>
               <Text style={styles.UserNewNameText}>Chat Name : </Text>
               <TextInput
-                 style={styles.UserNewName}
+                style={styles.UserNewName}
                 placeholder="new name"
+              />
+            </TouchableOpacity> */}
+
+
+            <TouchableOpacity
+              style={styles.longBox}
+              activeOpacity={0.6}
+              onPress={() => setIsSelected(!isSelected)}>
+              <Text style={styles.longBarText}>Leave Chat</Text>
+              <Ionicons
+                name={'trash-outline'}
+                size={scale(25)}
+                color={black}
+                style={styles.longBoxIcon}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -62,18 +76,6 @@ export default function ChatSettings({
               />
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.longBox}
-              activeOpacity={0.6}
-              onPress={() => setIsSelected(!isSelected)}>
-              <Text style={styles.longBarText}>Leave Chat</Text>
-              <Ionicons
-                name={'trash-outline'}
-                size={scale(25)}
-                color={black}
-                style={styles.longBoxIcon}
-              />
-            </TouchableOpacity>
           </View>
 
 
