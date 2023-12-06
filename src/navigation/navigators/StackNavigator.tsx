@@ -22,15 +22,18 @@ import AboutScreen, {
 import JoinChatsScreen, {
   JoinChatsScreenProps,
 } from '../../screens/stack/joinChats/JoinChatsScreen';
-import EditProfileScreen, {
-  EditProfileScreenProps,
-} from '../../screens/stack/editProfile/EditProfileScreen';
+import EditNameScreen, {
+  EditNameScreenProps,
+} from '../../screens/stack/editProfile/EditNameScreen';
 import SettingsScreen, {
   SettingsScreenProps,
 } from '../../screens/stack/settings/SettingsScreen';
-import JoinCoursesScreen, {
-  JoinCoursesScreenProps,
+import JoinCoursesScreen, { 
+  JoinCoursesScreenProps, 
 } from '../../screens/stack/joinCourses/JoinCoursesScreen';
+import EditBioScreen, { 
+  EditBioScreenProps,
+} from '../../screens/stack/editProfile/EditBioScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -43,7 +46,8 @@ type AuthStackNavigatorPages = keyof AuthStackNavigatorScreens;
 type AppStackNavigatorScreens = {
   tabNavigator: EmptyProps;
   chat: ChatScreenProps;
-  editProfile: EditProfileScreenProps;
+  editName: EditNameScreenProps;
+  editBio: EditBioScreenProps;
   chatSettings: ChatSettingsProps;
   settings: SettingsScreenProps;
   about: AboutScreenProps;
@@ -75,7 +79,8 @@ export default function StackNavigator() {
           <Stack.Screen name={'tabNavigator'} component={TabNavigator} />
           <Stack.Screen name={'chat'} component={ChatScreen} />
           <Stack.Screen name={'chatSettings'} component={ChatSettings} />
-          <Stack.Screen name={'editProfile'} component={EditProfileScreen} />
+          <Stack.Screen name={'editName'} component={EditNameScreen} />
+          <Stack.Screen name={'editBio'} component={EditBioScreen} />
           <Stack.Screen name={'about'} component={AboutScreen} />
           <Stack.Screen name={'joinChats'} component={JoinChatsScreen} />
           <Stack.Screen name={'settings'} component={SettingsScreen} />

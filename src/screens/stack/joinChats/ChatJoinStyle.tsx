@@ -105,7 +105,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: 290,
+    width: 260,
     height: 120,
     padding: 15,
     borderRadius: 10,
@@ -120,7 +120,7 @@ export const styles = StyleSheet.create({
   },
   courseModalText: {
     color: grey,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     marginTop: 5,
     marginLeft: 25,
