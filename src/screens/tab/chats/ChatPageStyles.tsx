@@ -64,6 +64,8 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 15,
     marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   category: {
     fontSize: 20,

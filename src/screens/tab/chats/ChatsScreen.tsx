@@ -15,7 +15,8 @@ import {
   appStackNavigate,
 } from '../../../navigation/navigators/StackNavigator';
 import Header from '../../../components/header/Header';
-import {coral, white} from '../../../utilities/colors';
+import {Ionicons} from '@expo/vector-icons';
+import {coral, white, black} from '../../../utilities/colors';
 import {scale} from '../../../utilities/scale';
 import { avenirBlackCentered} from '../../../utilities/textfont';
 import { loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
@@ -65,7 +66,7 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
       />
 
       {/* Current Class List*/}
-      <Text style={styles.category}>Current Classes</Text>
+      {/* <Text style={styles.category}>Current Classes</Text> */}
       
       {joinedChats.length === 0 ? 
       <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
@@ -80,8 +81,14 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
             style={styles.chatItem}
             onPress={() => appStackNavigate(navigation, 'chat', {id: chatId})}>
             <Text style={styles.chatName}>
-              {coursemap[chatId]?.courseTitle || 'Unknown Chat'}
+              {coursemap[chatId]?.courseId || 'Unknown Chat'}
             </Text>
+            <Ionicons
+                name={'chevron-forward-outline'}
+                size={scale(25)}
+                color={black}
+                //style={styles.longBoxIcon}
+              />
             {/* <Text style={styles.chatMessage}>
               Sender: This is a placeholder of the last sent msg ...
             </Text> */}
