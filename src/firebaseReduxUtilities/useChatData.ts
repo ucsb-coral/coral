@@ -40,9 +40,27 @@ const joinCourseChat = async (courseId: string) => {
   store.dispatch(joinChatAction({id: courseId, chat: chatToSet}));
 };
 
+const leaveCourseChat = async (courseId: string) => {
+  const myUserId = store.getState().data.myUserId;
+  const chatDocumentRef = getChatDocumentRef(courseId);
+  const myUserDocumentRef = getUserDocumentRef(myUserId);
+
+  const chatDocSnapshot = await chatDocumentRef.get();
+  if (chatDocSnapshot.exists) {
+    const data = chatDocSnapshot.data() as Chat;
+    data.memberIds = data.memberIds.filter((id) => id !== myUserId);
+    chatDocumentRef.update({memberIds: data.memberIds});
+  }
+  const userDocSnapshot = await myUserDocumentRef.get();
+  const user = userDocSnapshot.data() as User;
+  if (!user.chats) user.chats = [];
+  user.chats = user.chats.filter((id) => id !== courseId);
+  await myUserDocumentRef.set(user);
+}
+
 export default function useChatData() {
   useEffect(() => {});
   return {};
 }
 
-export {getChatDocumentRef, joinCourseChat};
+export {getChatDocumentRef, joinCourseChat,leaveCourseChat};
