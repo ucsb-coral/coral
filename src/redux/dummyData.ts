@@ -4,7 +4,7 @@ const coursemap: Coursemap = {
   crsfirebase_uid_1: {
     memberIds: [],
     courseId: 'CMPSC 16',
-    quarter: '20234',
+    quarter: '2023F',
     enrollCode: '07724',
     gradingOptionCode: 'L',
     unitsAttempted: 4,
@@ -15,7 +15,7 @@ const coursemap: Coursemap = {
       "section": "0100",
       "instructionTypeCode": "LEC",
       "buildingRoom": "ILP 2302",
-      "days": "M W",
+      "days": "MW",
       "beginTime": "11:00",
       "endTime": "12:15",
       "instructors": [
@@ -30,7 +30,7 @@ const coursemap: Coursemap = {
   crsfirebase_uid_2: {
     memberIds: [],
     courseId: 'CMPSC 24',
-    quarter: '20234',
+    quarter: '2023F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
     unitsAttempted: 4,
@@ -41,7 +41,7 @@ const coursemap: Coursemap = {
       "section": "0101",
       "instructionTypeCode": "LEC",
       "buildingRoom": "Phelps 0000",
-      "days": "M W",
+      "days": "MW",
       "beginTime": "14:00",
       "endTime": "15:15",
       "instructors": [
@@ -55,68 +55,133 @@ const coursemap: Coursemap = {
   },
   crsfirebase_uid_3: {
     memberIds: [],
-    courseId: '',
-    quarter: '2000F',
+    courseId: 'CMPSC 64',
+    quarter: '2023F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
     unitsAttempted: 4,
-    courseTitle: 'Test Course 3',
+    courseTitle: 'COMP ORGANIZATION',
     session: 'string',
     repeatTypeCode: 'string',
-    timeLocations: [],
+    timeLocations: [{
+      "section": "0101",
+      "instructionTypeCode": "LEC",
+      "buildingRoom": "Buchana 1920",
+      "days": "MW",
+      "beginTime": "8:00",
+      "endTime": "9:15",
+      "instructors": [
+        {
+            "name": "teacher of64",
+            "functionCode": "Teaching and in charge"
+        }
+    ]
+  }],
     waitlist: false,
   },
   crsfirebase_uid_4: {
     memberIds: [],
-    courseId: '',
-    quarter: '2000F',
+    courseId: 'CMPSC 111',
+    quarter: '2023F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
     unitsAttempted: 4,
-    courseTitle: 'Test Course 4',
+    courseTitle: 'INT COMPUTAT SCI',
     session: 'string',
     repeatTypeCode: 'string',
-    timeLocations: [],
+    timeLocations: [{
+      "section": "0101",
+      "instructionTypeCode": "LEC",
+      "buildingRoom": "Phelps 1160",
+      "days": "MW",
+      "beginTime": "14:00",
+      "endTime": "15:15",
+      "instructors": [
+        {
+            "name": "teacher of111",
+            "functionCode": "Teaching and in charge"
+        }
+    ]
+  }],
     waitlist: false,
   },
   crsfirebase_uid_5: {
     memberIds: [],
-    courseId: '',
-    quarter: '2000F',
+    courseId: 'CMPSC 130A',
+    quarter: '2023F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
     unitsAttempted: 4,
-    courseTitle: 'Test Course 5',
+    courseTitle: 'DATA STRUCT ALGOR',
     session: 'string',
     repeatTypeCode: 'string',
-    timeLocations: [],
-    waitlist: true,
+    timeLocations: [{
+      "section": "0101",
+      "instructionTypeCode": "LEC",
+      "buildingRoom": "ILP 1101",
+      "days": "MW",
+      "beginTime": "9:30",
+      "endTime": "10:45",
+      "instructors": [
+        {
+            "name": "teacher of130a",
+            "functionCode": "Teaching and in charge"
+        }
+    ]
+  }],
+    waitlist: false,
   },
   crsfirebase_uid_6: {
     memberIds: [],
-    courseId: '',
-    quarter: '2000F',
+    courseId: 'CMPSC 184',
+    quarter: '2023F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
     unitsAttempted: 4,
-    courseTitle: 'Test Course 6',
+    courseTitle: 'MOBILE APP DEV',
     session: 'string',
     repeatTypeCode: 'string',
-    timeLocations: [],
-    waitlist: true,
+    timeLocations: [{
+      "section": "0101",
+      "instructionTypeCode": "LEC",
+      "buildingRoom": "South Hall 1431",
+      "days": "MW",
+      "beginTime": "14:00",
+      "endTime": "15:15",
+      "instructors": [
+        {
+            "name": "HOLLERER T",
+            "functionCode": "Teaching and in charge"
+        }
+    ]
+  }],
+    waitlist: false,
   },
   crsfirebase_uid_7: {
     memberIds: [],
-    courseId: '',
-    quarter: '2000F',
+    courseId: 'WRIT 2',
+    quarter: '2023F',
     enrollCode: 'string',
     gradingOptionCode: 'string',
-    unitsAttempted: 4,
-    courseTitle: 'Test Course 7',
+    unitsAttempted: 5,
+    courseTitle: 'ACADEMIC WRITING',
     session: 'string',
     repeatTypeCode: 'string',
-    timeLocations: [],
-    waitlist: true,
+    timeLocations: [{
+      "section": "0101",
+      "instructionTypeCode": "LEC",
+      "buildingRoom": "ILP 4103",
+      "days": "TR",
+      "beginTime": "11:00",
+      "endTime": "12:50",
+      "instructors": [
+        {
+            "name": "teacher ofwrit2",
+            "functionCode": "Teaching and in charge"
+        }
+    ]
+  }],
+    waitlist: false,
   },
 };
 
