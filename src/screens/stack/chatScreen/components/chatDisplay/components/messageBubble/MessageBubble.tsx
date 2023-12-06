@@ -151,7 +151,12 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
       <View style={fromUserId === myUserId ? styles.myUserNameAndIconContainer : styles.otherUserNameAndIconContainer}>
         {fromUserId !== myUserId && (
           <Ionicons
-            name={isMuted ? 'book-outline' : 'bed-outline'}
+            name={isMuted === 0 ? 'book-outline' :
+              isMuted === 1 ? 'bed-outline' :
+                isMuted === 2 ? 'fast-food-outline' :
+                  isMuted === 3 ? 'airplane-outline' :
+                    isMuted === 4 ? 'barbell-outline' :
+                      'musical-notes-outline'}
             size={scale(20)}
             color={black}
             style={{ marginRight: 5 }}
@@ -162,7 +167,12 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
         </Text>
         {fromUserId === myUserId && (
           <Ionicons
-            name={isMuted ? 'book-outline' : 'bed-outline'}
+            name={isMuted === 0 ? 'book-outline' :
+              isMuted === 1 ? 'bed-outline' :
+                isMuted === 2 ? 'fast-food-outline' :
+                  isMuted === 3 ? 'airplane-outline' :
+                    isMuted === 4 ? 'barbell-outline' :
+                      'musical-notes-outline'}
             size={scale(20)}
             color={black}
             style={{ marginLeft: 5 }}
