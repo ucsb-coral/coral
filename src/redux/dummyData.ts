@@ -15,7 +15,7 @@ const coursemap: Coursemap = {
       "section": "0100",
       "instructionTypeCode": "LEC",
       "buildingRoom": "ILP 2302",
-      "days": "MW",
+      "days": "M W",
       "beginTime": "11:00",
       "endTime": "12:15",
       "instructors": [
@@ -41,7 +41,7 @@ const coursemap: Coursemap = {
       "section": "0101",
       "instructionTypeCode": "LEC",
       "buildingRoom": "Phelps 0000",
-      "days": "MW",
+      "days": "M W",
       "beginTime": "14:00",
       "endTime": "15:15",
       "instructors": [
@@ -67,7 +67,7 @@ const coursemap: Coursemap = {
       "section": "0101",
       "instructionTypeCode": "LEC",
       "buildingRoom": "Buchana 1920",
-      "days": "MW",
+      "days": "M W",
       "beginTime": "8:00",
       "endTime": "9:15",
       "instructors": [
@@ -93,7 +93,7 @@ const coursemap: Coursemap = {
       "section": "0101",
       "instructionTypeCode": "LEC",
       "buildingRoom": "Phelps 1160",
-      "days": "MW",
+      "days": "M W",
       "beginTime": "14:00",
       "endTime": "15:15",
       "instructors": [
@@ -119,7 +119,7 @@ const coursemap: Coursemap = {
       "section": "0101",
       "instructionTypeCode": "LEC",
       "buildingRoom": "ILP 1101",
-      "days": "MW",
+      "days": "M W",
       "beginTime": "9:30",
       "endTime": "10:45",
       "instructors": [
@@ -145,7 +145,7 @@ const coursemap: Coursemap = {
       "section": "0101",
       "instructionTypeCode": "LEC",
       "buildingRoom": "South Hall 1431",
-      "days": "MW",
+      "days": "M W",
       "beginTime": "14:00",
       "endTime": "15:15",
       "instructors": [
@@ -171,7 +171,7 @@ const coursemap: Coursemap = {
       "section": "0101",
       "instructionTypeCode": "LEC",
       "buildingRoom": "ILP 4103",
-      "days": "TR",
+      "days": "T R",
       "beginTime": "11:00",
       "endTime": "12:50",
       "instructors": [
