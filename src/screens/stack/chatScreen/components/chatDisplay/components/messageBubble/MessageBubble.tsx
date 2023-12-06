@@ -7,8 +7,11 @@ import Video, { VideoRef, ResizeMode } from 'react-native-video';
 import { styles } from '../../../../ChatScreenStyles';
 import Feather from 'react-native-vector-icons/Feather';
 import RNFS from 'react-native-fs';
-// import { red } from '../../../../../../../utilities/colors';
-// import { useSelector } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
+import { scale } from '../../../../../../../utilities/scale';
+import { black } from '../../../../../../../utilities/colors';
+import firestore from '@react-native-firebase/firestore';
+
 export type Props = Message & {
   myUserId: string;
 };
@@ -22,6 +25,21 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
   const handleImagePress = () => {
     setImageViewVisible(true);
   };
+  const [isMuted, setIsMuted] = useState(false);
+  useEffect(() => {
+    const unsubscribe = firestore()
+      .collection('users')
+      .doc(fromUserId)
+      .onSnapshot(doc => {
+        if (doc.exists) {
+          const userData = doc.data();
+          if (userData) {
+            setIsMuted(userData.status);
+          }
+        }
+      });
+    return () => unsubscribe();
+  }, [myUserId]);
 
   const handleFilePressToDownload = () => {
     console.log(contentURL);
@@ -43,7 +61,7 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
     );
   };
 
-  const downloadFile = async (url: string, name: string) => {  
+  const downloadFile = async (url: string, name: string) => {
     const decodedUrl = decodeURIComponent(url);
     const fileName = decodedUrl.substring(
       decodedUrl.lastIndexOf('/') + 1,
@@ -134,6 +152,12 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
         {fromUserName}
       </Text>
       <View style={fromUserId === myUserId ? styles.myMessageContainer : styles.otherMessageContainer}>
+        <Ionicons
+          name={isMuted ? 'book-outline' : 'bed-outline'}
+          size={scale(25)}
+          color={black}
+          style={styles.longBoxIcon}
+        />
         {type === 'TEXT' && <Text style={styles.message}>{content}</Text>}
         {/* {type === 'IMAGE' && <Image source={{ uri: contentURL }} style={{ width: imageSize.width, height: imageSize.height }} />} */}
         {type === 'IMAGE' && (

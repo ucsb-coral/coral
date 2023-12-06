@@ -224,7 +224,7 @@ const userStatus = async () => {
               onPressIn={() => setIsActive(true)}
               onPressOut={() => setIsActive(false)}
               onPress={() => {
-                setIsMuted(!isMuted); 
+                setIsMuted(isMuted); 
                 userStatus(); 
               }}>
           

@@ -81,9 +81,9 @@ export const styles = StyleSheet.create({
     },
     fileContainer: {
         backgroundColor: white,
-        borderWidth: 1, 
+        borderWidth: 1,
         borderColor: grey5,
-        borderRadius: 15, 
+        borderRadius: 15,
         padding: 10,
         maxWidth: '99%',
         alignSelf: 'flex-start',
@@ -133,5 +133,9 @@ export const styles = StyleSheet.create({
     fullScreenImage: {
         width: '100%',
         height: '100%',
+    },
+    longBoxIcon: {
+        textAlign: 'right',
+        marginRight: 15,
     },
 });
