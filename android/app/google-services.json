@@ -1,129 +1,34 @@
 {
   "project_info": {
-    "project_number": "1030381352952",
-    "project_id": "ucsb-coral",
-    "storage_bucket": "ucsb-coral.appspot.com"
+    "project_number": "44210895544",
+    "project_id": "coral-406419",
+    "storage_bucket": "coral-406419.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1030381352952:android:511878717cb822fb2a880d",
-        "android_client_info": {
-          "package_name": "com.Wenjin_HW2"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1030381352952-ee9ti00cphj8j3blqiu4epcf95101dai.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDb_PlHQ0TZE3OafCzCR05TLs0W1Xch7T4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1030381352952-ee9ti00cphj8j3blqiu4epcf95101dai.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1030381352952-hq42sa324f7e2mt26qr6sm207b90oau8.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.app.coral"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1030381352952:android:b67ff01498e65fc02a880d",
+        "mobilesdk_app_id": "1:44210895544:android:bee92d1a2f6b524849124d",
         "android_client_info": {
           "package_name": "com.coral"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1030381352952-niladkdfh17j59ugfv2cfcnetis6bf4h.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.coral",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1030381352952-ee9ti00cphj8j3blqiu4epcf95101dai.apps.googleusercontent.com",
+          "client_id": "44210895544-s7nk4iaotcd1ovs72qb7702eis735ld0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDb_PlHQ0TZE3OafCzCR05TLs0W1Xch7T4"
+          "current_key": "AIzaSyDYb1fLyKQ-WajqbslxTvHnQi07z6ZOsDI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1030381352952-ee9ti00cphj8j3blqiu4epcf95101dai.apps.googleusercontent.com",
+              "client_id": "44210895544-s7nk4iaotcd1ovs72qb7702eis735ld0.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1030381352952-hq42sa324f7e2mt26qr6sm207b90oau8.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.app.coral"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1030381352952:android:c2647c303bb40f1b2a880d",
-        "android_client_info": {
-          "package_name": "com.react_native_hello_world"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1030381352952-dv39gse13utu2a52cancthiatrj4bopj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.react_native_hello_world",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1030381352952-ee9ti00cphj8j3blqiu4epcf95101dai.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDb_PlHQ0TZE3OafCzCR05TLs0W1Xch7T4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1030381352952-ee9ti00cphj8j3blqiu4epcf95101dai.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1030381352952-hq42sa324f7e2mt26qr6sm207b90oau8.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.app.coral"
-              }
             }
           ]
         }

@@ -28,7 +28,9 @@ import EditProfileScreen, {
 import SettingsScreen, {
   SettingsScreenProps,
 } from '../../screens/stack/settings/SettingsScreen';
-import JoinCoursesScreen, { JoinCoursesScreenProps } from '../../screens/stack/joinCourses/JoinCoursesScreen';
+import JoinCoursesScreen, {
+  JoinCoursesScreenProps,
+} from '../../screens/stack/joinCourses/JoinCoursesScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -52,7 +54,7 @@ type AppStackNavigatorScreens = {
 
 type AppStackNavigatorPages = keyof AppStackNavigatorScreens;
 
-type StackNavigatorScreens = AuthStackNavigatorScreens &
+export type StackNavigatorScreens = AuthStackNavigatorScreens &
   AppStackNavigatorScreens;
 
 type StackNavigatorPages = keyof StackNavigatorScreens;

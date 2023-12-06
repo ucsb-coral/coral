@@ -4,6 +4,7 @@ const initialData: Data = {
   usermap: {},
   chatmap: {},
   coursemap: {},
+  tokenData: null,
 };
 
 function initializeState(): Data {
@@ -35,10 +36,12 @@ export function reducer(
         ...state,
         chatmap: {...chatmap},
         usermap: {
-          ...usermap, 
+          ...usermap,
           [myUserId!]: {
-            ...myUser, 
-            chats: [...myUser.chats, id]}},
+            ...myUser,
+            chats: [...myUser.chats, id],
+          },
+        },
       };
     }
     case 'SET_CHATS': {
@@ -66,16 +69,18 @@ export function reducer(
       } else if (!myUser.courses.includes(id)) {
         myUser.courses = [...myUser.courses, id];
       }
-      const newCourses = myUser.courses
+      const newCourses = myUser.courses;
       return {
         ...state,
         usermap: {
-          ...usermap, 
+          ...usermap,
           [myUserId!]: {
-            ...myUser, 
-            courses: newCourses}},
+            ...myUser,
+            courses: newCourses,
+          },
+        },
         coursemap: {...coursemap, [id]: course},
-      }
+      };
     }
     case 'LEAVE_COURSE': {
       const {id, course} = action;
@@ -87,12 +92,29 @@ export function reducer(
       return {
         ...state,
         usermap: {
-          ...usermap, 
+          ...usermap,
           [myUserId!]: {
-            ...myUser, 
-            courses: newCourses}},
+            ...myUser,
+            courses: newCourses,
+          },
+        },
         coursemap: {...coursemap, [id]: course},
-      }
+      };
+    }
+    case 'SET_TOKEN_DATA': {
+      return {
+        ...state,
+        tokenData: action.data,
+      };
+    }
+    case 'REFRESH_TOKEN_DATA': {
+      const myUser = {...state.usermap[state.myUserId!]};
+      myUser.refreshData.expiry = action.newExpiry;
+      state.usermap[state.myUserId!] = myUser;
+      state.tokenData = action.data;
+      return {
+        ...state,
+      };
     }
     case 'SIGN_OUT': {
       return {

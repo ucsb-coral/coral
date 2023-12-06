@@ -1,24 +1,36 @@
 import firestore from '@react-native-firebase/firestore';
-import { store } from '../redux/useRedux';
-import { joinCourseAction, leaveCourseAction, loadCoursesAction, setMyUserAction } from '../redux/actions';
-import { getUserDocumentRef } from './useUserData';
-import { coursemap } from '../redux/dummyData';
+import {store} from '../redux/useRedux';
+import {
+  joinCourseAction,
+  leaveCourseAction,
+  loadCoursesAction,
+  setMyUserAction,
+} from '../redux/actions';
+import {getUserDocumentRef} from './useUserData';
+import {coursemap} from '../redux/dummyData';
+
+const getCurrentCourses = async (idToken: string) => {
+  // TODO: Build this out
+};
 
 /* load course data into coursemap from courses list */
 const loadCoursesData = async (courseIds: string[] | null | undefined) => {
-  if(!courseIds || courseIds.length == 0) return;
+  if (!courseIds || courseIds.length == 0) return;
   const courseCollectionRef = firestore().collection('courses');
   try {
-    const courseDocs = (await courseCollectionRef.where(firestore.FieldPath.documentId(), 'in', courseIds).get()).docs;
+    const courseDocs = (
+      await courseCollectionRef
+        .where(firestore.FieldPath.documentId(), 'in', courseIds)
+        .get()
+    ).docs;
     const coursemap: Coursemap = {};
     courseDocs.forEach(doc => {
       coursemap[doc.id] = doc.data() as Course;
     });
-    store.dispatch(loadCoursesAction({ coursemap }));
+    store.dispatch(loadCoursesAction({coursemap}));
   } catch (error) {
     console.error('Failed to load courses data: ', error);
   }
-
 };
 // adds course data to firestore - move this to backend server later
 const addCourses = async (courseIds: string[] | null | undefined) => {
@@ -26,25 +38,27 @@ const addCourses = async (courseIds: string[] | null | undefined) => {
   try {
     await firestore().runTransaction(async transaction => {
       // get course data from api - currently gets course data from dummyData
-      courseIds?.forEach((courseId) => {
+      courseIds?.forEach(courseId => {
         const courseData = coursemap[courseId];
         // const courseData = store.getState().data.coursemap[courseId];
         console.log(courseData);
-        
-        transaction.set(courseCollectionRef.doc(courseId), courseData)
-      })
-    })
+
+        transaction.set(courseCollectionRef.doc(courseId), courseData);
+      });
+    });
   } catch (error) {
     console.error('Failed to add courses: ', error);
   }
-}
+};
 
 // returns all course ids from firestore
 const getCourses = async () => {
   const courseCollectionRef = firestore().collection('courses');
-  const courseDocIds = (await courseCollectionRef.get()).docs.forEach(doc => doc.id);
-  return courseDocIds
-}
+  const courseDocIds = (await courseCollectionRef.get()).docs.forEach(
+    doc => doc.id,
+  );
+  return courseDocIds;
+};
 
 const joinCourse = async (courseId: string) => {
   const myUserId = store.getState().data.myUserId;
@@ -67,7 +81,7 @@ const joinCourse = async (courseId: string) => {
         user.courses.push(courseId);
       }
       transaction.update(myUserDocumentRef, user);
-      store.dispatch(setMyUserAction({ id: myUserId, user }));
+      store.dispatch(setMyUserAction({id: myUserId, user}));
 
       // update course.memberIds list
       const courseDocSnapshot = await transaction.get(courseDocumentRef);
@@ -84,12 +98,11 @@ const joinCourse = async (courseId: string) => {
         course.memberIds.push(myUserId);
       }
       transaction.update(courseDocumentRef, course);
-      store.dispatch(joinCourseAction({ id: courseId, course }));
-
+      store.dispatch(joinCourseAction({id: courseId, course}));
     });
   } catch (error) {
     console.error('Failed to join course: ', error);
-    return error
+    return error;
   }
 };
 
@@ -111,12 +124,12 @@ const leaveCourse = async (courseId: string) => {
       }
       const newCourses = user.courses.filter(id => id !== courseId);
       if (newCourses.length === user.courses.length) {
-        throw 'User is not in course with id: ' + courseId;;
+        throw 'User is not in course with id: ' + courseId;
       } else {
         user.courses = newCourses;
       }
       transaction.update(myUserDocumentRef, user);
-      store.dispatch(setMyUserAction({ id: myUserId, user }));
+      store.dispatch(setMyUserAction({id: myUserId, user}));
 
       // update course.memberIds list
       const courseDocSnapshot = await transaction.get(courseDocumentRef);
@@ -134,8 +147,7 @@ const leaveCourse = async (courseId: string) => {
         course.memberIds = newMemberIds;
       }
       transaction.update(courseDocumentRef, course);
-      store.dispatch(leaveCourseAction({ id: courseId, course }));
-
+      store.dispatch(leaveCourseAction({id: courseId, course}));
     });
   } catch (error) {
     console.error('Failed to leave course: ', error);
@@ -146,4 +158,12 @@ export default function useCourseData() {
   return {};
 }
 
-export { useCourseData, loadCoursesData, joinCourse, leaveCourse, addCourses, getCourses};
+export {
+  useCourseData,
+  loadCoursesData,
+  joinCourse,
+  leaveCourse,
+  addCourses,
+  getCourses,
+  getCurrentCourses,
+};

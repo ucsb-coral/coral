@@ -79,7 +79,7 @@ From the schedule page, press a course to open an info modal. Then click "join c
 
 ### 8.1 Unable to Join a Chat
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...
+Please ensure that you are enrolled in the course.
 
 ### 8.2 Technical Issues
 
@@ -96,4 +96,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...
 
 ## 10. Contact and Support
 
-For further assistance, please contact our support team at [support@example.com](mailto:support@example.com).
+For further assistance, please contact our support team at [coraldev@ucsb.edu](coraldev@ucsb.edu).

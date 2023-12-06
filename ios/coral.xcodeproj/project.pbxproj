@@ -16,7 +16,7 @@
 		70E106AFE73D169371604A70 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507F36AB3DCF5E33638DD576 /* ExpoModulesProvider.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A289D4AEF2DC13212506FA34 /* Pods_coral.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B77BFE39EEF574410DD2085 /* Pods_coral.framework */; };
-		AAC1E1B62AE796F1006E3AB3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAC1E1B52AE796F1006E3AB3 /* GoogleService-Info.plist */; };
+		AA82CD882B1ED305003829CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA82CD872B1ED305003829CB /* GoogleService-Info.plist */; };
 		AAC1E1C02AEB9E15006E3AB3 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAC1E1BF2AEB9E15006E3AB3 /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +49,7 @@
 		7B77BFE39EEF574410DD2085 /* Pods_coral.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coral.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = coral/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-coral-coralTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coral-coralTests.release.xcconfig"; path = "Target Support Files/Pods-coral-coralTests/Pods-coral-coralTests.release.xcconfig"; sourceTree = "<group>"; };
-		AAC1E1B52AE796F1006E3AB3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AA82CD872B1ED305003829CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AAC1E1BF2AEB9E15006E3AB3 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = coral/BootSplash.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -102,7 +102,7 @@
 		13B07FAE1A68108700A75B9A /* coral */ = {
 			isa = PBXGroup;
 			children = (
-				AAC1E1B52AE796F1006E3AB3 /* GoogleService-Info.plist */,
+				AA82CD872B1ED305003829CB /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -280,8 +280,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				AA82CD882B1ED305003829CB /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				AAC1E1B62AE796F1006E3AB3 /* GoogleService-Info.plist in Resources */,
 				AAC1E1C02AEB9E15006E3AB3 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -682,6 +682,10 @@
 					"-ld_classic",
 					"-Wl",
 					"-ld_classic",
+					"-Wl",
+					"-ld_classic",
+					"-Wl",
+					"-ld_classic",
 					"-Wl -ld_classic ",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
@@ -763,6 +767,10 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
+					"-Wl",
+					"-ld_classic",
+					"-Wl",
+					"-ld_classic",
 					"-Wl",
 					"-ld_classic",
 					"-Wl",
