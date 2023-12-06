@@ -82,9 +82,9 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
             <Text style={styles.chatName}>
               {coursemap[chatId]?.courseTitle || 'Unknown Chat'}
             </Text>
-            <Text style={styles.chatMessage}>
+            {/* <Text style={styles.chatMessage}>
               Sender: This is a placeholder of the last sent msg ...
-            </Text>
+            </Text> */}
           </TouchableOpacity>
         ))}
       </ScrollView>
