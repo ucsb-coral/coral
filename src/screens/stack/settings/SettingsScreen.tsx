@@ -14,7 +14,7 @@ import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {appStackNavigate} from '../../../navigation/navigators/StackNavigator';
 import {styles} from '../../tab/profile/UserPageStyle';
 import {signOut} from '../../../../auth/useAuth';
-import {white} from '../../../utilities/colors';
+import {red, white} from '../../../utilities/colors';
 import Header from '../../../components/header/Header';
 import {Ionicons, FontAwesome5, FontAwesome} from '@expo/vector-icons';
 import {coral} from '../../../utilities/colors';
@@ -88,19 +88,19 @@ export default function SettingsScreen({
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+        <View style={[styles.modalContainer]}>
+          <View style={[styles.modalContent,{height:'23%',width:'60%'}]}>
             <View>
               <TouchableOpacity
-                style={styles.courseModalButton}
+                style={[styles.courseModalButton,{marginLeft:'20%',width:'93%'}]}
                 onPress={() => {
                   setModalVisible(false);
                   appStackNavigate(navigation, 'editName');
                 }}>
-                <Text style={styles.courseModalButtonText}> {'Preferred Name'}</Text>
+                <Text style={styles.courseModalButtonText}> {'Name'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.courseModalButton}
+                style={[styles.courseModalButton,{marginTop:10,marginLeft:'20%',width:'93%'}]}
                 onPress={() => {
                   setModalVisible(false);
                   appStackNavigate(navigation, 'editBio');
