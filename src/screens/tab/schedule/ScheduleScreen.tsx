@@ -311,9 +311,9 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
         ) : (
           <Calendar
             // only show weekdays
-            // mode = 'custom'
-            // weekStartsOn={1}
-            // weekEndsOn={5}
+            mode = 'custom'
+            weekStartsOn={1}
+            weekEndsOn={5}
             events={combinedEvents}
             ampm={true}
             height={600}
