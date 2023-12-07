@@ -85,6 +85,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
 
       const { beginTime, buildingRoom, days, endTime, instructors } = course.timeLocations[0];
       return {
+        uid: courseId,
         courseId: course.courseId,
         courseTitle: course.courseTitle,
         beginTime,
@@ -116,6 +117,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF3366', '#33FFFF'];
     const eventColor = colors[Math.floor(Math.random() * colors.length)]; // Assign a random color
 
+    const uid = extractCoursesInfo?.uid;
     const beginTime = extractCoursesInfo?.beginTime;
     // console.log('beginTime', beginTime);
     const buildingRoom = extractCoursesInfo?.buildingRoom;
@@ -149,6 +151,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
         start: new Date(year, month, date, CourseBeginHours[0], CourseBeginHours[1]),
         end: new Date(year, month, date, CourseEndHours[0], CourseEndHours[1]),
         eventColor: eventColor, // Assign the event color
+        uid: uid,
       });
     }
 
@@ -317,7 +320,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
             events={combinedEvents}
             ampm={true}
             height={600}
-
+            onPressEvent={(event: any) => openCourseModal(event.uid)}
             overlapOffset={0}
             swipeEnabled={false}
             // showTime={false}
