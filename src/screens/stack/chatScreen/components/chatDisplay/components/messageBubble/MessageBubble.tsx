@@ -25,7 +25,8 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
   const handleImagePress = () => {
     setImageViewVisible(true);
   };
-  const [isMuted, setIsMuted] = useState(false);
+  //const [isMuted, setIsMuted] = useState(false);
+  const [status, setStatus] = useState(0);
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('users')
@@ -34,7 +35,7 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
         if (doc.exists) {
           const userData = doc.data();
           if (userData) {
-            setIsMuted(userData.status);
+            setStatus(userData.status);
           }
         }
       });
@@ -151,12 +152,13 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
       <View style={fromUserId === myUserId ? styles.myUserNameAndIconContainer : styles.otherUserNameAndIconContainer}>
         {fromUserId !== myUserId && (
           <Ionicons
-            name={isMuted === 0 ? 'book-outline' :
-              isMuted === 1 ? 'bed-outline' :
-                isMuted === 2 ? 'fast-food-outline' :
-                  isMuted === 3 ? 'airplane-outline' :
-                    isMuted === 4 ? 'barbell-outline' :
-                      'musical-notes-outline'}
+            name={
+            status === 0 ? 'book-outline' : 
+            status === 1 ? 'bed-outline' :
+            status === 2 ? 'fast-food-outline' :
+            status === 3 ? 'airplane-outline' :
+            status === 4 ? 'barbell-outline' :
+            'musical-notes-outline'}
             size={scale(20)}
             color={black}
             style={{ marginRight: 5 }}
@@ -167,12 +169,12 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
         </Text>
         {fromUserId === myUserId && (
           <Ionicons
-            name={isMuted === 0 ? 'book-outline' :
-              isMuted === 1 ? 'bed-outline' :
-                isMuted === 2 ? 'fast-food-outline' :
-                  isMuted === 3 ? 'airplane-outline' :
-                    isMuted === 4 ? 'barbell-outline' :
-                      'musical-notes-outline'}
+            name={status === 0 ? 'book-outline' : 
+            status === 1 ? 'bed-outline' :
+            status === 2 ? 'fast-food-outline' :
+            status === 3 ? 'airplane-outline' :
+            status === 4 ? 'barbell-outline' :
+            'musical-notes-outline'}
             size={scale(20)}
             color={black}
             style={{ marginLeft: 5 }}
