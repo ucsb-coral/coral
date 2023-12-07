@@ -268,35 +268,40 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
           style={styles.toggleAndManageButton}
           onPress={() => setShowCourses(!showCourses)}>
           <Text style={styles.toggleAndManageButtonText}>
-            {showCourses ? "Show Courses" : "Show Calendar"}
+            {showCourses ? "Show Calendar" : "Show Courses"}
           </Text>
         </Pressable>
 
         {/* Conditional Rendering of FlatList or Calendar */}
-        {userCourses.length == 0 ? (
-          <Text style={styles.notEnrolledText}>
-            You are not enrolled in any courses
-          </Text>
-        ) : showCourses ? (
-          <FlatList
-            style={{}}
-            contentContainerStyle={styles.courseFlatListStyle}
-            data={userCourses}
-            renderItem={renderItem}
-            bounces={false}
-          />
-        ) : (
-          <Calendar
-            // mode='3days'
-            events={testingEvents}
-            ampm={true}
-            height={600}
-            overlapOffset={0}
-            eventCellStyle={{ backgroundColor: coral }}
-            weekStartsOn={0}
-            scrollOffsetMinutes={300}
-          />
-        )}
+        {
+          showCourses ? (
+              userCourses.length == 0 ? (
+                <Text style={styles.notEnrolledText}>
+                  You are not enrolled in any courses
+                </Text>
+              ) : (
+                <FlatList
+                  style={{}}
+                  contentContainerStyle={styles.courseFlatListStyle}
+                  data={userCourses}
+                  renderItem={renderItem}
+                  bounces={false}
+                />
+              )
+          ) : (
+            <Calendar
+              // mode='3days'
+              events={testingEvents}
+              ampm={true}
+              height={600}
+              hourRowHeight={35}
+              overlapOffset={0}
+              eventCellStyle={{ backgroundColor: coral }}
+              weekStartsOn={0}
+              scrollOffsetMinutes={300}
+            />
+          )
+        }
 
       </View>
       <CourseInfoModal
