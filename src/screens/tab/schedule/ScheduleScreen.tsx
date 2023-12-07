@@ -28,6 +28,7 @@ import{buttonFont,
   NameFont,
   EmailFont,
 }from "../../../utilities/textfont";
+import { Calendar ,} from 'react-native-big-calendar'
 
 export type ScheduleScreenProps = EmptyProps;
 
@@ -47,6 +48,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
   const userCourses: string[] = tempCourses ? tempCourses : [];
+  // console.log('userCourses', userCourses);
 
   // uncomment this and refresh to reset/load dummy data into firebase
   // addCourses(courses)
@@ -59,10 +61,42 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   }, [userCourses]);
 
   const userCoursemap = useSelector((state: ReduxState) => state.data.coursemap);
+  // console.log('userCoursemap', userCoursemap);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>("");
 
+
+  // below is i added for doing the calendar things 
+
+  
+  const dummyYearStart = 2023;
+  const dummyYearEnd = 2023;
+  const dummyMonthStart = 12;
+  const dummyDayStart = 1;
+  const dummyMonthEnd = 12;
+  const dummyDayEnd = 30;
+  const [showCourses, setShowCourses] = useState(true);
+  const splitTimeHour = (time: string) => {
+    return parseInt(time.split(':')[0]);
+  }
+  // console.log(splitTimeHour('10:00'));
+  const splitTimeMinute = (time: string) => {
+    return parseInt(time.split(':')[1]);
+  }
+  // console.log(splitTimeMinute('10:00'));
+
+
+  const events = [
+    {
+      allDay: true,
+      title: 'Coffee break',
+      start: new Date(2023, 5, 12, 15, 45), // June 12, 2023, at 15:45
+      end: new Date(2023, 5, 12, 16, 30),
+    },
+  ];
+  
+  //above is i added for doing the calendar things
   const openCourseModal = (id: string) => {
     setModalData(id);
     setModalVisible(true);
@@ -75,6 +109,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     let hours_12 = (((hours_24 + 11) % 12) + 1).toString();
     return `${hours_12 + time.slice(2)} ${suffix}`;
   };
+
 
   function renderItem({ item: courseId, index }: { item: string; index: number; }) {
     const course: Course = userCoursemap[courseId];
@@ -199,25 +234,58 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
       <Header centerElement={'Your Courses'} />
       <View style={{ flex: 1, width: '100%' , backgroundColor:white }}>
 
-        {userCourses.length == 0 ?
-          <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
-            You are not enrolled in any courses
-          </Text>
-          :
-          <FlatList
-            style={{}}
-            contentContainerStyle={{
-              position: 'absolute',
-              display: 'flex',
-              width: '100%',
-              paddingLeft: standardMargin,
-              paddingRight: standardMargin,
-            }}
-            data={userCourses}
-            renderItem={renderItem}
-            bounces={false}
-          />
-        }
+
+      {/* Toggle Button */}
+      <Pressable
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: ButtonBackground,
+          borderRadius: 15,
+          padding: 10,
+          margin: 10,
+        }}
+        onPress={() => setShowCourses(!showCourses)}>
+        <Text style={{
+          color: black,
+          fontFamily: buttonFont,
+          fontWeight: '700',
+          fontSize: 18,
+        }}>
+          {showCourses ? "Show Courses" : "Show Calendar"}
+        </Text>
+      </Pressable>
+
+      {/* Conditional Rendering of FlatList or Calendar */}
+      {userCourses.length == 0 ? (
+        <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
+          You are not enrolled in any courses
+        </Text>
+      ) : showCourses ? (
+        <FlatList
+          style={{}}
+          contentContainerStyle={{
+            position: 'absolute',
+            display: 'flex',
+            width: '100%',
+            paddingLeft: standardMargin,
+            paddingRight: standardMargin,
+          }}
+          data={userCourses}
+          renderItem={renderItem}
+          bounces={false}
+        />
+      ) : (
+        <Calendar 
+        events={events} 
+        height={600} 
+        scrollOffsetMinutes={300} 
+        weekStartsOn={1}
+
+        />
+      )}
+        
+
       </View>
       <CourseInfoModal
         isOpen={modalVisible}
