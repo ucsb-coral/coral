@@ -109,6 +109,9 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
       return []; // Return an empty array if no courses are available
     }
     
+    const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF3366', '#33FFFF'];
+    const eventColor = colors[Math.floor(Math.random() * colors.length)]; // Assign a random color
+
     const beginTime = extractCoursesInfo?.beginTime;
     // console.log('beginTime', beginTime);
     const buildingRoom = extractCoursesInfo?.buildingRoom;
@@ -134,17 +137,29 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
         title: courseTitle,
         start: new Date(2023, 11, 7, CourseBeginHours[0], CourseBeginHours[1]),
         end: new Date(2023, 11, 7, CourseEndHours[0], CourseEndHours[1]),
+        eventColor: eventColor, // Assign the event color
       },
       {
         title: courseTitle,
         start: new Date(2023, 11, 8, CourseBeginHours[0], CourseBeginHours[1]),
         end: new Date(2023, 11, 8, CourseEndHours[0], CourseEndHours[1]),
+        eventColor: eventColor, // Assign the event color
       },
     ];
     return testingEvents;
 
   }
   const testingEvents = generateEventFromCourse(extractCoursesInfo[0]);
+  const extractCoursesLength = extractCoursesInfo.length;
+  console.log('extractCoursesLength', extractCoursesLength);
+  const combinedEvents = [];
+  for (let i = 0; i < extractCoursesLength; i++) {
+    const eventsForCourse = generateEventFromCourse(extractCoursesInfo[i]);
+    combinedEvents.push(...eventsForCourse); // Spread the events into the combinedEvents array
+  }
+  
+  console.log('combinedEvents', combinedEvents);
+
 
 
 
@@ -288,11 +303,11 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
         ) : (
           <Calendar
             // mode='3days'
-            events={testingEvents}
+            events={combinedEvents}
             ampm={true}
             height={600}
             overlapOffset={0}
-            eventCellStyle={{ backgroundColor: coral }}
+            // eventCellStyle={{ backgroundColor: coral }}
             weekStartsOn={0}
             scrollOffsetMinutes={300}
           />
