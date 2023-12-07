@@ -1,4 +1,4 @@
-import React, { Dispatch, Key, SetStateAction, useState, useEffect } from 'react';
+import React, {Dispatch, Key, SetStateAction, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,21 +13,26 @@ import {
   AppStackPageProps,
   appStackNavigate,
 } from '../../../navigation/navigators/StackNavigator';
-import { useSelector } from 'react-redux';
-import { black, coral, grey, opacity, white ,ButtonBackground,} from '../../../utilities/colors';
-import { joinCourseChat } from '../../../firebaseReduxUtilities/useChatData';
-import { addCourses, joinCourse, leaveCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
-import { FontAwesome } from '@expo/vector-icons';
-import { scale, standardMargin } from '../../../utilities/scale';
+import {useSelector} from 'react-redux';
+import {
+  black,
+  coral,
+  grey,
+  opacity,
+  white,
+  ButtonBackground,
+} from '../../../utilities/colors';
+import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
+import {loadCoursesData} from '../../../firebaseReduxUtilities/useCourseData';
+import {FontAwesome} from '@expo/vector-icons';
+import {scale, standardMargin} from '../../../utilities/scale';
 import Header from '../../../components/header/Header';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { TabPageProps } from '../../../navigation/navigators/TabNavigator';
-import { avenirBlackCentered } from '../../../utilities/textfont';
-import { courses } from '../../../redux/dummyData';
-import{buttonFont,
-  NameFont,
-  EmailFont,
-}from "../../../utilities/textfont";
+import {CompositeScreenProps} from '@react-navigation/native';
+import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
+import {avenirBlackCentered} from '../../../utilities/textfont';
+import {courses} from '../../../redux/dummyData';
+import {buttonFont, NameFont, EmailFont} from '../../../utilities/textfont';
+import {withTokens} from '../../../firebaseReduxUtilities/tokens';
 
 export type ScheduleScreenProps = EmptyProps;
 
@@ -43,25 +48,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function ScheduleScreen({ route, navigation }: SchedulePageProps) {
-  const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
-  const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
-  const userCourses: string[] = tempCourses ? tempCourses : [];
-
-  // uncomment this and refresh to reset/load dummy data into firebase
-  // addCourses(courses)
-
-  // leaveCourse(userCourses[0])
-
-  // load user.courses list into coursemap
-  useEffect(() => {
-    loadCoursesData(userCourses);
-  }, [userCourses]);
-
-  const userCoursemap = useSelector((state: ReduxState) => state.data.coursemap);
+export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
+  const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalData, setModalData] = useState<string>("");
+  const [modalData, setModalData] = useState<string>('');
 
   const openCourseModal = (id: string) => {
     setModalData(id);
@@ -76,10 +67,14 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     return `${hours_12 + time.slice(2)} ${suffix}`;
   };
 
-  function renderItem({ item: courseId, index }: { item: string; index: number; }) {
-    const course: Course = userCoursemap[courseId];
-    const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${course?.courseTitle}`;
-    const timeLocation = course?.timeLocations?.find((timeloc) => timeloc?.instructionTypeCode === 'LEC');
+  function renderItem({item: courseId, index}: {item: string; index: number}) {
+    const course: Course = coursemap[courseId];
+    const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${
+      course?.courseTitle
+    }`;
+    const timeLocation = course?.timeLocations?.find(
+      timeloc => timeloc?.instructionTypeCode === 'LEC',
+    );
     const instructors = timeLocation?.instructors[0];
     return (
       <Pressable
@@ -92,20 +87,24 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
           height: 'auto',
           padding: 8,
           borderRadius: 15,
-          backgroundColor:ButtonBackground,
+          backgroundColor: ButtonBackground,
           marginBottom: standardMargin,
         }}
         onPress={() => openCourseModal(courseId)}>
         <Text
           style={{
             color: 'black',
-            fontFamily:buttonFont,
+            fontFamily: buttonFont,
             fontWeight: '700',
             fontSize: 18,
           }}>
           {title}
         </Text>
-        <Text style={styles.courseText}>{timeLocation?.days.replaceAll(/\s+/g, ' ').trim()} - {convertTime(timeLocation?.beginTime)} to {convertTime(timeLocation?.endTime)}</Text>
+        <Text style={styles.courseText}>
+          {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+          {convertTime(timeLocation?.beginTime)} to{' '}
+          {convertTime(timeLocation?.endTime)}
+        </Text>
         <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
         <Text style={styles.courseText}>{instructors?.name}</Text>
       </Pressable>
@@ -124,9 +123,11 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     modalData,
   }: CourseInfoModalProps) {
     function generateCourseModal(courseId: string) {
-      const course = userCoursemap[courseId];
+      const course = coursemap[courseId];
       const title = `${course?.courseId.replaceAll(/\s+/g, ' ').trim()}`;
-      const timeLocation = course?.timeLocations?.find((timeloc) => timeloc?.instructionTypeCode === 'LEC');
+      const timeLocation = course?.timeLocations?.find(
+        timeloc => timeloc?.instructionTypeCode === 'LEC',
+      );
       const instructors = timeLocation?.instructors[0];
 
       return (
@@ -144,9 +145,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
             {convertTime(timeLocation?.beginTime)} to{' '}
             {convertTime(timeLocation?.endTime)}
           </Text>
-          <Text style={styles.courseText}>
-            {timeLocation?.buildingRoom}
-          </Text>
+          <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
           <Text style={styles.courseText}>{instructors?.name}</Text>
         </View>
       );
@@ -179,7 +178,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
                 name="close"
                 size={scale(24)}
                 color={coral}
-                style={{ alignSelf: 'flex-end' }}
+                style={{alignSelf: 'flex-end'}}
               />
             </TouchableOpacity>
             {generateCourseModal(modalData)}
@@ -189,7 +188,6 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     );
   }
 
-
   return (
     <View
       style={{
@@ -197,13 +195,20 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
         backgroundColor: white,
       }}>
       <Header centerElement={'Your Courses'} />
-      <View style={{ flex: 1, width: '100%' , backgroundColor:white }}>
-
-        {userCourses.length == 0 ?
-          <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
+      <View style={{flex: 1, width: '100%', backgroundColor: white}}>
+        <Button title="test" onPress={withTokens} />
+        {Object.keys(coursemap).length === 0 ? (
+          <Text
+            style={{
+              alignSelf: 'center',
+              marginTop: 20,
+              fontFamily: avenirBlackCentered,
+              fontSize: 20,
+              color: 'black',
+            }}>
             You are not enrolled in any courses
           </Text>
-          :
+        ) : (
           <FlatList
             style={{}}
             contentContainerStyle={{
@@ -213,11 +218,11 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
               paddingLeft: standardMargin,
               paddingRight: standardMargin,
             }}
-            data={userCourses}
+            data={Object.keys(coursemap)}
             renderItem={renderItem}
             bounces={false}
           />
-        }
+        )}
       </View>
       <CourseInfoModal
         isOpen={modalVisible}
@@ -234,12 +239,12 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
           margin: 10,
         }}
         onPress={() =>
-          appStackNavigate(navigation, 'joinCourses', { id: 'joinCourses' })
+          appStackNavigate(navigation, 'joinCourses', {id: 'joinCourses'})
         }>
         <Text
           style={{
             color: black,
-            fontFamily:buttonFont,
+            fontFamily: buttonFont,
             fontWeight: '700',
             fontSize: 18,
           }}>
@@ -249,4 +254,3 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     </View>
   );
 }
-

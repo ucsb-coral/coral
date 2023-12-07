@@ -28,6 +28,7 @@ const getNewTokens = async (refreshToken: string) => {
 };
 
 export const withTokens = async () => {
+  console.log('withTokens');
   const userId = store.getState().data.myUserId;
   const {refreshToken, expiry} =
     store.getState().data.usermap[userId].refreshData;
@@ -40,8 +41,11 @@ export const withTokens = async () => {
     store.dispatch(
       refreshTokenDataAction({newExpiry: expiry, data: tokenData}),
     );
+    console.log('withTokens refreshed', tokenData);
     return tokenData;
   }
+
   const tokenData = store.getState().data.tokenData!;
+  console.log('withTokens unrefreshed', tokenData, expiry - now);
   return tokenData;
 };

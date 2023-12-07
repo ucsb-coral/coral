@@ -1,3 +1,5 @@
+import {generateCourseId} from '../../../firebaseReduxUtilities/useCourseData';
+
 const initialData: Data = {
   authState: 'NONE',
   myUserId: '',
@@ -5,6 +7,7 @@ const initialData: Data = {
   chatmap: {},
   coursemap: {},
   tokenData: null,
+  quarter: 0,
 };
 
 function initializeState(): Data {
@@ -21,7 +24,7 @@ export function reducer(
     case 'SET_MY_USER': {
       const {id, user} = action;
       const usermap = state.usermap;
-      usermap[id] = {...usermap[id],...user};
+      usermap[id] = {...usermap[id], ...user};
       return {...state, myUserId: id, usermap: {...usermap}};
     }
     case 'JOIN_CHAT': {
@@ -133,6 +136,44 @@ export function reducer(
       state.tokenData = action.data;
       return {
         ...state,
+      };
+    }
+    case 'UPDATE_COURSES': {
+      const {courses} = action;
+      const coursemap: Coursemap = {};
+      courses.forEach(course => {
+        var {courseId, session} = course;
+        const id = generateCourseId(courseId, session);
+        coursemap[id] = course;
+        coursemap[id].courseId = courseId.replace(/\s+/g, ' ').trim();
+      });
+      const myUser = {...state.usermap[state.myUserId!]};
+      const myChats = myUser.chats;
+      const myNewChats: string[] = [];
+      if (myChats) {
+        myChats.forEach(chatId => {
+          if (!coursemap[chatId]) delete state.chatmap[chatId];
+          else myNewChats.push(chatId);
+        });
+        myUser.chats = myNewChats;
+      }
+
+      return {
+        ...state,
+        coursemap: coursemap,
+        chatmap: {...state.chatmap},
+        usermap: {
+          ...state.usermap,
+          [state.myUserId!]: myUser,
+        },
+
+        // quarter: action,
+      };
+    }
+    case 'SET_QUARTER': {
+      return {
+        ...state,
+        quarter: action.quarter,
       };
     }
     case 'SIGN_OUT': {
