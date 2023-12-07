@@ -1,26 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  Pressable,
-  PixelRatio,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import {
-  white,
-  red,
-  black,
-  grey,
-  coral,
-  lightGrey,
-  darkGrey,
-  GreyUseForButton,
-  ButtonBackground,
-} from '../../../utilities/colors';
-import {buttonFont, NameFont, EmailFont} from '../../../utilities/textfont';
+import { StyleSheet, PixelRatio } from 'react-native';
+import { white, red, black, grey, coral, lightGrey, darkGrey, GreyUseForButton, ButtonBackground } from '../../../utilities/colors';
+import { buttonFont, NameFont, EmailFont } from '../../../utilities/textfont';
 
 const DEVICEPIXELRATIO = PixelRatio.get();
 
