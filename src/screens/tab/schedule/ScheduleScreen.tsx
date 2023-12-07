@@ -145,7 +145,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
       const month = courseDate.getMonth();
       const date = courseDate.getDate();
       testingEvents.push({
-        title: courseTitle,
+        title: courseid + ' - ' + courseTitle,
         start: new Date(year, month, date, CourseBeginHours[0], CourseBeginHours[1]),
         end: new Date(year, month, date, CourseEndHours[0], CourseEndHours[1]),
         eventColor: eventColor, // Assign the event color
@@ -310,15 +310,18 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
           />
         ) : (
           <Calendar
-            // mode='schedule'
+            // only show weekdays
+            // mode = 'custom'
+            // weekStartsOn={1}
+            // weekEndsOn={5}
             events={combinedEvents}
             ampm={true}
             height={600}
+
             overlapOffset={0}
             swipeEnabled={false}
             // showTime={false}
             // eventCellStyle={{ backgroundColor: coral }}
-            weekStartsOn={0}
             scrollOffsetMinutes={300}
           />
         )}
