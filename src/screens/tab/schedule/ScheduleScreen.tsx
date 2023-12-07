@@ -50,7 +50,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
       'M': 1,  // Monday
       'T': 2,  // Tuesday
       'W': 3,  // Wednesday
-      'TR': 4,  // Thursday
+      'R': 4,  // Thursday
       'F': 5,  // Friday
       'U': 6   // Saturday
     };
@@ -104,6 +104,10 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
 
 console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
   function generateEventFromCourse(extractCoursesInfo: any) {
+
+    if (!extractCoursesInfo) {
+      return []; // Return an empty array if no courses are available
+    }
     
     const beginTime = extractCoursesInfo?.beginTime;
     // console.log('beginTime', beginTime);
