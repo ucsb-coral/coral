@@ -64,7 +64,7 @@ export default function ChatSettings({
               onPress={() => {
                 () => setIsSelected(!isSelected);
                 leaveCourseChat(currentChatID);
-                leaveCourse(currentChatID);
+                // leaveCourse(currentChatID);
                 appStackNavigate(navigation,'tabNavigator');
               }}>
               <Text style={styles.longBarText}>Leave Chat</Text>

@@ -50,6 +50,12 @@ const leaveCourseAction: Action<LeaveCourseAction> = props => {
     ...props,
   };
 };
+const leaveChatAction: Action<LeaveChatAction> = props => {
+  return {
+    type: 'LEAVE_CHAT',
+    ...props,
+  };
+};
 
 const setTokenDataAction: Action<SetTokenDataAction> = props => {
   return {
@@ -85,6 +91,7 @@ export {
   loadCoursesAction,
   joinCourseAction,
   leaveCourseAction,
+  leaveChatAction,
   setTokenDataAction,
   refreshTokenDataAction,
   signOutAction,
