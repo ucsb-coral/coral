@@ -58,12 +58,14 @@ export const styles = StyleSheet.create({
         fontSize: 12,
         color: black,
         alignSelf: 'flex-end',
+        marginBottom: 2,
     },
     otherSenderId: {
         fontWeight: 'bold',
         fontSize: 12,
         color: black,
         alignSelf: 'flex-start',
+        marginBottom: 2,
     },
     myMessageContainer: {
         backgroundColor: ButtonBackground,
@@ -79,11 +81,19 @@ export const styles = StyleSheet.create({
         maxWidth: '90%',
         alignSelf: 'flex-start',
     },
+    myUserNameAndIconContainer: {
+        flexDirection: 'row', 
+        alignSelf: 'flex-end',
+    },
+    otherUserNameAndIconContainer: {
+        flexDirection: 'row', 
+        alignSelf: 'flex-start',
+    },
     fileContainer: {
         backgroundColor: white,
-        borderWidth: 1, 
+        borderWidth: 1,
         borderColor: grey5,
-        borderRadius: 15, 
+        borderRadius: 15,
         padding: 10,
         maxWidth: '99%',
         alignSelf: 'flex-start',

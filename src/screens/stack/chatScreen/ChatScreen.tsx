@@ -106,7 +106,7 @@ export default function ChatScreen({
           <Header
             centerElement={courseTitle}
             leftHandler={navigation.goBack}
-            rightHandler={() => appStackNavigate(navigation, 'chatSettings')}
+            rightHandler={() => appStackNavigate(navigation, 'chatSettings',{id})}
           />
           <ChatDisplay
             myUserId={myUserId}

@@ -1,5 +1,5 @@
 //UserPage.tsx
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -13,18 +13,18 @@ import {
   Modal,
 } from 'react-native';
 import { coral } from '../../../utilities/colors';
-import {styles} from './UserPageStyle';
-import {useSelector} from 'react-redux';
-import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
-import {CompositeScreenProps} from '@react-navigation/native';
+import { styles } from './UserPageStyle';
+import { useSelector } from 'react-redux';
+import { TabPageProps } from '../../../navigation/navigators/TabNavigator';
+import { CompositeScreenProps } from '@react-navigation/native';
 import {
   AppStackPageProps,
   appStackNavigate,
 } from '../../../navigation/navigators/StackNavigator';
-import {FontAwesome} from '@expo/vector-icons';
-import {Ionicons} from '@expo/vector-icons';
-import {scale} from '../../../utilities/scale';
-import {black} from '../../../utilities/colors';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { scale } from '../../../utilities/scale';
+import { black } from '../../../utilities/colors';
 import ReadMore from '@fawazahmed/react-native-read-more';
 import { setMyUserStatus } from '../../../firebaseReduxUtilities/useUserData';
 
@@ -42,7 +42,7 @@ type ProfilePageProps = CompositeScreenProps<
   TabPageProps<'profile'>
 >;
 
-export default function ProfileScreen({route, navigation}: ProfilePageProps) {
+export default function ProfileScreen({ route, navigation }: ProfilePageProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const user = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!],
@@ -51,24 +51,24 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
   const bio = useSelector((state: ReduxState) => state.data.usermap[myUserId!].bio);
   const status = useSelector((state: ReduxState) => state.data.usermap[myUserId!].status); 
   const [boxHeight, setBoxHeight] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [userPhoto, setUserPhoto] = useState(user?.photo || '');
 
-const userStatus = async () => {
-  const newSatatus = isMuted;
-  try {
-    await firestore()
-      .collection('users')
-      .doc(myUserId)
-      .update({
-        status: isMuted,
-      });
-    console.log('User status updated successfully.');
-  } catch (error) {
-    console.error('Error updating user status:', error);
-  }
+  const userStatus = async () => {
+    const newSatatus = isMuted;
+    try {
+      await firestore()
+        .collection('users')
+        .doc(myUserId)
+        .update({
+          status: isMuted,
+        });
+      console.log('User status updated successfully.');
+    } catch (error) {
+      console.error('Error updating user status:', error);
+    }
   }
 
 
@@ -81,8 +81,8 @@ const userStatus = async () => {
     let fileName = '';
     let contentType = '';
     if (type === 'IMAGE') {
-      console.log('uploading image '+sourceURL);
-      fileName = `${myUserId}/${Date.now()}.jpg`;  
+      console.log('uploading image ' + sourceURL);
+      fileName = `${myUserId}/${Date.now()}.jpg`;
       contentType = 'image/jpg';
     }
     try {
@@ -106,7 +106,7 @@ const userStatus = async () => {
         .update({
           photo: downloadURL,
         });
-        setUserPhoto(downloadURL);
+      setUserPhoto(downloadURL);
     } catch (error) {
       console.error('Upload failed', error);
     }
@@ -136,7 +136,7 @@ const userStatus = async () => {
     const currentUserDocRef = firestore().collection('users').doc(myUserId);
     const docSnapshot = await currentUserDocRef.get();
     const previousImageURL = docSnapshot.data()?.photo;
-  
+
     // Delete the previous image from Firebase Storage (if it exists)
     if (previousImageURL) {
       try {
@@ -146,7 +146,7 @@ const userStatus = async () => {
         console.error('Failed to delete previous image from Firebase Storage', error);
       }
     }
-  
+
     // Upload the new image and update Firestore
     uploadImage(newImageUri, 'IMAGE');
   }
@@ -157,18 +157,18 @@ const userStatus = async () => {
       <SafeAreaView>
         <ScrollView style={styles.ScrollView}>
           <View style={styles.headerWrapper}>
-            <TouchableOpacity 
-                    onPress={() => {setModalVisible(true);}}
-                    activeOpacity={0.6}
+            <TouchableOpacity
+              onPress={() => { setModalVisible(true); }}
+              activeOpacity={0.6}
             >
-          <Image
-            source={
-              userPhoto
-                ? { uri: userPhoto }
-                : require('../../../utilities/image/userImage.png')
-            }
-            style={styles.profileImage}
-          />
+              <Image
+                source={
+                  userPhoto
+                    ? { uri: userPhoto }
+                    : require('../../../utilities/image/userImage.png')
+                }
+                style={styles.profileImage}
+              />
             </TouchableOpacity>
             <View style={styles.userInfoContainer}>
               <Text style={styles.userName}>
@@ -179,19 +179,19 @@ const userStatus = async () => {
           </View>
           <View
             style={styles.userBioContainer}>
-              <View style={styles.userBioTextContainer}>
-                  <ReadMore
-                    numberOfLines={3}
-                    seeMoreText='more'
-                    seeMoreStyle={{color: coral}}
-                    seeLessText='hide'
-                    seeLessStyle={{color: coral}}
-                  >
-                    {
-                      bio ? bio : 'Do not have a bio yet?\nGo to Settings >> Edit Profile to add one!'
-                    }
-                  </ReadMore>
-              </View>
+            <View style={styles.userBioTextContainer}>
+              <ReadMore
+                numberOfLines={3}
+                seeMoreText='more'
+                seeMoreStyle={{ color: coral }}
+                seeLessText='hide'
+                seeLessStyle={{ color: coral }}
+              >
+                {
+                  bio ? bio : 'Do not have a bio yet?\nGo to Settings >> Edit Profile to add one!'
+                }
+              </ReadMore>
+            </View>
           </View>
           <View
             style={styles.userLinksContainer}
@@ -200,7 +200,7 @@ const userStatus = async () => {
               setBoxHeight(containerWidth * 0.35);
             }}>
             <TouchableOpacity
-              style={[styles.box, {height: boxHeight}]}
+              style={[styles.box, { height: boxHeight }]}
               activeOpacity={0.6}
               onPress={() => Linking.openURL('https://www.canvas.ucsb.edu/')}>
               <Text style={styles.userLinks}>Canvas</Text>
@@ -208,7 +208,7 @@ const userStatus = async () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.box, {height: boxHeight}]}
+              style={[styles.box, { height: boxHeight }]}
               activeOpacity={0.6}
               onPress={() => Linking.openURL('https://my.sa.ucsb.edu/gold/')}>
               <Text style={styles.userLinks}>Gold</Text>
@@ -219,19 +219,19 @@ const userStatus = async () => {
             {/* <TouchableOpacity
               style={[
                 styles.longBox,
-                isActive ? {backgroundColor: '#F883793D'} : {},
+                isActive ? { backgroundColor: '#F883793D' } : {},
               ]}
               activeOpacity={0.6}
               onPressIn={() => setIsActive(true)}
               onPressOut={() => setIsActive(false)}
               onPress={() => {
-                setIsMuted(!isMuted); 
-                userStatus(); 
+                setIsMuted(!isMuted);
+                userStatus();
               }}>
-          
+
               <Text style={styles.longBarText}>Status</Text>
               <Ionicons
-                name={isMuted ? 'book-outline' : 'bed-outline'}
+                name={isMuted ? 'bed-outline' : 'book-outline'}
                 size={scale(25)}
                 color={black}
                 style={styles.longBoxIcon}
@@ -292,23 +292,23 @@ const userStatus = async () => {
         }}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-          <View>
-          <Text style={styles.courseModalText}>Choose Your Image</Text>
-          <TouchableOpacity
-          style={styles.courseModalButton}
-          onPress={() => {
-            PickImage();
-            setModalVisible(false);
-          }}>
-          <Text style={styles.courseModalButtonText}> {'Gallery'}</Text>
-            </TouchableOpacity>
+            <View>
+              <Text style={styles.courseModalText}>Choose Your Image</Text>
+              <TouchableOpacity
+                style={styles.courseModalButton}
+                onPress={() => {
+                  PickImage();
+                  setModalVisible(false);
+                }}>
+                <Text style={styles.courseModalButtonText}> {'Gallery'}</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => setModalVisible(false)} style={{paddingLeft:10,paddingBottom:15}}>
+            <TouchableOpacity onPress={() => setModalVisible(false)} style={{ paddingLeft: 10, paddingBottom: 15 }}>
               <FontAwesome
                 name="close"
                 size={scale(24)}
                 color={coral}
-                style={{alignSelf: 'flex-end'}}
+                style={{ alignSelf: 'flex-end' }}
               />
             </TouchableOpacity>
           </View>

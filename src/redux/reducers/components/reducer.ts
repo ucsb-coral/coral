@@ -101,6 +101,25 @@ export function reducer(
         coursemap: {...coursemap, [id]: course},
       };
     }
+    case 'LEAVE_CHAT': {
+      const {id, chat} = action;
+      const myUserId = state.myUserId;
+      const chatmap = state.chatmap;
+      const usermap = state.usermap;
+      const myUser = usermap[myUserId!];
+      const newChats = myUser.chats?.filter(chatId => chatId !== id);
+      return {
+        ...state,
+        usermap: {
+          ...usermap,
+          [myUserId!]: {
+            ...myUser,
+            chats: newChats,
+          },
+        },
+        chatmap: {...chatmap, [id]: chat},
+      };
+    }
     case 'SET_TOKEN_DATA': {
       return {
         ...state,

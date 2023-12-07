@@ -7,8 +7,11 @@ import Video, { VideoRef, ResizeMode } from 'react-native-video';
 import { styles } from '../../../../ChatScreenStyles';
 import Feather from 'react-native-vector-icons/Feather';
 import RNFS from 'react-native-fs';
-// import { red } from '../../../../../../../utilities/colors';
-// import { useSelector } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
+import { scale } from '../../../../../../../utilities/scale';
+import { black } from '../../../../../../../utilities/colors';
+import firestore from '@react-native-firebase/firestore';
+
 export type Props = Message & {
   myUserId: string;
 };
@@ -22,6 +25,22 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
   const handleImagePress = () => {
     setImageViewVisible(true);
   };
+  //const [isMuted, setIsMuted] = useState(false);
+  const [status, setStatus] = useState(0);
+  useEffect(() => {
+    const unsubscribe = firestore()
+      .collection('users')
+      .doc(fromUserId)
+      .onSnapshot(doc => {
+        if (doc.exists) {
+          const userData = doc.data();
+          if (userData) {
+            setStatus(userData.status);
+          }
+        }
+      });
+    return () => unsubscribe();
+  }, [myUserId]);
 
   const handleFilePressToDownload = () => {
     console.log(contentURL);
@@ -43,7 +62,7 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
     );
   };
 
-  const downloadFile = async (url: string, name: string) => {  
+  const downloadFile = async (url: string, name: string) => {
     const decodedUrl = decodeURIComponent(url);
     const fileName = decodedUrl.substring(
       decodedUrl.lastIndexOf('/') + 1,
@@ -130,10 +149,40 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
   }, [contentURL, type]);
   return (
     <View style={[styles.messageBlock]}>
-      <Text style={fromUserId === myUserId ? styles.mySenderId : styles.otherSenderId}>
-        {fromUserName}
-      </Text>
+      <View style={fromUserId === myUserId ? styles.myUserNameAndIconContainer : styles.otherUserNameAndIconContainer}>
+        {fromUserId !== myUserId && (
+          <Ionicons
+            name={
+            status === 0 ? 'book-outline' : 
+            status === 1 ? 'bed-outline' :
+            status === 2 ? 'fast-food-outline' :
+            status === 3 ? 'airplane-outline' :
+            status === 4 ? 'barbell-outline' :
+            'musical-notes-outline'}
+            size={scale(20)}
+            color={black}
+            style={{ marginRight: 5 }}
+          />
+        )}
+        <Text style={fromUserId === myUserId ? styles.mySenderId : styles.otherSenderId}>
+          {fromUserName}
+        </Text>
+        {fromUserId === myUserId && (
+          <Ionicons
+            name={status === 0 ? 'book-outline' : 
+            status === 1 ? 'bed-outline' :
+            status === 2 ? 'fast-food-outline' :
+            status === 3 ? 'airplane-outline' :
+            status === 4 ? 'barbell-outline' :
+            'musical-notes-outline'}
+            size={scale(20)}
+            color={black}
+            style={{ marginLeft: 5 }}
+          />
+        )}
+      </View>
       <View style={fromUserId === myUserId ? styles.myMessageContainer : styles.otherMessageContainer}>
+
         {type === 'TEXT' && <Text style={styles.message}>{content}</Text>}
         {/* {type === 'IMAGE' && <Image source={{ uri: contentURL }} style={{ width: imageSize.width, height: imageSize.height }} />} */}
         {type === 'IMAGE' && (
@@ -180,5 +229,6 @@ export default function MessageBubble({ myUserId, fromUserName, fromUserId, cont
         </TouchableWithoutFeedback>
       </Modal>
     </View>
+    // </View>
   );
 }

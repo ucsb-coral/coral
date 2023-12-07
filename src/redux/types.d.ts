@@ -37,6 +37,12 @@ declare type LeaveCourseAction = {
   course: Course;
 };
 
+declare type LeaveChatAction = {
+  type: 'LEAVE_CHAT';
+  id: string;
+  chat: Chat;
+};
+
 declare type SetTokenDataAction = {
   type: 'SET_TOKEN_DATA';
   data: TokenData;
@@ -64,6 +70,7 @@ declare type ActionTypes =
   | LoadCoursesAction
   | JoinCourseAction
   | LeaveCourseAction
+  | LeaveChatAction
   | SetTokenDataAction
   | RefreshTokenDataAction
   | SignOutAction
