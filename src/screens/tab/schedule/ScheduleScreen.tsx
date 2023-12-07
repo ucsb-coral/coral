@@ -34,34 +34,71 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   }, [userCourses]);
 
   const userCoursemap = useSelector((state: ReduxState) => state.data.coursemap);
-  // console.log('userCoursemap', userCoursemap);
+  // console.log('userCoursemap', userCoursemap['crsfirebase_uid_1']);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>("");
-
-  // calendar dummy data for testing
-  const dummyYearStart = 2023;
-  const dummyYearEnd = 2023;
-  const dummyMonthStart = 12;
-  const dummyDayStart = 1;
-  const dummyMonthEnd = 12;
-  const dummyDayEnd = 30;
   const [showCourses, setShowCourses] = useState(true);
-  const splitTimeHour = (time: string) => {
-    return parseInt(time.split(':')[0]);
-  }
-  // console.log(splitTimeHour('10:00'));
-  const splitTimeMinute = (time: string) => {
-    return parseInt(time.split(':')[1]);
-  }
-  // console.log(splitTimeMinute('10:00'));
 
-  const events = [{
-    allDay: true,
-    title: 'Coffee break',
-    start: new Date(2023, 5, 12, 15, 45), // June 12, 2023, at 15:45
-    end: new Date(2023, 5, 12, 16, 30),
-  }];
+  function splitTime(time: string) {
+    const parts = time.split(':');
+    return [parseInt(parts[0]), parseInt(parts[1])];
+  };
+
+  // const hr = splitTime('10:19')[0];
+  // const min = splitTime('10:19')[1];
+  // console.log("testing", hr);
+  // console.log("testing", min);
+
+  console.log('userCourses', userCourses);
+
+  // function extractCourseInfo(userCourses: string[]) {
+  //   return userCoursemap[userCourses[0]]?.courseId;
+  // }
+  // console.log('testing extractCourseInfo', extractCourseInfo(userCourses));
+
+  function extractCourseInfo1(userCourses: string[], userCoursemap: string[]) {
+    return userCourses.map(courseId => {
+      const course = userCoursemap[courseId];
+      if (!course || !course.timeLocations || course.timeLocations.length === 0) {
+        return null; // here to filter out null values
+      }
+
+      const { beginTime, buildingRoom, days, endTime, instructors } = course.timeLocations[0];
+      return {
+        courseId: course.courseId,
+        courseTitle: course.courseTitle,
+        beginTime,
+        buildingRoom,
+        days,
+        endTime,
+        // instructors
+      };
+    }).filter(courseInfo => courseInfo !== null); // here to filter out null values
+  }
+
+  const extractCoursesInfo = extractCourseInfo1(userCourses, userCoursemap);
+  console.log('extractCoursesInfo: \n', extractCoursesInfo);
+
+  // console.log('testing', extractCoursesInfo[0]?.beginTime);
+
+  function generateTestingEvents2(extractCoursesInfo: any) {
+
+  }
+  // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
+
+  const testingEvents = [
+    {
+      title: 'Meeting1',
+      start: new Date(2023, 11, 7, 15, 45),
+      end: new Date(2023, 11, 7, 16, 30),
+    },
+    {
+      title: 'Meeting2',
+      start: new Date(2023, 11, 8, 15, 45),
+      end: new Date(2023, 11, 8, 16, 30),
+    },
+  ];
 
   // end of calendar dummy data for testing
   const openCourseModal = (id: string) => {
@@ -189,10 +226,10 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
           />
         ) : (
           <Calendar
-            events={events}
+            events={testingEvents}
             height={600}
+            weekStartsOn={0}
             scrollOffsetMinutes={300}
-            weekStartsOn={1}
           />
         )}
 
