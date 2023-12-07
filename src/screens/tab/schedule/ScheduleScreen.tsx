@@ -44,6 +44,21 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     const parts = time.split(':');
     return [parseInt(parts[0]), parseInt(parts[1])];
   };
+  function weekDayToNum(daysString:string) {
+    const daysMap = {
+      'S': 0,  // Sunday
+      'M': 1,  // Monday
+      'T': 2,  // Tuesday
+      'W': 3,  // Wednesday
+      'TR': 4,  // Thursday
+      'F': 5,  // Friday
+      'U': 6   // Saturday
+    };
+  
+    const dayNumbers = daysString.split('').map(day => daysMap[day]);
+  
+    return dayNumbers;
+  }
 
   // const hr = splitTime('10:19')[0];
   // const min = splitTime('10:19')[1];
@@ -87,18 +102,60 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   }
   // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
 
-  const testingEvents = [
-    {
-      title: 'Meeting1',
-      start: new Date(2023, 11, 7, 15, 45),
-      end: new Date(2023, 11, 7, 16, 30),
-    },
-    {
-      title: 'Meeting2',
-      start: new Date(2023, 11, 8, 15, 45),
-      end: new Date(2023, 11, 8, 16, 30),
-    },
-  ];
+console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
+  function generateEventFromCourse(extractCoursesInfo: any) {
+    
+    const beginTime = extractCoursesInfo?.beginTime;
+    // console.log('beginTime', beginTime);
+    const buildingRoom = extractCoursesInfo?.buildingRoom;
+    // console.log('buildingRoom', buildingRoom);
+    const courseid = extractCoursesInfo?.courseId;
+    // console.log('courseid', courseid);
+    const courseTitle = extractCoursesInfo?.courseTitle;
+    // console.log('courseTitle', courseTitle);
+    const days = extractCoursesInfo?.days;
+    // console.log('days', days);
+    const endTime = extractCoursesInfo?.endTime;
+    // console.log('endTime', endTime);
+
+    const CourseBeginHours = splitTime(beginTime);
+    console.log('CourseBeginHours', CourseBeginHours);
+    const CourseEndHours = splitTime(endTime);
+    console.log('CourseEndHours', CourseEndHours);
+    const CourseWeekDay = weekDayToNum(days);
+    console.log('CourseWeekDay', CourseWeekDay);
+
+    const testingEvents = [
+      {
+        title: courseTitle,
+        start: new Date(2023, 11, 7, CourseBeginHours[0], CourseBeginHours[1]),
+        end: new Date(2023, 11, 7, CourseEndHours[0], CourseEndHours[1]),
+      },
+      {
+        title: courseTitle,
+        start: new Date(2023, 11, 8, CourseBeginHours[0], CourseBeginHours[1]),
+        end: new Date(2023, 11, 8, CourseEndHours[0], CourseEndHours[1]),
+      },
+    ];
+    return testingEvents;
+
+  }
+  const testingEvents = generateEventFromCourse(extractCoursesInfo[0]);
+
+
+
+  // const testingEvents = [
+  //   {
+  //     title: 'Meeting1',
+  //     start: new Date(2023, 11, 7, 15, 45),
+  //     end: new Date(2023, 11, 7, 17, 30),
+  //   },
+  //   {
+  //     title: 'Meeting2',
+  //     start: new Date(2023, 11, 8, 15, 45),
+  //     end: new Date(2023, 11, 8, 16, 30),
+  //   },
+  // ];
 
   // end of calendar dummy data for testing
   const openCourseModal = (id: string) => {
@@ -226,8 +283,12 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
           />
         ) : (
           <Calendar
+            mode='3days'
             events={testingEvents}
+            ampm={true}
             height={600}
+            overlapOffset={0}
+            eventCellStyle={{ backgroundColor: coral }}
             weekStartsOn={0}
             scrollOffsetMinutes={300}
           />
