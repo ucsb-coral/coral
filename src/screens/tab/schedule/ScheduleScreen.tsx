@@ -283,7 +283,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
           />
         ) : (
           <Calendar
-            mode='3days'
+            // mode='3days'
             events={testingEvents}
             ampm={true}
             height={600}
