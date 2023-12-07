@@ -13,6 +13,7 @@ import { TabPageProps } from '../../../navigation/navigators/TabNavigator';
 import { courses } from '../../../redux/dummyData';
 import { Calendar } from 'react-native-big-calendar'
 import { styles } from './ScheduleScreenStyles';
+import { current } from '@reduxjs/toolkit';
 export type ScheduleScreenProps = EmptyProps;
 
 // workaround for navigating from tab page to app stack page - not sure if this actually works
@@ -39,6 +40,9 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>("");
   const [showCourses, setShowCourses] = useState(true);
+
+  var today = new Date();
+  var current_day = new Date().getDay();
 
   function splitTime(time: string) {
     const parts = time.split(':');
@@ -132,20 +136,22 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     const CourseWeekDay = weekDayToNum(days);
     console.log('CourseWeekDay', CourseWeekDay);
 
-    const testingEvents = [
-      {
+    const testingEvents: any[] = [];
+    for (let i = 0; i < CourseWeekDay.length; i++) {
+      const course_day = CourseWeekDay[i];
+      const interval = current_day - course_day;
+      const courseDate = new Date(today.getTime() - (interval * 24 * 60 * 60 * 1000));
+      const year = courseDate.getFullYear();
+      const month = courseDate.getMonth();
+      const date = courseDate.getDate();
+      testingEvents.push({
         title: courseTitle,
-        start: new Date(2023, 11, 7, CourseBeginHours[0], CourseBeginHours[1]),
-        end: new Date(2023, 11, 7, CourseEndHours[0], CourseEndHours[1]),
+        start: new Date(year, month, date, CourseBeginHours[0], CourseBeginHours[1]),
+        end: new Date(year, month, date, CourseEndHours[0], CourseEndHours[1]),
         eventColor: eventColor, // Assign the event color
-      },
-      {
-        title: courseTitle,
-        start: new Date(2023, 11, 8, CourseBeginHours[0], CourseBeginHours[1]),
-        end: new Date(2023, 11, 8, CourseEndHours[0], CourseEndHours[1]),
-        eventColor: eventColor, // Assign the event color
-      },
-    ];
+      });
+    }
+
     return testingEvents;
 
   }
@@ -157,11 +163,13 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     const eventsForCourse = generateEventFromCourse(extractCoursesInfo[i]);
     combinedEvents.push(...eventsForCourse); // Spread the events into the combinedEvents array
   }
+
+  combinedEvents.sort(function (a, b) {
+    return a.start - b.start;
+  });
+
   
   console.log('combinedEvents', combinedEvents);
-
-
-
 
   // const testingEvents = [
   //   {
@@ -302,12 +310,13 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
           />
         ) : (
           <Calendar
-            // mode='3days'
+            // mode='schedule'
             events={combinedEvents}
             ampm={true}
             height={600}
-            hourRowHeight={35}
             overlapOffset={0}
+            swipeEnabled={false}
+            // showTime={false}
             // eventCellStyle={{ backgroundColor: coral }}
             weekStartsOn={0}
             scrollOffsetMinutes={300}
@@ -315,11 +324,13 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
         )}
 
       </View>
+
       <CourseInfoModal
         isOpen={modalVisible}
         setIsOpen={setModalVisible}
         modalData={modalData}
       />
+
       <Pressable style={styles.toggleAndManageButton}
         onPress={() => appStackNavigate(navigation, 'joinCourses', { id: 'joinCourses' })}
       >
