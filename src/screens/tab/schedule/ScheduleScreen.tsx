@@ -98,29 +98,22 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           return null; // here to filter out null values
         }
 
-        const {beginTime, buildingRoom, days, endTime, instructors} =
+        const {beginTime, days, endTime} =
           course.timeLocations[0];
         const section_day = course.timeLocations[1]?.days;
         const section_beginTime = course.timeLocations[1]?.beginTime;
         const section_endTime = course.timeLocations[1]?.endTime;
-        const section_buildingRoom = course.timeLocations[1]?.buildingRoom;
-        const section_instructors = course.timeLocations[1]?.instructors;
 
         return {
           uid: courseId,
           courseId: course.courseId,
           courseTitle: course.courseTitle,
           beginTime,
-          buildingRoom,
           days,
           endTime,
-          instructors,
           section_day,
           section_beginTime,
           section_endTime,
-          section_buildingRoom,
-          section_instructors,
-          // instructors
         };
       })
       .filter(courseInfo => courseInfo !== null); // here to filter out null values
@@ -312,20 +305,38 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     function generateCourseModal(courseId: string) {
       const course = coursemap[courseId];
       const title = `${course?.courseId.replaceAll(/\s+/g, ' ').trim()}`;
-      const timeLocation = course?.timeLocations?.find(
+      const timeLocation_LEC = course?.timeLocations?.find(
         timeloc => timeloc?.instructionTypeCode === 'LEC',
       );
-      const instructors = timeLocation?.instructors[0];
+      const instructors_LEC = timeLocation_LEC?.instructors;
+      const timeLocation_SEC = course?.timeLocations?.find(
+        timeloc => timeloc?.instructionTypeCode === 'DIS',
+      );
+      const instructors_SEC = timeLocation_SEC?.instructors;
+
       return (
         <View>
           <Text style={styles.eachCourseInfoTitle}>{title}</Text>
           <Text style={styles.courseText}>
-            {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-            {convertTime(timeLocation?.beginTime)} to{' '}
-            {convertTime(timeLocation?.endTime)}
+            Lecture: { '\n' }
+            {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+            {convertTime(timeLocation_LEC?.beginTime)}  to{' '}
+            {convertTime(timeLocation_LEC?.endTime)}
           </Text>
-          <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
-          <Text style={styles.courseText}>{instructors?.name}</Text>
+          <Text style={styles.courseText}>{timeLocation_LEC?.buildingRoom}</Text>
+          <Text style={styles.courseText}>
+            {instructors_LEC?.map(instructor => instructor?.name).join(', ')}
+          </Text>
+          <Text style={styles.courseText}>
+            Section:  { '\n' }
+            {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+            {convertTime(timeLocation_SEC?.beginTime)}  to{' '}
+            {convertTime(timeLocation_SEC?.endTime)}
+          </Text>
+          <Text style={styles.courseText}>{timeLocation_SEC?.buildingRoom}</Text>
+          <Text style={styles.courseText}>
+            {instructors_SEC?.map(instructor => instructor?.name).join(', ')}
+          </Text>
         </View>
       );
     }
