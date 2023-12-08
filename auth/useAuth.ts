@@ -129,7 +129,7 @@ export default function useAuth() {
   }, []);
 
   useEffect(() => {
-    console.log('STATE', state);
+    // console.log('STATE', state);
   }, [state]);
 
   return {authState};
