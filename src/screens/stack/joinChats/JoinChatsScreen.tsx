@@ -36,7 +36,7 @@ export default function JoinChatsScreen({
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
   const courses = Object.keys(coursemap);
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalData, setModalData] = useState<string>(courses[0]);
+  const [modalData, setModalData] = useState<string>(coursemap[0]?.courseId);
   const [searchText, setSearchText] = useState<string>('');
 
   const openCourseModal = (id: string) => {
@@ -132,7 +132,7 @@ export default function JoinChatsScreen({
       <ScrollView
         style={styles.courseList}
         contentContainerStyle={styles.courseListContainer}>
-        {courses.map(generateCourseCards)}
+        {Object.keys(coursemap).map(generateCourseCards)}
       </ScrollView>
 
       <Modal

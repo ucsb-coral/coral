@@ -30,7 +30,10 @@ const joinButton = (
   <Button label="Join" rounded style={{height: scale(34), width: scale(72)}} />
 );
 
-export default function ChatsScreen({route, navigation}: ChatsPageProps) {
+export default function ChatsScreen({
+  route,
+  navigation,
+}: TabPageProps<'chats'>) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats ?? [],
@@ -40,12 +43,24 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   let resolvedChats = chats ?? ['NONE'];
   console.log(resolvedChats);
 
+  // filter out all chats that only joined in the chat
+  // const joinedCourses = resolvedChats.filter((chatId) => {
+  //   return coursemap[chatId]?.courseTitle;
+  // });
+  const [joinedChats, setJoinedChats] = useState<string[]>([]);
+  useEffect(() => {
+    const filteredChats = Object.keys(coursemap).filter(courseId =>
+      chats?.includes(courseId),
+    );
+    setJoinedChats(filteredChats);
+  }, [chats]);
+
   return (
     <View style={{flex: 1, backgroundColor: white}}>
       <Header
         centerElement={'Chat List'}
-        // rightHandler={() => navigation.navigate('schedule', {})}
-        // rightElement={joinButton}
+        rightHandler={() => navigation.navigate('schedule', {})}
+        rightElement={joinButton}
       />
 
       {/* Current Class List*/}
