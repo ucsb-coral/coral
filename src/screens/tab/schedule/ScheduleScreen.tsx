@@ -59,6 +59,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return [parseInt(parts[0]), parseInt(parts[1])];
   }
   function weekDayToNum(daysString: string) {
+
     const daysMap: {[key: string]: number} = {
       S: 0, // Sunday
       M: 1, // Monday
