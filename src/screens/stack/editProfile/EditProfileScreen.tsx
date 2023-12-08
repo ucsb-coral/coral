@@ -39,21 +39,23 @@ export default function EditProfileScreen({
   const user = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
+  const {preferredName, photo, bio} = user;
 
   const [newPreferredName, setNewPreferredName] = useState<string>(
-    user.preferredName || '',
+    preferredName || '',
   );
-  const [newPhoto, setNewPhoto] = useState<string>(user.photo || '');
-  const [newBio, setNewBio] = useState<string>(user.bio || '');
+  const [newPhoto, setNewPhoto] = useState<string>(photo || '');
+  const [newBio, setNewBio] = useState<string>(bio || '');
   const [isChangeMade, setChangeMade] = useState<boolean>(false);
 
   useEffect(() => {
     setChangeMade(
-      (!!newPreferredName && newPreferredName !== user.preferredName) ||
-        (!!newPhoto && newPhoto !== user.photo) ||
-        (!!newBio && newBio !== user.bio),
+      ((!!newPreferredName || !!preferredName) &&
+        newPreferredName !== preferredName) ||
+        ((!!newPhoto || !!photo) && newPhoto !== photo) ||
+        ((!!newBio || !!bio) && newBio !== bio),
     );
-  }, [newPreferredName, newPhoto, newBio]);
+  }, [newPreferredName, newPhoto, newBio, user]);
 
   const handlePickImage = async () => {
     // const uri: string | null =
@@ -63,12 +65,15 @@ export default function EditProfileScreen({
 
   const handleSave = async () => {
     const userToUpdate: MutableUser = {};
-    if (newPreferredName && newPreferredName !== user.preferredName)
+    if (
+      (!!newPreferredName || !!preferredName) &&
+      newPreferredName !== preferredName
+    )
       userToUpdate.preferredName = newPreferredName;
-    if (newPhoto && newPhoto !== user.photo) {
+    if ((!!newPhoto || !!photo) && newPhoto !== photo) {
       updateUserImage(newPhoto);
     }
-    if (newBio && newBio !== user.bio) userToUpdate.bio = newBio;
+    if ((!!newBio || !!bio) && newBio !== bio) userToUpdate.bio = newBio;
     updateMyUser(userToUpdate);
   };
 
