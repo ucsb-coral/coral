@@ -1,21 +1,32 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { Image, Pressable, TextInput, View, Alert } from 'react-native';
-import { sendPng, sendDisabledPng } from '../../../../../assets/pngs/send';
+import React, {Dispatch, SetStateAction, useEffect, useRef} from 'react';
+import {Image, Pressable, TextInput, View, Alert} from 'react-native';
+import {sendPng, sendDisabledPng} from '../../../../../assets/pngs/send';
 import plusPng from '../../../../../assets/pngs/plus';
-import { scale, standardMargin } from '../../../../../utilities/scale';
+import {scale, standardMargin} from '../../../../../utilities/scale';
 import useCustomActionSheet from '../../../../../utilities/useCustomActionSheet';
 import {
-  black, coral, grey0, grey3, lightGrey, opacity, white, grey5
+  black,
+  coral,
+  grey0,
+  grey3,
+  lightGrey,
+  opacity,
+  white,
+  grey5,
 } from '../../../../../utilities/colors';
 import InputFooterButton from './components/InputFooterButton';
-import { platform } from '../../../../../utilities/platform';
+import {platform} from '../../../../../utilities/platform';
 
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
 // import RNFS from 'react-native-fs';
 import * as DocumentPicker from 'expo-document-picker';
+import {
+  handleSendFileMessage,
+  handleSendMediaMessage,
+} from '../../../../../firebaseReduxUtilities/useChatData';
 
 export type Props = {
   message: string;
@@ -35,9 +46,9 @@ export default function InputFooter({
   selectedInput,
   setSelectedInput,
   handleSendMessage,
-  chatId
+  chatId,
 }: Props) {
-  const { showCustomActionSheet } = useCustomActionSheet();
+  const {showCustomActionSheet} = useCustomActionSheet();
   const inputRef = useRef<TextInput | null>(null);
   const MAX_BASE_HEIGHT = BASE_HEIGHT * 2.5;
   const INPUT_LINE_HEIGHT = BASE_HEIGHT * 0.32;
@@ -59,32 +70,29 @@ export default function InputFooter({
     let contentType = '';
     let filePath = '';
     const fileExtension = sourceURL.split('.').pop(); // get the file extension
-    console.log("File Extension: " + fileExtension);
-    if (type === 'IMAGE') {
+    console.log('File Extension: ' + fileExtension);
+    if (type === 'image') {
       console.log('uploading image');
-      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
-      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      fileName = `${Date.now()}.${fileExtension}`; // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`; // change this later if there is a better way to name/store files
       contentType = `file/${fileExtension}`;
-      console.log("File name: " + fileName);
-      console.log("File path: " + filePath);
-    }
-    else if (type === 'VIDEO') {
+      console.log('File name: ' + fileName);
+      console.log('File path: ' + filePath);
+    } else if (type === 'video') {
       console.log('uploading video');
-      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
-      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      fileName = `${Date.now()}.${fileExtension}`; // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`; // change this later if there is a better way to name/store files
       contentType = `file/${fileExtension}`;
-      console.log("File name: " + fileName);
-      console.log("File path: " + filePath);
-    }
-    else if (type === 'FILE') {
+      console.log('File name: ' + fileName);
+      console.log('File path: ' + filePath);
+    } else if (type === 'file') {
       console.log('uploading file');
-      fileName = `${Date.now()}.${fileExtension}`;  // change this later if there is a better way to name/store files
-      filePath = `${myUserId}/${fileName}`;  // change this later if there is a better way to name/store files
+      fileName = `${Date.now()}.${fileExtension}`; // change this later if there is a better way to name/store files
+      filePath = `${myUserId}/${fileName}`; // change this later if there is a better way to name/store files
       contentType = `file/${fileExtension}`;
-      console.log("File name: " + fileName);
-      console.log("File path: " + filePath);
-    }
-    else {
+      console.log('File name: ' + fileName);
+      console.log('File path: ' + filePath);
+    } else {
       console.log('trying to upload unknown type, rejected');
       return;
     }
@@ -105,19 +113,20 @@ export default function InputFooter({
       await reference.putFile(sourceURL, metadata);
       const downloadURL = await reference.getDownloadURL();
       console.log('File available at', downloadURL);
-      await firestore()
-        .collection('chats')
-        .doc(chatId)
-        .collection('messages')
-        .add({
-          type: type,
-          fromUserName: userName?.firstName + ' ' + userName?.lastName,
-          fromUserId: myUserId,
-          contentURL: downloadURL,
-          createdAt: uploadTimestamp,
-          fileName: fileName,
-          // ...(type === 'FILE' && { fileName: fileName }),
-        });
+      switch (type) {
+        case 'file': {
+          await handleSendFileMessage(myUserId, downloadURL, fileName, chatId);
+          break;
+        }
+        case 'image': {
+          await handleSendMediaMessage('image', myUserId, downloadURL, chatId);
+          break;
+        }
+        case 'video': {
+          await handleSendMediaMessage('video', myUserId, downloadURL, chatId);
+          break;
+        }
+      }
     } catch (error) {
       console.error('Upload failed', error);
     }
@@ -150,9 +159,13 @@ export default function InputFooter({
   };
 
   const handleTakePicture = async () => {
-    const cameraPermissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    const cameraPermissionResult =
+      await ImagePicker.requestCameraPermissionsAsync();
     if (!cameraPermissionResult.granted) {
-      Alert.alert("Camera Permission Required", "You need to allow access to your camera to take a picture.");
+      Alert.alert(
+        'Camera Permission Required',
+        'You need to allow access to your camera to take a picture.',
+      );
       return;
     }
     console.log('camera permission granted');
@@ -162,18 +175,26 @@ export default function InputFooter({
       quality: 1.0,
       // aspect: [4, 3],
     });
-    if (pictureResult.canceled || !pictureResult.assets || pictureResult.assets.length === 0) {
+    if (
+      pictureResult.canceled ||
+      !pictureResult.assets ||
+      pictureResult.assets.length === 0
+    ) {
       return;
     }
     const imageUri = pictureResult.assets[0].uri;
     // console.log(imageUri);
-    uploader(imageUri, 'IMAGE');
+    uploader(imageUri, 'image');
   };
 
   const handleUploadImage = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      Alert.alert("Permission Required", "You need to allow access to your photos to upload an image.");
+      Alert.alert(
+        'Permission Required',
+        'You need to allow access to your photos to upload an image.',
+      );
       return;
     }
     console.log('permission granted');
@@ -185,35 +206,48 @@ export default function InputFooter({
       // aspect: [4, 4], // for cropper, and if the allowEditing is true
     });
     console.log(pickerResult);
-    if (pickerResult.canceled || !pickerResult.assets || pickerResult.assets.length === 0) {
+    if (
+      pickerResult.canceled ||
+      !pickerResult.assets ||
+      pickerResult.assets.length === 0
+    ) {
       return;
     }
     const imageUri = pickerResult.assets[0].uri;
     // console.log(imageUri);
-    uploader(imageUri, 'IMAGE');
+    uploader(imageUri, 'image');
   };
 
   const handleUploadVideo = async () => {
     // https://github.com/react-native-video/react-native-video
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      Alert.alert("Permission Required", "You need to allow access to your photos to upload a video.");
+      Alert.alert(
+        'Permission Required',
+        'You need to allow access to your photos to upload a video.',
+      );
       return;
-    } const pickerResult = await ImagePicker.launchImageLibraryAsync({
+    }
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       quality: 1.0,
     });
     console.log(pickerResult);
-    if (pickerResult.canceled || !pickerResult.assets || pickerResult.assets.length === 0) {
+    if (
+      pickerResult.canceled ||
+      !pickerResult.assets ||
+      pickerResult.assets.length === 0
+    ) {
       return;
     }
     const videoUri = pickerResult.assets[0].uri;
-    uploader(videoUri, 'VIDEO');
+    uploader(videoUri, 'video');
   };
 
   const handleUploadFile = async () => {
     const result = await DocumentPicker.getDocumentAsync({
-      type: "*/*", // all files allowed for now
+      type: '*/*', // all files allowed for now
     });
     if (result.canceled || !result.assets || result.assets.length === 0) {
       return;
@@ -222,10 +256,8 @@ export default function InputFooter({
     // console.log('Uploading file:', firstFile.name);
     const fileUri = firstFile.uri;
     // console.log("File URL:" + fileUri);
-    uploader(fileUri, 'FILE');
+    uploader(fileUri, 'file');
   };
-
-
 
   const openPlusAlert = () =>
     showCustomActionSheet({
@@ -257,12 +289,12 @@ export default function InputFooter({
   }, [selectedInput]);
 
   return (
-    <View style={{
-      backgroundColor: white,
-      borderTopWidth: 1,
-      borderTopColor: grey5,
-
-    }}>
+    <View
+      style={{
+        backgroundColor: white,
+        borderTopWidth: 1,
+        borderTopColor: grey5,
+      }}>
       <Pressable
         onPress={() => setSelectedInput(INPUT_FOOTER_NAME)}
         style={{
@@ -286,7 +318,7 @@ export default function InputFooter({
               style={{
                 width: BASE_HEIGHT * 0.44,
                 height: BASE_HEIGHT * 0.44,
-                marginBottom: BASE_HEIGHT * 0.44 / 2,
+                marginBottom: (BASE_HEIGHT * 0.44) / 2,
               }}
             />
           </InputFooterButton>
@@ -331,7 +363,13 @@ export default function InputFooter({
             onPress={handleSendMessage}
             paddingLeft={PADDING}
             paddingRight={SIDE_PADDING}>
-            <Image source={sendPng} style={{ height: BASE_HEIGHT * 0.44, marginBottom: BASE_HEIGHT * 0.44 / 2, }} />
+            <Image
+              source={sendPng}
+              style={{
+                height: BASE_HEIGHT * 0.44,
+                marginBottom: (BASE_HEIGHT * 0.44) / 2,
+              }}
+            />
           </InputFooterButton>
         </View>
       </Pressable>

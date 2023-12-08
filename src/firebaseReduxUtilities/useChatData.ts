@@ -15,6 +15,7 @@ const getChatDocumentRef = (courseId: string) =>
   firestore().collection('chats').doc(courseId);
 
 const joinCourseChat = async (courseId: string) => {
+  console.log('afadfaf');
   const myUserId = store.getState().data.myUserId;
   const chatDocumentRef = getChatDocumentRef(courseId);
   const myUserDocumentRef = getUserDocumentRef(myUserId);
@@ -61,6 +62,41 @@ const handleSendTextMessage = async (
     type: 'text',
     fromUserId: myUserId,
     content: {text},
+    createdAt: new Date(),
+  };
+  return handleSendMessage(message, chatId);
+};
+
+const handleSendMediaMessage = async (
+  type: 'image' | 'video',
+  myUserId: string,
+  url: string,
+  chatId: string,
+) => {
+  const message: Message = {
+    type,
+    fromUserId: myUserId,
+    content: {
+      url,
+    },
+    createdAt: new Date(),
+  };
+  return handleSendMessage(message, chatId);
+};
+
+const handleSendFileMessage = async (
+  myUserId: string,
+  url: string,
+  fileName: string,
+  chatId: string,
+) => {
+  const message: Message = {
+    type: 'file',
+    fromUserId: myUserId,
+    content: {
+      url,
+      fileName,
+    },
     createdAt: new Date(),
   };
   return handleSendMessage(message, chatId);
@@ -141,4 +177,6 @@ export {
   joinCourseChat,
   leaveCourseChat,
   handleSendTextMessage,
+  handleSendMediaMessage,
+  handleSendFileMessage,
 };

@@ -4,25 +4,6 @@ import {setMyUserAction, updateMyUserAction} from '../redux/actions';
 import storage from '@react-native-firebase/storage';
 import {uploadImage} from '../utilities/images';
 
-export const getNextStatus = (status?: Status) => {
-  switch (status) {
-    case 'reading':
-      return 'sleeping';
-    case 'sleeping':
-      return 'eating';
-    case 'eating':
-      return 'traveling';
-    case 'traveling':
-      return 'working_out';
-    case 'working_out':
-      return 'music';
-    case 'music':
-      return 'reading';
-    default:
-      return 'reading';
-  }
-};
-
 const getUserDocumentRef = (userId: string) =>
   firestore().collection('users').doc(userId);
 

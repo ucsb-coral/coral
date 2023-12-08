@@ -28,10 +28,8 @@ import {black} from '../../../utilities/colors';
 import ReadMore from '@fawazahmed/react-native-read-more';
 import firestore from '@react-native-firebase/firestore';
 import genericUserImagePng from '../../../assets/pngs/userImage.png';
-import {
-  getNextStatus,
-  updateMyUserWithBuffer,
-} from '../../../firebaseReduxUtilities/useUserData';
+import {updateMyUserWithBuffer} from '../../../firebaseReduxUtilities/useUserData';
+import {getNextStatus, getStatusIcon} from '../../../utilities/status';
 
 export type ProfileScreenProps = EmptyProps;
 
@@ -48,25 +46,6 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
 
   const [boxHeight, setBoxHeight] = useState(0);
   const [newStatus, setNewStatus] = useState(status);
-
-  const getStatusIcon = (status?: Status) => {
-    switch (status) {
-      case 'reading':
-        return 'book-outline';
-      case 'sleeping':
-        return 'bed-outline';
-      case 'eating':
-        return 'fast-food-outline';
-      case 'traveling':
-        return 'airplane-outline';
-      case 'working_out':
-        return 'barbell-outline';
-      case 'music':
-        return 'musical-notes-outline';
-      default:
-        return 'md-add-circle-outline';
-    }
-  };
 
   const toggleStatus = () => {
     const statusToSet = getNextStatus(newStatus);

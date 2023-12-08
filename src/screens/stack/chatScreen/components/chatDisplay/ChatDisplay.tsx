@@ -15,8 +15,21 @@ import {
   View,
 } from 'react-native';
 import {height} from '../../../../../utilities/scale';
-import MessageBubble from './components/messageBubble/MessageBubble';
-import { red ,lightGrey, grey0, grey1, grey2, grey3, grey4, grey5} from '../../../../../utilities/colors';
+import MessageBubble from './components/messageBubble/MessageBubbleWrapper';
+import {
+  red,
+  lightGrey,
+  grey0,
+  grey1,
+  grey2,
+  grey3,
+  grey4,
+  grey5,
+} from '../../../../../utilities/colors';
+import TextMessageBubble from './components/messageBubble/bubbles/TextMessageBubble';
+import ImageMessageBubble from './components/messageBubble/bubbles/ImageMessageBubble';
+import VideoMessageBubble from './components/messageBubble/bubbles/VideoMessageBubble';
+import FileMessageBubble from './components/messageBubble/bubbles/FileMessageBubble';
 
 const emptyMap = {};
 const SHOULD_PAGINATE_RATIO = 0.6;
@@ -25,8 +38,9 @@ const DURATION = 200;
 export type Props = {
   myUserId: string;
   setSelectedInput: Dispatch<SetStateAction<string>>;
-  messages: Message[];
+  messages: string[];
   messagemap: Messagemap;
+  usermap: Usermap;
 };
 
 export default function ChatDisplay({
@@ -34,6 +48,7 @@ export default function ChatDisplay({
   setSelectedInput,
   messages,
   messagemap,
+  usermap,
 }: Props) {
   const flatlistRef = useRef<FlatList | null>(null);
 
@@ -41,10 +56,33 @@ export default function ChatDisplay({
 
   const handleMessagePagination = async () => {};
 
-  function renderItem({item, index}: {item: Message; index: number}) {
-    // const message = messagemap[item];
-
-    return <MessageBubble {...item} myUserId={myUserId} />;
+  function renderItem({item, index}: {item: string; index: number}) {
+    const {fromUserId, type, content} = messagemap[item];
+    const fromUser = usermap[fromUserId];
+    const isMyMessage = fromUserId === myUserId;
+    const commonProps = {
+      fromUser,
+      isMyMessage,
+    };
+    console.log('dsasdasd', content);
+    switch (type) {
+      case 'text': {
+        const props = {...commonProps, ...(content as TextMessageContent)};
+        return <TextMessageBubble {...props} />;
+      }
+      case 'image': {
+        const props = {...commonProps, ...(content as MediaMessageContent)};
+        return <ImageMessageBubble {...props} />;
+      }
+      case 'video': {
+        const props = {...commonProps, ...(content as MediaMessageContent)};
+        return <VideoMessageBubble {...props} />;
+      }
+      case 'file': {
+        const props = {...commonProps, ...(content as FileMessageContent)};
+        return <FileMessageBubble {...props} />;
+      }
+    }
   }
 
   return (
@@ -68,18 +106,10 @@ export default function ChatDisplay({
         scrollEventThrottle={250}
         overScrollMode={'never'}
         onScroll={() => {}}
-        // maintainVisibleContentPosition={{
-        //   minIndexForVisible: 0,
-        //   autoscrollToTopThreshold: height / 4,
-        // }}
-
         onContentSizeChange={() => {}}
-        keyExtractor={(item: Message, index: number) => {
-          return `${index}`;
+        keyExtractor={(item: string, index: number) => {
+          return item;
         }}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={() => {}} />
-        }
         data={messages}
         inverted
         keyboardDismissMode={'none'}

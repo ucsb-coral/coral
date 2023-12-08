@@ -29,14 +29,10 @@ export default function ChatScreen({
   const chat = useSelector((state: ReduxState) => state.data.chatmap[id]);
   const {messages, messagemap} = chat ?? {};
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
+  const usermap = useSelector((state: ReduxState) => state.data.usermap);
   const [message, setMessage] = useState<string>('');
   const [selectedInput, setSelectedInput] = useState<string>('');
   const courseTitle = coursemap[id].courseId;
-  const flatListRef = useRef<FlatList<Message>>(null);
-
-  const userName = useSelector(
-    (state: ReduxState) => state.data.usermap[myUserId!],
-  );
 
   const sendTextMessage = async () => {
     const messageToSend = message.trim();
@@ -68,12 +64,13 @@ export default function ChatScreen({
               appStackNavigate(navigation, 'chatSettings', {id})
             }
           />
-          {/* <ChatDisplay
+          <ChatDisplay
             myUserId={myUserId}
             messages={messages}
-            messagemap={{}}
+            messagemap={messagemap}
             setSelectedInput={setSelectedInput}
-          /> */}
+            usermap={usermap}
+          />
         </View>
       </KeyboardAvoidingView>
     </Loading>
