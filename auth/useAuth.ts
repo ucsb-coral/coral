@@ -46,38 +46,33 @@ export const handleSignIn = async (url: string) => {
     const quarter = Number(urlObject.searchParams.get('quarter'));
     if (!userId || !authToken || !accessToken || !idToken || !quarter)
       throw new Error('Missing params');
-    auth()
-      .signInWithCustomToken(authToken)
-      .then(async () => {
-        const myUserDocumentRef = getUserDocumentRef(userId);
-        const userData = (await myUserDocumentRef.get()).data() as
-          | User
-          | undefined;
-        if (!userData) throw new Error('User does not exist');
-        if (userData.chats) {
-          const chatPromises: Promise<void>[] = [];
-          const chatmapToSet: Chatmap = {};
-          userData.chats.forEach(id => {
-            const add = async () => {
-              const chatRef = getChatDocumentRef(id);
-              const data = (await chatRef.get()).data() as Chat;
-              chatmapToSet[id] = data;
-            };
-            chatPromises.push(add());
-          });
-          await Promise.all(chatPromises);
-          store.dispatch(setChatsAction({chatmap: chatmapToSet}));
-        }
-        store.dispatch(setMyUserAction({id: userId, user: userData}));
-        store.dispatch(
-          setTokenDataAction({
-            data: {accessToken, idToken},
-          }),
-        );
-        store.dispatch(setQuarterAction({quarter}));
-        await getCurrentCourses({idToken, quarter});
-        store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
+    await auth().signInWithCustomToken(authToken);
+    const myUserDocumentRef = getUserDocumentRef(userId);
+    const userData = (await myUserDocumentRef.get()).data() as User | undefined;
+    if (!userData) throw new Error('User does not exist');
+    if (userData.chats) {
+      const chatPromises: Promise<void>[] = [];
+      const chatmapToSet: Chatmap = {};
+      userData.chats.forEach(id => {
+        const add = async () => {
+          const chatRef = getChatDocumentRef(id);
+          const data = (await chatRef.get()).data() as Chat;
+          chatmapToSet[id] = data;
+        };
+        chatPromises.push(add());
       });
+      await Promise.all(chatPromises);
+      store.dispatch(setChatsAction({chatmap: chatmapToSet}));
+    }
+    store.dispatch(setMyUserAction({id: userId, data: userData}));
+    store.dispatch(
+      setTokenDataAction({
+        data: {accessToken, idToken},
+      }),
+    );
+    store.dispatch(setQuarterAction({quarter}));
+    await getCurrentCourses({idToken, quarter});
+    store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
   } catch (error) {
     abortSignIn();
   }

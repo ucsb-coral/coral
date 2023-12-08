@@ -15,12 +15,11 @@ import {useSelector} from 'react-redux';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {appStackNavigate} from '../../../navigation/navigators/StackNavigator';
 import {coral, grey} from '../../../utilities/colors';
-// import {coursemap, courses} from '../../../redux/dummyData';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 import {styles} from './ChatJoinStyle';
 import Header from '../../../components/header/Header';
 import {FontAwesome} from '@expo/vector-icons';
-import { avenirBlackCentered } from '../../../utilities/textfont';
+import {avenirBlackCentered} from '../../../utilities/textfont';
 import {scale, standardMargin} from '../../../utilities/scale';
 import SearchInput from '../../../components/searchInput/SearchInput';
 
@@ -34,10 +33,8 @@ export default function JoinChatsScreen({
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats,
   );
-  const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
-  const courses: string[] = tempCourses ? tempCourses : [];
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
-
+  const courses = Object.keys(coursemap);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>(courses[0]);
   const [searchText, setSearchText] = useState<string>('');
@@ -119,11 +116,18 @@ export default function JoinChatsScreen({
         }}
       />
 
-      {courses.length === 0 ? 
-      <Text style={{ alignSelf: 'center', marginTop: 20, fontFamily: avenirBlackCentered, fontSize: 20, color: 'black' }}>
-        You are not enrolled in any courses
-      </Text>
-       : null}
+      {courses.length === 0 ? (
+        <Text
+          style={{
+            alignSelf: 'center',
+            marginTop: 20,
+            fontFamily: avenirBlackCentered,
+            fontSize: 20,
+            color: 'black',
+          }}>
+          You are not enrolled in any courses
+        </Text>
+      ) : null}
 
       <ScrollView
         style={styles.courseList}

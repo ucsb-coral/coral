@@ -22,18 +22,12 @@ import AboutScreen, {
 import JoinChatsScreen, {
   JoinChatsScreenProps,
 } from '../../screens/stack/joinChats/JoinChatsScreen';
-import EditNameScreen, {
-  EditNameScreenProps,
-} from '../../screens/stack/editProfile/EditNameScreen';
 import SettingsScreen, {
   SettingsScreenProps,
 } from '../../screens/stack/settings/SettingsScreen';
-import JoinCoursesScreen, { 
-  JoinCoursesScreenProps, 
-} from '../../screens/stack/joinCourses/JoinCoursesScreen';
-import EditBioScreen, { 
-  EditBioScreenProps,
-} from '../../screens/stack/editProfile/EditBioScreen';
+import EditProfileScreen, {
+  EditProfileScreenProps,
+} from '../../screens/stack/editProfile/EditProfileScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -46,13 +40,11 @@ type AuthStackNavigatorPages = keyof AuthStackNavigatorScreens;
 type AppStackNavigatorScreens = {
   tabNavigator: EmptyProps;
   chat: ChatScreenProps;
-  editName: EditNameScreenProps;
-  editBio: EditBioScreenProps;
   chatSettings: ChatSettingsProps;
   settings: SettingsScreenProps;
+  editProfile: EditProfileScreenProps;
   about: AboutScreenProps;
   joinChats: JoinChatsScreenProps;
-  joinCourses: JoinCoursesScreenProps;
   // ADD more app screens here
 };
 
@@ -79,12 +71,10 @@ export default function StackNavigator() {
           <Stack.Screen name={'tabNavigator'} component={TabNavigator} />
           <Stack.Screen name={'chat'} component={ChatScreen} />
           <Stack.Screen name={'chatSettings'} component={ChatSettings} />
-          <Stack.Screen name={'editName'} component={EditNameScreen} />
-          <Stack.Screen name={'editBio'} component={EditBioScreen} />
           <Stack.Screen name={'about'} component={AboutScreen} />
           <Stack.Screen name={'joinChats'} component={JoinChatsScreen} />
           <Stack.Screen name={'settings'} component={SettingsScreen} />
-          <Stack.Screen name={'joinCourses'} component={JoinCoursesScreen} />
+          <Stack.Screen name={'editProfile'} component={EditProfileScreen} />
           {/* ADD more app stack screens here */}
         </>
       ) : authState === 'LOADING' ? (

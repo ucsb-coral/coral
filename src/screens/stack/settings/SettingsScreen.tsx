@@ -27,9 +27,6 @@ export default function SettingsScreen({
   route,
   navigation,
 }: AppStackPageProps<'settings'>) {
-
-  const [modalVisible, setModalVisible] = useState(false);
-
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={white} barStyle="dark-content" />
@@ -39,7 +36,9 @@ export default function SettingsScreen({
         {/* go to different pages */}
         <View style={styles.settingBarContainer}>
           <TouchableOpacity
-            onPress={() => {setModalVisible(true);}}
+            onPress={() => {
+              appStackNavigate(navigation, 'editProfile');
+            }}
             style={styles.longBox}
             activeOpacity={0.6}>
             <Text style={styles.longBarText}>Edit Profile</Text>
@@ -80,45 +79,6 @@ export default function SettingsScreen({
           </TouchableOpacity>
         </View>
       </ScrollView>
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={[styles.modalContainer]}>
-          <View style={[styles.modalContent,{height:'23%',width:'60%'}]}>
-            <View>
-              <TouchableOpacity
-                style={[styles.courseModalButton,{marginLeft:'20%',width:'93%'}]}
-                onPress={() => {
-                  setModalVisible(false);
-                  appStackNavigate(navigation, 'editName');
-                }}>
-                <Text style={styles.courseModalButtonText}> {'Name'}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.courseModalButton,{marginTop:10,marginLeft:'20%',width:'93%'}]}
-                onPress={() => {
-                  setModalVisible(false);
-                  appStackNavigate(navigation, 'editBio');
-                }}>
-                <Text style={styles.courseModalButtonText}> {'Bio'}</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(false)} style={{paddingLeft:10,paddingBottom:15}}>
-              <FontAwesome
-                name="close"
-                size={scale(24)}
-                color={coral}
-                style={{alignSelf: 'flex-end'}}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 }

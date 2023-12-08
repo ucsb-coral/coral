@@ -16,6 +16,13 @@ const setMyUserAction: Action<SetMyUserAction> = props => {
   };
 };
 
+const updateMyUserAction: Action<UpdateMyUserAction> = props => {
+  return {
+    type: 'UPDATE_MY_USER',
+    ...props,
+  };
+};
+
 const joinChatAction: Action<JoinChatAction> = props => {
   return {
     type: 'JOIN_CHAT',
@@ -30,26 +37,6 @@ const setChatsAction: Action<SetChatsAction> = props => {
   };
 };
 
-const loadCoursesAction: Action<LoadCoursesAction> = props => {
-  return {
-    type: 'LOAD_COURSES',
-    ...props,
-  };
-};
-
-const joinCourseAction: Action<JoinCourseAction> = props => {
-  return {
-    type: 'JOIN_COURSE',
-    ...props,
-  };
-};
-
-const leaveCourseAction: Action<LeaveCourseAction> = props => {
-  return {
-    type: 'LEAVE_COURSE',
-    ...props,
-  };
-};
 const leaveChatAction: Action<LeaveChatAction> = props => {
   return {
     type: 'LEAVE_CHAT',
@@ -100,11 +87,9 @@ const clearStoreAction: Action<ClearStoreAction> = () => {
 export {
   setAuthStateAction,
   setMyUserAction,
+  updateMyUserAction,
   joinChatAction,
   setChatsAction,
-  loadCoursesAction,
-  joinCourseAction,
-  leaveCourseAction,
   leaveChatAction,
   setTokenDataAction,
   refreshTokenDataAction,

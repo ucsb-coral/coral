@@ -1,18 +1,36 @@
-import React, { Dispatch, Key, SetStateAction, useState, useEffect } from 'react';
-import { View, Text, Pressable, StyleSheet, Modal, Button, TouchableOpacity, FlatList } from 'react-native';
-import { AppStackPageProps, appStackNavigate } from '../../../navigation/navigators/StackNavigator';
-import { useSelector } from 'react-redux';
-import { black, coral, grey, opacity, white, ButtonBackground, } from '../../../utilities/colors';
+import React, {Dispatch, Key, SetStateAction, useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  Modal,
+  Button,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import {
+  AppStackPageProps,
+  appStackNavigate,
+} from '../../../navigation/navigators/StackNavigator';
+import {useSelector} from 'react-redux';
+import {
+  black,
+  coral,
+  grey,
+  opacity,
+  white,
+  ButtonBackground,
+} from '../../../utilities/colors';
 // import { joinCourseChat } from '../../../firebaseReduxUtilities/useChatData';
 // import { addCourses, joinCourse, leaveCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
-import { FontAwesome } from '@expo/vector-icons';
-import { scale, standardMargin } from '../../../utilities/scale';
+import {FontAwesome} from '@expo/vector-icons';
+import {scale, standardMargin} from '../../../utilities/scale';
 import Header from '../../../components/header/Header';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { TabPageProps } from '../../../navigation/navigators/TabNavigator';
-import { courses } from '../../../redux/dummyData';
-import { Calendar } from 'react-native-big-calendar'
-import { styles } from './ScheduleScreenStyles';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
+import {Calendar} from 'react-native-big-calendar';
+import {styles} from './ScheduleScreenStyles';
 // import { current } from '@reduxjs/toolkit';
 
 // import { avenirBlackCentered } from '../../../utilities/textfont';
@@ -27,9 +45,9 @@ type SchedulePageProps = CompositeScreenProps<
   TabPageProps<'schedule'>
 >;
 
-export default function ScheduleScreen({ route, navigation }: SchedulePageProps) {
+export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
-
+  const courses = Object.keys(coursemap);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>('');
   const [showCourses, setShowCourses] = useState<boolean>(true);
@@ -39,16 +57,16 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   function splitTime(time: string) {
     const parts = time.split(':');
     return [parseInt(parts[0]), parseInt(parts[1])];
-  };
+  }
   function weekDayToNum(daysString: string) {
-    const daysMap = {
-      'S': 0,  // Sunday
-      'M': 1,  // Monday
-      'T': 2,  // Tuesday
-      'W': 3,  // Wednesday
-      'R': 4,  // Thursday
-      'F': 5,  // Friday
-      'U': 6   // Saturday
+    const daysMap: {[key: string]: number} = {
+      S: 0, // Sunday
+      M: 1, // Monday
+      T: 2, // Tuesday
+      W: 3, // Wednesday
+      R: 4, // Thursday
+      F: 5, // Friday
+      U: 6, // Saturday
     };
 
     const dayNumbers = daysString.split('').map(day => daysMap[day]);
@@ -69,24 +87,31 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   // console.log('testing extractCourseInfo', extractCourseInfo(userCourses));
 
   function extractCourseInfo1() {
-    return Object.keys(coursemap).map((courseId: string) => {
-      const course = coursemap[courseId];
-      if (!course || !course.timeLocations || course.timeLocations.length === 0) {
-        return null; // here to filter out null values
-      }
+    return courses
+      .map((courseId: string) => {
+        const course = coursemap[courseId];
+        if (
+          !course ||
+          !course.timeLocations ||
+          course.timeLocations.length === 0
+        ) {
+          return null; // here to filter out null values
+        }
 
-      const { beginTime, buildingRoom, days, endTime, instructors } = course.timeLocations[0];
-      return {
-        uid: courseId,
-        courseId: course.courseId,
-        courseTitle: course.courseTitle,
-        beginTime,
-        buildingRoom,
-        days,
-        endTime,
-        // instructors
-      };
-    }).filter(courseInfo => courseInfo !== null); // here to filter out null values
+        const {beginTime, buildingRoom, days, endTime, instructors} =
+          course.timeLocations[0];
+        return {
+          uid: courseId,
+          courseId: course.courseId,
+          courseTitle: course.courseTitle,
+          beginTime,
+          buildingRoom,
+          days,
+          endTime,
+          // instructors
+        };
+      })
+      .filter(courseInfo => courseInfo !== null); // here to filter out null values
   }
 
   const extractCoursesInfo = extractCourseInfo1();
@@ -94,14 +119,11 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
 
   // console.log('testing', extractCoursesInfo[0]?.beginTime);
 
-  function generateTestingEvents2(extractCoursesInfo: any) {
-
-  }
+  function generateTestingEvents2(extractCoursesInfo: any) {}
   // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
 
   console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
   function generateEventFromCourse(extractCoursesInfo: any) {
-
     if (!extractCoursesInfo) {
       return []; // Return an empty array if no courses are available
     }
@@ -134,13 +156,21 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     for (let i = 0; i < CourseWeekDay.length; i++) {
       const course_day = CourseWeekDay[i];
       const interval = current_day - course_day;
-      const courseDate = new Date(today.getTime() - (interval * 24 * 60 * 60 * 1000));
+      const courseDate = new Date(
+        today.getTime() - interval * 24 * 60 * 60 * 1000,
+      );
       const year = courseDate.getFullYear();
       const month = courseDate.getMonth();
       const date = courseDate.getDate();
       testingEvents.push({
         title: courseid + ' - ' + courseTitle,
-        start: new Date(year, month, date, CourseBeginHours[0], CourseBeginHours[1]),
+        start: new Date(
+          year,
+          month,
+          date,
+          CourseBeginHours[0],
+          CourseBeginHours[1],
+        ),
         end: new Date(year, month, date, CourseEndHours[0], CourseEndHours[1]),
         eventColor: eventColor, // Assign the event color
         uid: uid,
@@ -148,7 +178,6 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     }
 
     return testingEvents;
-
   }
   const testingEvents = generateEventFromCourse(extractCoursesInfo[0]);
   const extractCoursesLength = extractCoursesInfo.length;
@@ -162,7 +191,6 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   combinedEvents.sort(function (a, b) {
     return a.start - b.start;
   });
-
 
   console.log('combinedEvents', combinedEvents);
 
@@ -198,9 +226,11 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     modalData: string;
   };
-  function renderItem({ item: courseId, index }: { item: string; index: number }) {
+  function renderItem({item: courseId, index}: {item: string; index: number}) {
     const course: Course = coursemap[courseId];
-    const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${course?.courseTitle}`;
+    const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${
+      course?.courseTitle
+    }`;
     const timeLocation = course?.timeLocations?.find(
       timeloc => timeloc?.instructionTypeCode === 'LEC',
     );
@@ -210,13 +240,10 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
         key={index}
         style={styles.courseBlock}
         onPress={() => openCourseModal(courseId)}>
-        <Text
-          style={styles.eachCourseTitle}>
-          {title}
-        </Text>
+        <Text style={styles.eachCourseTitle}>{title}</Text>
         <Text style={styles.courseText}>
-          {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()}
-          - {convertTime(timeLocation?.beginTime)}
+          {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()}-{' '}
+          {convertTime(timeLocation?.beginTime)}
           to {convertTime(timeLocation?.endTime)}
         </Text>
         <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
@@ -225,7 +252,11 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     );
   }
 
-  function CourseInfoModal({ isOpen, setIsOpen, modalData }: CourseInfoModalProps) {
+  function CourseInfoModal({
+    isOpen,
+    setIsOpen,
+    modalData,
+  }: CourseInfoModalProps) {
     function generateCourseModal(courseId: string) {
       const course = coursemap[courseId];
       const title = `${course?.courseId.replaceAll(/\s+/g, ' ').trim()}`;
@@ -235,9 +266,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
       const instructors = timeLocation?.instructors[0];
       return (
         <View>
-          <Text style={styles.eachCourseInfoTitle}>
-            {title}
-          </Text>
+          <Text style={styles.eachCourseInfoTitle}>{title}</Text>
           <Text style={styles.courseText}>
             {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
             {convertTime(timeLocation?.beginTime)} to{' '}
@@ -256,16 +285,14 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
         onRequestClose={() => {
           setIsOpen(false);
         }}>
-        <View
-          style={styles.eachCourseInfoPosition}>
-          <View
-            style={styles.eachCourseInfoWindow}>
+        <View style={styles.eachCourseInfoPosition}>
+          <View style={styles.eachCourseInfoWindow}>
             <TouchableOpacity onPress={() => setIsOpen(false)}>
               <FontAwesome
                 name="close"
                 size={scale(24)}
                 color={coral}
-                style={{ alignSelf: 'flex-end' }}
+                style={{alignSelf: 'flex-end'}}
               />
             </TouchableOpacity>
             {generateCourseModal(modalData)}
@@ -276,22 +303,20 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   }
 
   return (
-    <View
-      style={{ flex: 1, backgroundColor: white }}>
+    <View style={{flex: 1, backgroundColor: white}}>
       <Header centerElement={'Your Courses'} />
-      <View style={{ flex: 1, width: '100%', backgroundColor: white }}>
-
+      <View style={{flex: 1, width: '100%', backgroundColor: white}}>
         {/* Toggle Button */}
         <Pressable
           style={styles.toggleAndManageButton}
           onPress={() => setShowCourses(!showCourses)}>
           <Text style={styles.toggleAndManageButtonText}>
-            {showCourses ? "Show Calendar" : "Show Courses"}
+            {showCourses ? 'Show Calendar' : 'Show Courses'}
           </Text>
         </Pressable>
 
         {/* Conditional Rendering of FlatList or Calendar */}
-        {Object.keys(coursemap).length === 0 ? (
+        {courses.length === 0 ? (
           <Text style={styles.notEnrolledText}>
             You are not enrolled in any courses
           </Text>
@@ -299,14 +324,14 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
           <FlatList
             style={{}}
             contentContainerStyle={styles.courseFlatListStyle}
-            data={Object.keys(coursemap)}
+            data={courses}
             renderItem={renderItem}
             bounces={false}
           />
         ) : (
           <Calendar
             // only show weekdays
-            mode='custom'
+            mode="custom"
             weekStartsOn={1}
             weekEndsOn={5}
             events={combinedEvents}
@@ -320,22 +345,12 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
             scrollOffsetMinutes={300}
           />
         )}
-
       </View>
-
       <CourseInfoModal
         isOpen={modalVisible}
         setIsOpen={setModalVisible}
         modalData={modalData}
       />
-
-      <Pressable style={styles.toggleAndManageButton}
-        onPress={() => appStackNavigate(navigation, 'joinCourses', { id: 'joinCourses' })}
-      >
-        <Text style={styles.toggleAndManageButtonText}>
-          Manage Courses
-        </Text>
-      </Pressable>
     </View>
   );
 }

@@ -6,7 +6,12 @@ declare type SetAuthStateAction = {
 declare type SetMyUserAction = {
   type: 'SET_MY_USER';
   id: string;
-  user: User;
+  data: User;
+};
+
+declare type UpdateMyUserAction = {
+  type: 'UPDATE_MY_USER';
+  data: MutableUser;
 };
 
 declare type JoinChatAction = {
@@ -20,27 +25,9 @@ declare type SetChatsAction = {
   chatmap: Chatmap;
 };
 
-declare type LoadCoursesAction = {
-  type: 'LOAD_COURSES';
-  coursemap: Coursemap;
-};
-
-declare type JoinCourseAction = {
-  type: 'JOIN_COURSE';
-  id: string;
-  course: Course;
-};
-
-declare type LeaveCourseAction = {
-  type: 'LEAVE_COURSE';
-  id: string;
-  course: Course;
-};
-
 declare type LeaveChatAction = {
   type: 'LEAVE_CHAT';
   id: string;
-  chat: Chat;
 };
 
 declare type SetTokenDataAction = {
@@ -77,9 +64,7 @@ declare type ActionTypes =
   | SetMyUserAction
   | JoinChatAction
   | SetChatsAction
-  | LoadCoursesAction
-  | JoinCourseAction
-  | LeaveCourseAction
+  | UpdateMyUserAction
   | LeaveChatAction
   | SetTokenDataAction
   | RefreshTokenDataAction
@@ -130,40 +115,52 @@ declare type RefreshData = {
   expiry: number;
 };
 
-declare type User = {
-  email: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  perm: number;
-  preferredName?: string | null;
-  photo?: string | null;
-  chats?: string[] | null;
-  courses?: string[] | null;
-  refreshData: RefreshData;
-  bio?: string | null;
-  status?: number | 0;
+declare type Status =
+  | 'reading'
+  | 'sleeping'
+  | 'eating'
+  | 'traveling'
+  | 'working_out'
+  | 'music';
+
+declare type MutableUser = {
+  preferredName?: string;
+  bio?: string;
+  status?: Status;
+  photo?: string;
 };
 
-declare type MessageType_TEXT = 'TEXT';
-declare type MessageType_IMAGE = 'IMAGE';
-declare type MessageType_VIDEO = 'VIDEO';
-declare type MessageType_FILE = 'FILE';
+declare type User = MutableUser & {
+  email: string;
+  firstName: string;
+  lastName: string;
+  perm: number;
+  refreshData: RefreshData;
+  chats?: string[];
+};
 
-declare type TextMessageContent = string;
-declare type MessageContent = TextMessageContent;
+declare type MessageType = 'text' | 'image' | 'video' | 'file';
+
+declare type TextMessageContent = {
+  text: string;
+};
+declare type MediaMessageContent = {
+  url: string;
+};
+declare type FileMessageContent = {
+  url: string;
+  fileName: string;
+};
+declare type MessageContent =
+  | TextMessageContent
+  | MediaMessageContent
+  | FileMessageContent;
 
 declare type Message = {
-  type:
-    | MessageType_TEXT
-    | MessageType_IMAGE
-    | MessageType_VIDEO
-    | MessageType_FILE;
-  content?: MessageContent;
-  contentURL?: string;
-  fromUserName: string;
+  type: MessageType;
+  content: MessageContent;
   fromUserId: string;
   createdAt: Date;
-  fileName?: string;
 };
 
 declare type Chat = {

@@ -22,10 +22,17 @@ export function reducer(
     case 'SET_AUTH_STATE':
       return {...state, authState: action.authState};
     case 'SET_MY_USER': {
-      const {id, user} = action;
+      const {id, data} = action;
       const usermap = state.usermap;
-      usermap[id] = {...usermap[id], ...user};
+      usermap[id] = {...usermap[id], ...data};
       return {...state, myUserId: id, usermap: {...usermap}};
+    }
+    case 'UPDATE_MY_USER': {
+      const {data} = action;
+      const myUserId = state.myUserId;
+      const usermap = state.usermap;
+      usermap[myUserId] = {...usermap[myUserId], ...data};
+      return {...state, usermap: {...usermap}};
     }
     case 'JOIN_CHAT': {
       const {id, chat} = action;
@@ -54,73 +61,18 @@ export function reducer(
         chatmap: {...state.chatmap, ...chatmap},
       };
     }
-    case 'LOAD_COURSES': {
-      const {coursemap} = action;
-      return {
-        ...state,
-        coursemap: {...state.coursemap, ...coursemap},
-      };
-    }
-    case 'JOIN_COURSE': {
-      const {id, course} = action;
-      const myUserId = state.myUserId;
-      const coursemap = state.coursemap;
-      const usermap = state.usermap;
-      const myUser = usermap[myUserId!];
-      if (!myUser.courses) {
-        myUser.courses = [];
-      } else if (!myUser.courses.includes(id)) {
-        myUser.courses = [...myUser.courses, id];
-      }
-      const newCourses = myUser.courses;
-      return {
-        ...state,
-        usermap: {
-          ...usermap,
-          [myUserId!]: {
-            ...myUser,
-            courses: newCourses,
-          },
-        },
-        coursemap: {...coursemap, [id]: course},
-      };
-    }
-    case 'LEAVE_COURSE': {
-      const {id, course} = action;
-      const myUserId = state.myUserId;
-      const coursemap = state.coursemap;
-      const usermap = state.usermap;
-      const myUser = usermap[myUserId!];
-      const newCourses = myUser.courses?.filter(courseId => courseId !== id);
-      return {
-        ...state,
-        usermap: {
-          ...usermap,
-          [myUserId!]: {
-            ...myUser,
-            courses: newCourses,
-          },
-        },
-        coursemap: {...coursemap, [id]: course},
-      };
-    }
     case 'LEAVE_CHAT': {
-      const {id, chat} = action;
+      const {id} = action;
       const myUserId = state.myUserId;
-      const chatmap = state.chatmap;
-      const usermap = state.usermap;
+      const chatmap = {...state.chatmap};
+      delete chatmap[id];
+      const usermap = {...state.usermap};
       const myUser = usermap[myUserId!];
-      const newChats = myUser.chats?.filter(chatId => chatId !== id);
+      usermap[myUserId].chats = myUser.chats?.filter(chatId => chatId !== id);
       return {
         ...state,
-        usermap: {
-          ...usermap,
-          [myUserId!]: {
-            ...myUser,
-            chats: newChats,
-          },
-        },
-        chatmap: {...chatmap, [id]: chat},
+        usermap,
+        chatmap,
       };
     }
     case 'SET_TOKEN_DATA': {

@@ -1,78 +1,93 @@
 import firestore from '@react-native-firebase/firestore';
 import {store} from '../redux/useRedux';
-import {setChatsAction, setMyUserAction} from '../redux/actions';
-import {coursemap} from '../redux/dummyData';
+import {setMyUserAction, updateMyUserAction} from '../redux/actions';
+import storage from '@react-native-firebase/storage';
+import {uploadImage} from '../utilities/images';
+
+export const getNextStatus = (status?: Status) => {
+  switch (status) {
+    case 'reading':
+      return 'sleeping';
+    case 'sleeping':
+      return 'eating';
+    case 'eating':
+      return 'traveling';
+    case 'traveling':
+      return 'working_out';
+    case 'working_out':
+      return 'music';
+    case 'music':
+      return 'reading';
+    default:
+      return 'reading';
+  }
+};
 
 const getUserDocumentRef = (userId: string) =>
   firestore().collection('users').doc(userId);
 
-const setMyUserFirebaseRedux = async (id: string, user: User) => {
-  let userToSet: User = user;
-  const myUserDocumentRef = getUserDocumentRef(id);
-  const userDocSnapshot = await myUserDocumentRef.get();
-  if (userDocSnapshot.exists) {
-    const data = userDocSnapshot.data();
-    if (data) userToSet = data as User;
-    if (userToSet.chats) {
-      const chatPromises: Promise<void>[] = [];
-      const chatmapToSet: Chatmap = {};
-      userToSet.chats.forEach(id => {
-        const add = async () => {
-          const snap = await firestore().collection('chats').doc(id).get();
-          const data = snap.data() as Chat;
-          chatmapToSet[id] = data;
-        };
-        chatPromises.push(add());
-      });
-      await Promise.all(chatPromises);
-      store.dispatch(setChatsAction({chatmap: chatmapToSet}));
-    }
-  } else await myUserDocumentRef.set(user);
-  store.dispatch(setMyUserAction({id, user: userToSet}));
+const updateMyUser = async (data: MutableUser) => {
+  const myUserId = store.getState().data.myUserId;
+  const myUserDocumentRef = getUserDocumentRef(myUserId);
+  await myUserDocumentRef.update(data);
+  store.dispatch(updateMyUserAction({data}));
 };
 
-const setMyUserBio = async (id: string, user: User, bio: string) => {
-  let UserToSet: User = user;
-  const myUserDocumentRef = getUserDocumentRef(id);
-  const userDocSnapshot = await myUserDocumentRef.get();
-  if (userDocSnapshot.exists) {
-    const data = userDocSnapshot.data();
-    if (data) UserToSet = data as User;
-    UserToSet.bio = bio;
-    await myUserDocumentRef.set(UserToSet);
-    store.dispatch(setMyUserAction({id, user: UserToSet}));
+var mutableUser: MutableUser = {};
+var mutableUserBufferTimeout: NodeJS.Timeout | null = null;
+var bufferMS = 2000;
+
+const updateMyUserWithBuffer = async (data: MutableUser) => {
+  if (mutableUserBufferTimeout) clearTimeout(mutableUserBufferTimeout);
+  mutableUser = {...mutableUser, ...data};
+  mutableUserBufferTimeout = setTimeout(() => {
+    updateMyUser(mutableUser);
+    mutableUserBufferTimeout = null;
+    mutableUser = {};
+  }, bufferMS);
+};
+
+const deleteOldUserImage = async (myUserId: string) => {
+  // Retrieve the current profile picture URL from Firestore
+  const currentUserDocRef = getUserDocumentRef(myUserId);
+  const docSnapshot = await currentUserDocRef.get();
+  const previousImageURL = docSnapshot?.data()?.photo;
+
+  // Delete the previous image from Firebase Storage (if it exists)
+  if (previousImageURL) {
+    try {
+      const storageRef = storage().refFromURL(previousImageURL);
+      await storageRef.delete();
+    } catch (error) {
+      throw new Error('Error deleting previous profile image.');
+    }
+  } else throw new Error('Error deleting previous profile image.');
+};
+
+const uploadUserImage = async (sourceUrl: string, myUserId: string) => {
+  const fileName = `${myUserId}/${Date.now()}.jpg`;
+  try {
+    const url = await uploadImage(sourceUrl, fileName);
+    return url;
+  } catch (error) {
+    console.error('Upload failed', error);
   }
-}
+};
 
-const setMyUserPreferredName = async (id: string, user: User, name: string) => {
-  let UserToSet: User = user;
-  const myUserDocumentRef = getUserDocumentRef(id);
-  const userDocSnapshot = await myUserDocumentRef.get();
-  if (userDocSnapshot.exists) {
-    const data = userDocSnapshot.data();
-    if (data) UserToSet = data as User;
-    UserToSet.preferredName = name;
-    await myUserDocumentRef.set(UserToSet);
-    store.dispatch(setMyUserAction({id, user: UserToSet}));
+const updateUserImage = async (url: string) => {
+  const myUserId = store.getState().data.myUserId;
+  try {
+    await deleteOldUserImage(myUserId);
+    const photo = await uploadUserImage(url, myUserId);
+    if (photo) updateMyUser({photo});
+  } catch (error) {
+    console.error('Error updating user image', error);
   }
-}
+};
 
-const setMyUserStatus = async (id: string, user: User) => {
-  let UserToSet: User = user;
-  const myUserDocumentRef = getUserDocumentRef(id);
-  const userDocSnapshot = await myUserDocumentRef.get();
-  if (userDocSnapshot.exists) {
-    const data = userDocSnapshot.data();
-    if (data) UserToSet = data as User;
-    if (UserToSet.status == null) UserToSet.status = 0; 
-    UserToSet.status = (UserToSet.status + 1) % 6;
-    await myUserDocumentRef.set(UserToSet);
-    store.dispatch(setMyUserAction({id, user: UserToSet}));
-  }
-}
-
-export default function useUserData() {
-  return {};
-}
-
-export {getUserDocumentRef, setMyUserFirebaseRedux, setMyUserBio, setMyUserPreferredName, setMyUserStatus};
+export {
+  getUserDocumentRef,
+  updateMyUser,
+  updateMyUserWithBuffer,
+  updateUserImage,
+};

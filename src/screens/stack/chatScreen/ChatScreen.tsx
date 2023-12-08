@@ -6,7 +6,6 @@ import {
 } from '../../../navigation/navigators/StackNavigator';
 import Loading from '../../../components/Loading';
 import {useSelector} from 'react-redux';
-import {coursemap} from '../../../redux/dummyData';
 import Header from '../../../components/header/Header';
 import InputFooter from './components/inputFooter/InputFooter';
 import ChatDisplay from './components/chatDisplay/ChatDisplay';
@@ -15,6 +14,7 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import {styles} from './ChatScreenStyles';
 import {black, white} from '../../../utilities/colors';
+import {handleSendTextMessage} from '../../../firebaseReduxUtilities/useChatData';
 
 export type ChatScreenProps = {
   id: string;
@@ -25,7 +25,9 @@ export default function ChatScreen({
   navigation,
 }: AppStackPageProps<'chat'>) {
   const {id} = route.params;
+  const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chat = useSelector((state: ReduxState) => state.data.chatmap[id]);
+  const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
   const [message, setMessage] = useState<string>('');
   const [selectedInput, setSelectedInput] = useState<string>('');
   const courseTitle = coursemap[id].courseTitle;
@@ -36,60 +38,20 @@ export default function ChatScreen({
   const [messages, setMessages] = useState<Message[]>([]);
   const flatListRef = useRef<FlatList<Message>>(null);
 
-  const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
-
   const userName = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
-  // console.log('myUserId:', myUserId);
-  // console.log('userName:', userName?.firstName + ' ' + userName?.lastName);
 
-  const sendMessage = async () => {
+  const sendTextMessage = async () => {
+    const messageToSend = message.trim();
     if (message.trim().length === 0) {
       // check if message is empty
       return;
     }
-
-    try {
-      await firestore()
-        .collection('chats')
-        .doc(id)
-        .collection('messages')
-        .add({
-          type: 'TEXT',
-          fromUserName: userName?.firstName + ' ' + userName?.lastName,
-          fromUserId: myUserId,
-          content: message,
-          createdAt: new Date().toISOString(),
-        });
-
-      setMessage(''); // clear message input when message is sent
-    } catch (error) {
-      console.error('Error sending message: ', error);
-    }
+    handleSendTextMessage(messageToSend, myUserId, id);
+    setMessage(''); // clear message input when message is sent
   };
 
-  useEffect(() => {
-    const unsubscribe = firestore()
-      .collection('chats')
-      .doc(id)
-      .collection('messages')
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(snapshot => {
-        const messages = snapshot.docs.map(
-          doc =>
-            ({
-              ...doc.data(),
-            } as Message),
-        );
-        setMessages([...messages]);
-        flatListRef.current?.scrollToEnd({animated: true});
-      });
-
-    return () => unsubscribe(); // unsubscribe when unmount
-  }, [id]);
-
-  // console.log('messages:', messages);
   return (
     <Loading isReady={!!chat}>
       <KeyboardAvoidingView
@@ -99,14 +61,16 @@ export default function ChatScreen({
           setMessage={setMessage}
           selectedInput={selectedInput}
           setSelectedInput={setSelectedInput}
-          handleSendMessage={sendMessage}
+          handleSendMessage={sendTextMessage}
           chatId={id}
         />
         <View style={{flex: 1, backgroundColor: white}}>
           <Header
             centerElement={courseTitle}
             leftHandler={navigation.goBack}
-            rightHandler={() => appStackNavigate(navigation, 'chatSettings',{id})}
+            rightHandler={() =>
+              appStackNavigate(navigation, 'chatSettings', {id})
+            }
           />
           <ChatDisplay
             myUserId={myUserId}

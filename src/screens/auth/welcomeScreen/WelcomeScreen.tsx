@@ -4,6 +4,7 @@ import {AuthStackPageProps} from '../../../navigation/navigators/StackNavigator'
 import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 import {styles} from './WelcomeScreenStyle';
 import {signIn} from '../../../../auth/useAuth';
+import coralPinkPng from '../../../assets/pngs/coralPink.png';
 
 export type WelcomeScreenProps = EmptyProps;
 
@@ -13,10 +14,7 @@ export default function WelcomeScreen({
 }: AuthStackPageProps<'welcome'>) {
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../../../utilities/image/Coral_pink.png')}
-        style={styles.image}
-      />
+      <Image source={coralPinkPng} style={styles.image} />
       <GoogleSigninButton
         style={styles.button}
         size={GoogleSigninButton.Size.Wide}
