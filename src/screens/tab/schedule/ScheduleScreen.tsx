@@ -125,7 +125,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   }
 
   const extractCoursesInfo = extractCourseInfo1();
-  console.log('extractCoursesInfo: \n', extractCoursesInfo);
+  // console.log('extractCoursesInfo: \n', extractCoursesInfo);
 
   // console.log('testing', extractCoursesInfo[0]?.beginTime);
 
@@ -162,11 +162,11 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     // console.log('section_endTime', section_endTime);
 
     const CourseBeginHours = splitTime(beginTime);
-    console.log('CourseBeginHours', CourseBeginHours);
+    // console.log('CourseBeginHours', CourseBeginHours);
     const CourseEndHours = splitTime(endTime);
-    console.log('CourseEndHours', CourseEndHours);
+    // console.log('CourseEndHours', CourseEndHours);
     const CourseWeekDay = weekDayToNum(days);
-    console.log('CourseWeekDay', CourseWeekDay);
+    // console.log('CourseWeekDay', CourseWeekDay);
 
     const testingEvents: any[] = [];
     for (let i = 0; i < CourseWeekDay.length; i++) {
@@ -231,7 +231,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   }
   const testingEvents = generateEventFromCourse(extractCoursesInfo[0]);
   const extractCoursesLength = extractCoursesInfo.length;
-  console.log('extractCoursesLength', extractCoursesLength);
+  // console.log('extractCoursesLength', extractCoursesLength);
   const combinedEvents = [];
   for (let i = 0; i < extractCoursesLength; i++) {
     const eventsForCourse = generateEventFromCourse(extractCoursesInfo[i]);
@@ -242,7 +242,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return a.start - b.start;
   });
 
-  console.log('combinedEvents', combinedEvents);
+  // console.log('combinedEvents', combinedEvents);
 
   // const testingEvents = [
   //   {
@@ -266,9 +266,12 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const convertTime = (time: string | undefined) => {
     if (!time) return '';
     let hours_24 = parseInt(time.slice(0, 2));
-    let suffix = hours_24 <= 12 ? 'AM' : 'PM';
-    let hours_12 = (((hours_24 + 11) % 12) + 1).toString();
-    return `${hours_12 + time.slice(2)} ${suffix}`;
+    console.log("hours_23",hours_24);
+    // let suffix = hours_24 <= 12 ? 'AM' : 'PM';
+    // let hours_12 = (((hours_24 + 11) % 12) + 1).toString();
+    // return `${hours_12 + time.slice(2)} ${suffix}`;
+    let timer = ( hours_24 + time.slice(2)).toString();
+    return timer + " "
   };
 
   type CourseInfoModalProps = {
@@ -409,10 +412,10 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             weekStartsOn={1}
             weekEndsOn={5}
             events={combinedEvents}
-            ampm={true}
+            ampm={false}
             height={600}
             onPressEvent={(event: any) => openCourseModal(event.uid)}
-            overlapOffset={0}
+            overlapOffset={20}
             swipeEnabled={false}
             // showTime={false}
             // eventCellStyle={{ backgroundColor: coral }}
