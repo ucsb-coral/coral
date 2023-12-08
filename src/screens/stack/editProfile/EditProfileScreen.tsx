@@ -74,6 +74,8 @@ export default function EditProfileScreen({
     }
     if ((!!newBio || !!bio) && newBio !== bio) userToUpdate.bio = newBio;
     updateMyUser(userToUpdate);
+    navigation.goBack();
+    navigation.goBack();
   };
   console.log(newPhoto, photo);
   const handleExit = () => {

@@ -54,6 +54,8 @@ const deleteOldUserImage = async (myUserId: string) => {
   const previousImageURL = docSnapshot?.data()?.photo;
 
   // Delete the previous image from Firebase Storage (if it exists)
+  const googleusercontent = 'googleusercontent';
+  if (previousImageURL.includes(googleusercontent)) return;
   if (previousImageURL) {
     const storageRef = storage().refFromURL(previousImageURL);
     await storageRef.delete();
