@@ -16,20 +16,33 @@ import {
 import {scale} from '../../utilities/scale';
 
 export type Props = TouchableOpacityProps & {
+  height?: number;
   label: string;
+  rounded?: boolean;
 };
 
-export default function FooterButton({label, style, ...rest}: Props) {
+export default function Button({
+  height,
+  label,
+  rounded,
+  style,
+  ...rest
+}: Props) {
+  const resolvedHeight = height ?? scale(40);
+  const fontSize = resolvedHeight * 0.42;
+  const borderRadius = rounded ? resolvedHeight / 2 : resolvedHeight * 0.32;
   return (
     <TouchableOpacity
       style={{
         ...{
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
           backgroundColor: coral,
-          width: '100%',
-          height: scale(50),
+          height: resolvedHeight,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: borderRadius,
+          paddingLeft: scale(16),
+          paddingRight: scale(16),
         },
         ...(style as {}),
       }}
@@ -39,11 +52,11 @@ export default function FooterButton({label, style, ...rest}: Props) {
           color: white,
           textAlign: 'center',
           fontFamily: avenirBlackCentered,
-          fontSize: scale(15),
+          fontSize,
           includeFontPadding: false,
           textAlignVertical: 'center',
         }}>
-        Join
+        {label}
       </Text>
     </TouchableOpacity>
   );

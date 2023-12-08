@@ -5,7 +5,6 @@ import {
   Pressable,
   StyleSheet,
   Modal,
-  Button,
   TouchableOpacity,
   FlatList,
 } from 'react-native';
@@ -31,6 +30,8 @@ import {CompositeScreenProps} from '@react-navigation/native';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 import {Calendar} from 'react-native-big-calendar';
 import {styles} from './ScheduleScreenStyles';
+import Button from '../../../components/button/Button';
+import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 // import { current } from '@reduxjs/toolkit';
 
 // import { avenirBlackCentered } from '../../../utilities/textfont';
@@ -48,6 +49,9 @@ type SchedulePageProps = CompositeScreenProps<
 export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
   const courses = Object.keys(coursemap);
+  const chats = useSelector(
+    (state: ReduxState) => state.data.usermap[state.data.myUserId]?.chats,
+  );
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>('');
   const [showCourses, setShowCourses] = useState<boolean>(true);
@@ -248,6 +252,14 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
         </Text>
         <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
         <Text style={styles.courseText}>{instructors?.name}</Text>
+        <Button
+          label={chats?.includes(courseId) ? 'Open Chat' : 'Join Chat'}
+          style={{alignSelf: 'flex-end', backgroundColor: opacity(coral, 0.8)}}
+          onPress={() => {
+            if (!chats?.includes(courseId)) joinCourseChat(courseId);
+            appStackNavigate(navigation, 'chat', {id: courseId});
+          }}
+        />
       </Pressable>
     );
   }
@@ -307,13 +319,11 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       <Header centerElement={'Your Courses'} />
       <View style={{flex: 1, width: '100%', backgroundColor: white}}>
         {/* Toggle Button */}
-        <Pressable
-          style={styles.toggleAndManageButton}
-          onPress={() => setShowCourses(!showCourses)}>
-          <Text style={styles.toggleAndManageButtonText}>
-            {showCourses ? 'Show Calendar' : 'Show Courses'}
-          </Text>
-        </Pressable>
+        <Button
+          label={showCourses ? 'Show Calendar' : 'Show Courses'}
+          style={{marginLeft: 16, marginRight: 16, marginBottom: 16}}
+          onPress={() => setShowCourses(s => !s)}
+        />
 
         {/* Conditional Rendering of FlatList or Calendar */}
         {courses.length === 0 ? (

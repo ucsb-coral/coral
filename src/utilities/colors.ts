@@ -12,14 +12,6 @@ const coral = '#F88379';
 
 const red = '#FF0000';
 
-// this color is used on Binyu user page welcome to use
-const lightGrey = '#999'; //for user Email
-const darkGrey = '#666'; //for user Name
-const GreyUseForButton = '#333'; //for user button
-const ButtonBackground = '#F883791A'; //for user button background
-
-const transparent = 'transparent';
-
 const opacityToHex = (opacity: number) => {
   return (opacity * 255).toString(16).substr(0, 2);
 };
@@ -27,6 +19,15 @@ const opacityToHex = (opacity: number) => {
 const opacity = (color?: string, opacity?: number) => {
   return `${color ?? '#FFFFFF'}${opacityToHex(opacity ?? 1)}`;
 };
+
+// this color is used on Binyu user page welcome to use
+const lightGrey = '#999'; //for user Email
+const darkGrey = '#666'; //for user Name
+const GreyUseForButton = '#333'; //for user button
+const ButtonBackground = opacity(coral, 0.15); //for user button background
+const cardBackground = opacity(coral, 0.1); //for user button background
+
+const transparent = 'transparent';
 
 export {
   white,
@@ -45,5 +46,6 @@ export {
   transparent,
   GreyUseForButton,
   ButtonBackground,
+  cardBackground,
   opacity,
 };

@@ -1,6 +1,15 @@
 import {Text, TextInput, TextInputProps, View} from 'react-native';
-import {GreyUseForButton, darkGrey} from '../../utilities/colors';
+import {
+  GreyUseForButton,
+  coral,
+  darkGrey,
+  grey0,
+  grey3,
+  grey5,
+  opacity,
+} from '../../utilities/colors';
 import {NameFont, buttonFont} from '../../utilities/textfont';
+import {scale} from '../../utilities/scale';
 
 export type Props = TextInputProps & {
   label: string;
@@ -13,8 +22,16 @@ export default function Input({
   maxLength,
   ...rest
 }: Props) {
+  const {multiline} = rest;
   return (
-    <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+    <View
+      style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        width: '100%',
+        padding: scale(16),
+        paddingBottom: 0,
+      }}>
       <Text
         style={{
           fontSize: 18,
@@ -22,34 +39,44 @@ export default function Input({
           color: GreyUseForButton,
           textAlign: 'left',
           fontFamily: buttonFont,
+          marginBottom: scale(6),
         }}>
         {`${label}:`}
       </Text>
-      <TextInput
+      <View
         style={{
-          ...{
-            fontSize: 20,
-            fontWeight: '600',
-            fontFamily: NameFont,
-            color: darkGrey,
-            textAlignVertical: 'top',
-            flex: 1,
-            padding: 0,
-            marginLeft: 2,
-          },
-          ...(style as {}),
-        }}
-        value={value}
-        maxLength={maxLength}
-      />
+          backgroundColor: opacity(coral, 0.2),
+          width: '100%',
+          borderRadius: scale(6),
+          paddingTop: multiline ? scale(8) : 0,
+          paddingBottom: multiline ? scale(12) : 0,
+        }}>
+        <TextInput
+          style={{
+            ...{
+              fontSize: 20,
+              fontWeight: '600',
+              fontFamily: NameFont,
+              minHeight: multiline ? scale(120) : scale(55),
+              padding: 0,
+              marginLeft: scale(12),
+            },
+            ...(style as {}),
+          }}
+          value={value}
+          maxLength={maxLength}
+          {...rest}
+        />
+      </View>
       {!!maxLength && (
         <Text
           style={{
-            fontSize: 12,
-            fontWeight: '100',
-            color: GreyUseForButton,
             fontFamily: buttonFont,
-            textAlign: 'right',
+            marginTop: scale(4),
+            fontSize: scale(12),
+            fontWeight: '400',
+            color: GreyUseForButton,
+            alignSelf: 'flex-end',
           }}>
           {maxLength - (value?.length ?? 0)}
         </Text>

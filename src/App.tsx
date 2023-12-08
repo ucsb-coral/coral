@@ -21,6 +21,7 @@ export default function App() {
     }
     prepare();
   }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={<></>} persistor={persistor}>

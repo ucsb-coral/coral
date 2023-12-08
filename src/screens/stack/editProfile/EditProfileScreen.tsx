@@ -28,6 +28,7 @@ import {
   updateMyUser,
   updateUserImage,
 } from '../../../firebaseReduxUtilities/useUserData';
+import Button from '../../../components/button/Button';
 
 export type EditProfileScreenProps = EmptyProps;
 export default function EditProfileScreen({
@@ -39,12 +40,12 @@ export default function EditProfileScreen({
     (state: ReduxState) => state.data.usermap[myUserId!],
   );
 
-  const [newPreferredName, setNewPreferredName] = useState(
+  const [newPreferredName, setNewPreferredName] = useState<string>(
     user.preferredName || '',
   );
-  const [newPhoto, setNewPhoto] = useState(user.photo || '');
-  const [newBio, setNewBio] = useState(user.bio || '');
-  const [isChangeMade, setChangeMade] = useState(false);
+  const [newPhoto, setNewPhoto] = useState<string>(user.photo || '');
+  const [newBio, setNewBio] = useState<string>(user.bio || '');
+  const [isChangeMade, setChangeMade] = useState<boolean>(false);
 
   useEffect(() => {
     setChangeMade(
@@ -55,8 +56,9 @@ export default function EditProfileScreen({
   }, [newPreferredName, newPhoto, newBio]);
 
   const handlePickImage = async () => {
-    const uri: string | null = await pickSquareImage();
-    if (uri) setNewPhoto(uri);
+    // const uri: string | null =
+    await pickSquareImage();
+    // if (uri) setNewPhoto(uri);
   };
 
   const handleSave = async () => {
@@ -82,6 +84,7 @@ export default function EditProfileScreen({
           },
           {
             text: 'Discard',
+            style: 'destructive',
             onPress: () => navigation.goBack(),
           },
         ],
@@ -90,16 +93,36 @@ export default function EditProfileScreen({
       navigation.goBack();
     }
   };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Header leftHandler={handleExit} centerElement={'Edit Profile'} />
-      <ScrollView>
+      <ScrollView
+        bounces={false}
+        contentContainerStyle={{display: 'flex', alignItems: 'center'}}>
         <TouchableOpacity onPress={handlePickImage} activeOpacity={0.6}>
           <Image
             source={newPhoto ? {uri: newPhoto} : genericUserImagePng}
-            style={styles.profileImage}
+            style={{
+              height: scale(100),
+              width: scale(100),
+              borderRadius: scale(20),
+              marginTop: scale(16),
+              marginBottom: scale(16),
+            }}
           />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handlePickImage}>
+          <Text
+            style={{
+              color: coral,
+              fontSize: scale(20),
+              fontWeight: '600',
+              marginBottom: scale(16),
+            }}>
+            {'Upload Image'}
+          </Text>
         </TouchableOpacity>
         <Input
           label="Display Name"
@@ -118,13 +141,23 @@ export default function EditProfileScreen({
           maxLength={150}
         />
       </ScrollView>
-      <FooterButton
+      {/* <FooterButton
         label="Save"
         style={{
           opacity: isChangeMade ? 1 : 0.5,
         }}
         disabled={!isChangeMade}
         onPress={handleSave}
+      /> */}
+      <Button
+        label="Save Changes"
+        disabled={!isChangeMade}
+        onPress={handleSave}
+        style={{
+          margin: scale(16),
+          marginBottom: scale(24),
+          opacity: isChangeMade ? 1 : 0.5,
+        }}
       />
     </View>
   );

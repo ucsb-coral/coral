@@ -1,22 +1,37 @@
-import { StyleSheet } from 'react-native';
-import { scale, standardMargin } from '../../../utilities/scale';
-import { buttonFont, NameFont, EmailFont, avenirBlackCentered } from "../../../utilities/textfont";
-import { black, coral, grey, opacity, white, ButtonBackground, } from '../../../utilities/colors';
+import {StyleSheet} from 'react-native';
+import {scale, standardMargin} from '../../../utilities/scale';
+import {
+  buttonFont,
+  NameFont,
+  EmailFont,
+  avenirBlackCentered,
+} from '../../../utilities/textfont';
+import {
+  black,
+  coral,
+  grey,
+  opacity,
+  white,
+  ButtonBackground,
+  cardBackground,
+} from '../../../utilities/colors';
 
 export const styles = StyleSheet.create({
   courseText: {
     color: grey,
+    fontSize: 16,
+    lineHeight: 20,
   },
 
   courseBlock: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: '100%',
     height: 'auto',
-    padding: 8,
+    padding: 16,
     borderRadius: 15,
-    backgroundColor: ButtonBackground,
+    backgroundColor: cardBackground,
     marginBottom: standardMargin,
   },
 
@@ -24,7 +39,8 @@ export const styles = StyleSheet.create({
     color: 'black',
     fontFamily: buttonFont,
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 20,
+    lineHeight: 30,
   },
 
   eachCourseInfoTitle: {
@@ -64,7 +80,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: avenirBlackCentered,
     fontSize: 20,
-    color: 'black'
+    color: 'black',
   },
   courseFlatListStyle: {
     position: 'absolute',
@@ -73,5 +89,4 @@ export const styles = StyleSheet.create({
     paddingLeft: standardMargin,
     paddingRight: standardMargin,
   },
-
 });

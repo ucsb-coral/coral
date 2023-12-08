@@ -35,7 +35,7 @@ const abortSignIn = () => {
   signOut();
   if (platform === 'ios') WebBrowser.dismissAuthSession();
 };
-abortSignIn();
+
 export const handleSignIn = async (url: string) => {
   try {
     const urlObject = new URL(url);

@@ -84,13 +84,19 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
               source={photo ? {uri: photo} : genericUserImagePng}
               style={styles.profileImage}
             />
-            <View style={styles.userInfoContainer}>
-              <Text style={styles.userName}>{preferredName ?? firstName}</Text>
-              <Text style={styles.userEmail}>{email}</Text>
+            <View>
+              <View style={styles.userInfoContainer}>
+                <Text style={styles.userName}>
+                  {preferredName ?? firstName}
+                </Text>
+                <Text style={styles.userEmail}>{email}</Text>
+              </View>
             </View>
           </View>
           <View style={styles.userBioContainer}>
-            <View style={styles.userBioTextContainer}>
+            <TouchableOpacity
+              onPress={() => appStackNavigate(navigation, 'editProfile', {})}
+              style={styles.userBioTextContainer}>
               <ReadMore
                 numberOfLines={3}
                 seeMoreText="more"
@@ -99,9 +105,9 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
                 seeLessStyle={{color: coral}}>
                 {bio
                   ? bio
-                  : 'Do not have a bio yet?\nGo to Settings >> Edit Profile to add one!'}
+                  : "Don't have a bio yet?\nGo to Settings >> Edit Profile to add one!"}
               </ReadMore>
-            </View>
+            </TouchableOpacity>
           </View>
           <View
             style={styles.userLinksContainer}

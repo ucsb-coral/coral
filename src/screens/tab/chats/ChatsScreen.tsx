@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
-import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
+import {
+  TabPageProps,
+  tabNavigate,
+} from '../../../navigation/navigators/TabNavigator';
 
 import {styles} from './ChatPageStyles';
-import {CompositeScreenProps} from '@react-navigation/native';
+import {CompositeScreenProps, useNavigation} from '@react-navigation/native';
 import {
   AppStackPageProps,
   appStackNavigate,
@@ -14,6 +17,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {coral, white, black} from '../../../utilities/colors';
 import {scale} from '../../../utilities/scale';
 import {avenirBlackCentered} from '../../../utilities/textfont';
+import Button from '../../../components/button/Button';
 
 export type ChatsScreenProps = EmptyProps;
 
@@ -21,6 +25,10 @@ type ChatsPageProps = CompositeScreenProps<
   AppStackPageProps<'tabNavigator'>,
   TabPageProps<'chats'>
 >;
+
+const joinButton = (
+  <Button label="Join" rounded style={{height: scale(34), width: scale(72)}} />
+);
 
 export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
@@ -36,8 +44,8 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
     <View style={{flex: 1, backgroundColor: white}}>
       <Header
         centerElement={'Chat List'}
-        rightHandler={() => appStackNavigate(navigation, 'joinChats', {})}
-        rightElement={joinButton}
+        // rightHandler={() => navigation.navigate('schedule', {})}
+        // rightElement={joinButton}
       />
 
       {/* Current Class List*/}
@@ -85,28 +93,3 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
     </View>
   );
 }
-
-const joinButton = (
-  <View
-    style={{
-      backgroundColor: coral,
-      height: scale(32),
-      width: scale(66),
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: scale(28),
-    }}>
-    <Text
-      style={{
-        color: white,
-        textAlign: 'center',
-        fontFamily: avenirBlackCentered,
-        fontSize: scale(15),
-        includeFontPadding: false,
-        textAlignVertical: 'center',
-      }}>
-      Join
-    </Text>
-  </View>
-);
