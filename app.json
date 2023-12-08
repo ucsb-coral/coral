@@ -1,4 +1,7 @@
 {
   "name": "coral",
-  "displayName": "coral UCSB"
+  "displayName": "coral UCSB",
+  "expo": {
+    "plugins": ["expo-image-picker"]
+  }
 }

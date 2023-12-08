@@ -24,33 +24,32 @@ const uploadImage = async (url: string, pathToFile: string) => {
 };
 
 const getImagePermission = async () => {
-  const permissionResult =
-    await ImagePicker.requestMediaLibraryPermissionsAsync();
-  if (!permissionResult.granted) {
-    Alert.alert(
-      'Permission Required',
-      'You need to allow access to your photos to upload an image.',
-    );
-    return;
-  }
-};
-
-const pickSquareImage = async () => {
   try {
-    getImagePermission();
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      Alert.alert(
+        'Permission Required',
+        'You need to allow access to your photos to upload an image.',
+      );
+      return;
+    }
   } catch (error) {
     console.error(error);
     return null;
   }
+};
 
-  // let pickerResult = await ImagePicker.launchImageLibraryAsync({
-  //   mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //   quality: 1.0,
-  //   allowsEditing: true,
-  //   aspect: [4, 4],
-  // });
-  // if (pickerResult.canceled) return null;
-  // return pickerResult.assets?.[0]?.uri ?? null;
+const pickSquareImage = async () => {
+  getImagePermission();
+  let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    quality: 1.0,
+    allowsEditing: true,
+    aspect: [4, 4],
+  });
+  if (pickerResult.canceled) return null;
+  return pickerResult.assets?.[0]?.uri ?? null;
 };
 
 export {pickSquareImage, uploadImage};

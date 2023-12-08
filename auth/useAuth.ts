@@ -123,9 +123,5 @@ export default function useAuth() {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  useEffect(() => {
-    // console.log('STATE', state);
-  }, [state]);
-
   return {authState};
 }

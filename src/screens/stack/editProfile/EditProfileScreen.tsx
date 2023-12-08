@@ -55,12 +55,11 @@ export default function EditProfileScreen({
         ((!!newPhoto || !!photo) && newPhoto !== photo) ||
         ((!!newBio || !!bio) && newBio !== bio),
     );
-  }, [newPreferredName, newPhoto, newBio, user]);
+  }, [newPreferredName, newPhoto, newBio, preferredName, photo, bio]);
 
   const handlePickImage = async () => {
-    // const uri: string | null =
-    await pickSquareImage();
-    // if (uri) setNewPhoto(uri);
+    const uri: string | null = await pickSquareImage();
+    if (uri) setNewPhoto(uri);
   };
 
   const handleSave = async () => {
@@ -71,12 +70,12 @@ export default function EditProfileScreen({
     )
       userToUpdate.preferredName = newPreferredName;
     if ((!!newPhoto || !!photo) && newPhoto !== photo) {
-      updateUserImage(newPhoto);
+      updateUserImage(newPhoto).then(url => setNewPhoto(url ?? ''));
     }
     if ((!!newBio || !!bio) && newBio !== bio) userToUpdate.bio = newBio;
     updateMyUser(userToUpdate);
   };
-
+  console.log(newPhoto, photo);
   const handleExit = () => {
     if (isChangeMade) {
       Alert.alert(

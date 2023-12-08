@@ -55,12 +55,8 @@ const deleteOldUserImage = async (myUserId: string) => {
 
   // Delete the previous image from Firebase Storage (if it exists)
   if (previousImageURL) {
-    try {
-      const storageRef = storage().refFromURL(previousImageURL);
-      await storageRef.delete();
-    } catch (error) {
-      throw new Error('Error deleting previous profile image.');
-    }
+    const storageRef = storage().refFromURL(previousImageURL);
+    await storageRef.delete();
   } else throw new Error('Error deleting previous profile image.');
 };
 
@@ -80,6 +76,7 @@ const updateUserImage = async (url: string) => {
     await deleteOldUserImage(myUserId);
     const photo = await uploadUserImage(url, myUserId);
     if (photo) updateMyUser({photo});
+    return photo;
   } catch (error) {
     console.error('Error updating user image', error);
   }
