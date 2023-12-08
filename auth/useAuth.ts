@@ -13,21 +13,14 @@ import {
   setChatsAction,
   setMyUserAction,
   signOutAction,
+  setQuarterAction,
 } from '../src/redux/actions';
 import {useEffect} from 'react';
-import {
-  getUserDocumentRef,
-  setMyUserFirebaseRedux,
-} from '../src/firebaseReduxUtilities/useUserData';
+import {getUserDocumentRef} from '../src/firebaseReduxUtilities/useUserData';
 import * as WebBrowser from 'expo-web-browser';
-import firestore from '@react-native-firebase/firestore';
-import {
-  getCurrentCourses,
-  loadCoursesData,
-} from '../src/firebaseReduxUtilities/useCourseData';
-import {Linking} from 'react-native';
 import {getChatDocumentRef} from '../src/firebaseReduxUtilities/useChatData';
 import {platform} from '../src/utilities/platform';
+import {getCurrentCourses} from '../src/firebaseReduxUtilities/useCourseData';
 
 export const signOut = () => {
   try {
@@ -40,8 +33,9 @@ export const signOut = () => {
 const abortSignIn = () => {
   store.dispatch(setAuthStateAction({authState: 'NONE'}));
   signOut();
+  if (platform === 'ios') WebBrowser.dismissAuthSession();
 };
-
+abortSignIn();
 export const handleSignIn = async (url: string) => {
   try {
     const urlObject = new URL(url);
@@ -49,7 +43,8 @@ export const handleSignIn = async (url: string) => {
     const authToken = urlObject.searchParams.get('authToken');
     const accessToken = urlObject.searchParams.get('accessToken');
     const idToken = urlObject.searchParams.get('idToken');
-    if (!userId || !authToken || !accessToken || !idToken)
+    const quarter = Number(urlObject.searchParams.get('quarter'));
+    if (!userId || !authToken || !accessToken || !idToken || !quarter)
       throw new Error('Missing params');
     auth()
       .signInWithCustomToken(authToken)
@@ -79,7 +74,8 @@ export const handleSignIn = async (url: string) => {
             data: {accessToken, idToken},
           }),
         );
-        await getCurrentCourses(idToken);
+        store.dispatch(setQuarterAction({quarter}));
+        await getCurrentCourses({idToken, quarter});
         store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
       });
   } catch (error) {

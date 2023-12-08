@@ -71,6 +71,20 @@ const refreshTokenDataAction: Action<RefreshTokenDataAction> = props => {
   };
 };
 
+const updateCoursesAction: Action<UpdateCoursesAction> = props => {
+  return {
+    type: 'UPDATE_COURSES',
+    ...props,
+  };
+};
+
+const setQuarterAction: Action<SetQuarterAction> = props => {
+  return {
+    type: 'SET_QUARTER',
+    ...props,
+  };
+};
+
 const signOutAction: Action<SignOutAction> = () => {
   return {
     type: 'SIGN_OUT',
@@ -94,6 +108,8 @@ export {
   leaveChatAction,
   setTokenDataAction,
   refreshTokenDataAction,
+  updateCoursesAction,
+  setQuarterAction,
   signOutAction,
   clearStoreAction,
 };

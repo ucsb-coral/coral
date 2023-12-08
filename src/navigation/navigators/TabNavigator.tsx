@@ -16,6 +16,7 @@ import {coral, grey} from '../../utilities/colors';
 import useChatData from '../../firebaseReduxUtilities/useChatData';
 import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../utilities/scale';
+import useCourseData from '../../firebaseReduxUtilities/useCourseData';
 
 type TabNavigatorScreens = {
   profile: ProfileScreenProps;
@@ -29,6 +30,7 @@ const Tab = createBottomTabNavigator<TabNavigatorScreens>();
 
 export default function TabNavigator() {
   useChatData();
+  useCourseData();
   return (
     <Tab.Navigator
       id={'tab-navigator'}

@@ -4,7 +4,7 @@ import { AppStackPageProps, appStackNavigate } from '../../../navigation/navigat
 import { useSelector } from 'react-redux';
 import { black, coral, grey, opacity, white, ButtonBackground, } from '../../../utilities/colors';
 // import { joinCourseChat } from '../../../firebaseReduxUtilities/useChatData';
-import { addCourses, joinCourse, leaveCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
+// import { addCourses, joinCourse, leaveCourse, loadCoursesData } from '../../../firebaseReduxUtilities/useCourseData';
 import { FontAwesome } from '@expo/vector-icons';
 import { scale, standardMargin } from '../../../utilities/scale';
 import Header from '../../../components/header/Header';
@@ -13,7 +13,12 @@ import { TabPageProps } from '../../../navigation/navigators/TabNavigator';
 import { courses } from '../../../redux/dummyData';
 import { Calendar } from 'react-native-big-calendar'
 import { styles } from './ScheduleScreenStyles';
-import { current } from '@reduxjs/toolkit';
+// import { current } from '@reduxjs/toolkit';
+
+// import { avenirBlackCentered } from '../../../utilities/textfont';
+// import { buttonFont, NameFont, EmailFont } from '../../../utilities/textfont';
+// import { withTokens } from '../../../firebaseReduxUtilities/tokens';
+
 export type ScheduleScreenProps = EmptyProps;
 
 // workaround for navigating from tab page to app stack page - not sure if this actually works
@@ -23,24 +28,11 @@ type SchedulePageProps = CompositeScreenProps<
 >;
 
 export default function ScheduleScreen({ route, navigation }: SchedulePageProps) {
-  const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
-  const tempCourses = useSelector((state: ReduxState) => state.data.usermap[myUserId!].courses);
-  const userCourses: string[] = tempCourses ? tempCourses : [];
-  // console.log('userCourses', userCourses);
-  // addCourses(courses) // uncomment this and refresh to reset/load dummy data into firebase
-  // leaveCourse(userCourses[0])
-  // load user.courses list into coursemap
-  useEffect(() => {
-    loadCoursesData(userCourses);
-  }, [userCourses]);
-
-  const userCoursemap = useSelector((state: ReduxState) => state.data.coursemap);
-  // console.log('userCoursemap', userCoursemap['crsfirebase_uid_1']);
+  const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalData, setModalData] = useState<string>("");
-  const [showCourses, setShowCourses] = useState(true);
-
+  const [modalData, setModalData] = useState<string>('');
+  const [showCourses, setShowCourses] = useState<boolean>(true);
   var today = new Date();
   var current_day = new Date().getDay();
 
@@ -48,7 +40,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     const parts = time.split(':');
     return [parseInt(parts[0]), parseInt(parts[1])];
   };
-  function weekDayToNum(daysString:string) {
+  function weekDayToNum(daysString: string) {
     const daysMap = {
       'S': 0,  // Sunday
       'M': 1,  // Monday
@@ -58,9 +50,9 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
       'F': 5,  // Friday
       'U': 6   // Saturday
     };
-  
+
     const dayNumbers = daysString.split('').map(day => daysMap[day]);
-  
+
     return dayNumbers;
   }
 
@@ -69,16 +61,16 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   // console.log("testing", hr);
   // console.log("testing", min);
 
-  console.log('userCourses', userCourses);
+  // console.log('userCourses', userCourses);
 
   // function extractCourseInfo(userCourses: string[]) {
   //   return userCoursemap[userCourses[0]]?.courseId;
   // }
   // console.log('testing extractCourseInfo', extractCourseInfo(userCourses));
 
-  function extractCourseInfo1(userCourses: string[], userCoursemap: string[]) {
-    return userCourses.map(courseId => {
-      const course = userCoursemap[courseId];
+  function extractCourseInfo1() {
+    return Object.keys(coursemap).map((courseId: string) => {
+      const course = coursemap[courseId];
       if (!course || !course.timeLocations || course.timeLocations.length === 0) {
         return null; // here to filter out null values
       }
@@ -97,7 +89,7 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
     }).filter(courseInfo => courseInfo !== null); // here to filter out null values
   }
 
-  const extractCoursesInfo = extractCourseInfo1(userCourses, userCoursemap);
+  const extractCoursesInfo = extractCourseInfo1();
   console.log('extractCoursesInfo: \n', extractCoursesInfo);
 
   // console.log('testing', extractCoursesInfo[0]?.beginTime);
@@ -107,13 +99,13 @@ export default function ScheduleScreen({ route, navigation }: SchedulePageProps)
   }
   // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
 
-console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
+  console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
   function generateEventFromCourse(extractCoursesInfo: any) {
 
     if (!extractCoursesInfo) {
       return []; // Return an empty array if no courses are available
     }
-    
+
     const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF3366', '#33FFFF'];
     const eventColor = colors[Math.floor(Math.random() * colors.length)]; // Assign a random color
 
@@ -171,7 +163,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     return a.start - b.start;
   });
 
-  
+
   console.log('combinedEvents', combinedEvents);
 
   // const testingEvents = [
@@ -206,11 +198,12 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     modalData: string;
   };
-
-  function renderItem({ item: courseId, index }: { item: string; index: number; }) {
-    const course: Course = userCoursemap[courseId];
+  function renderItem({ item: courseId, index }: { item: string; index: number }) {
+    const course: Course = coursemap[courseId];
     const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${course?.courseTitle}`;
-    const timeLocation = course?.timeLocations?.find((timeloc) => timeloc?.instructionTypeCode === 'LEC');
+    const timeLocation = course?.timeLocations?.find(
+      timeloc => timeloc?.instructionTypeCode === 'LEC',
+    );
     const instructors = timeLocation?.instructors[0];
     return (
       <Pressable
@@ -234,9 +227,11 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
 
   function CourseInfoModal({ isOpen, setIsOpen, modalData }: CourseInfoModalProps) {
     function generateCourseModal(courseId: string) {
-      const course = userCoursemap[courseId];
+      const course = coursemap[courseId];
       const title = `${course?.courseId.replaceAll(/\s+/g, ' ').trim()}`;
-      const timeLocation = course?.timeLocations?.find((timeloc) => timeloc?.instructionTypeCode === 'LEC');
+      const timeLocation = course?.timeLocations?.find(
+        timeloc => timeloc?.instructionTypeCode === 'LEC',
+      );
       const instructors = timeLocation?.instructors[0];
       return (
         <View>
@@ -248,9 +243,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
             {convertTime(timeLocation?.beginTime)} to{' '}
             {convertTime(timeLocation?.endTime)}
           </Text>
-          <Text style={styles.courseText}>
-            {timeLocation?.buildingRoom}
-          </Text>
+          <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
           <Text style={styles.courseText}>{instructors?.name}</Text>
         </View>
       );
@@ -282,7 +275,6 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     );
   }
 
-  // below is the the general return statement block
   return (
     <View
       style={{ flex: 1, backgroundColor: white }}>
@@ -299,7 +291,7 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
         </Pressable>
 
         {/* Conditional Rendering of FlatList or Calendar */}
-        {userCourses.length == 0 ? (
+        {Object.keys(coursemap).length === 0 ? (
           <Text style={styles.notEnrolledText}>
             You are not enrolled in any courses
           </Text>
@@ -307,14 +299,14 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
           <FlatList
             style={{}}
             contentContainerStyle={styles.courseFlatListStyle}
-            data={userCourses}
+            data={Object.keys(coursemap)}
             renderItem={renderItem}
             bounces={false}
           />
         ) : (
           <Calendar
             // only show weekdays
-            mode = 'custom'
+            mode='custom'
             weekStartsOn={1}
             weekEndsOn={5}
             events={combinedEvents}
@@ -347,4 +339,3 @@ console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     </View>
   );
 }
-

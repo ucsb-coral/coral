@@ -5,11 +5,6 @@ import {joinChatAction, leaveCourseAction, setMyUserAction,
 leaveChatAction} from '../redux/actions';
 import {getUserDocumentRef} from './useUserData';
 
-var shajs = require('sha.js');
-
-const generateCourseId = (courseId: string, session: string) =>
-  shajs('sha256').update(`crs${courseId}${session}`).digest('hex');
-
 const getChatDocumentRef = (courseId: string) =>
   firestore().collection('chats').doc(courseId);
 
@@ -29,7 +24,7 @@ const joinCourseChat = async (courseId: string) => {
     chatToSet = {
       memberIds: [myUserId],
       messages: [],
-      messagemap: {}
+      messagemap: {},
     };
     await chatDocumentRef.set(chatToSet);
   }

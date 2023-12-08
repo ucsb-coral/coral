@@ -54,6 +54,16 @@ declare type RefreshTokenDataAction = {
   data: TokenData;
 };
 
+declare type SetQuarterAction = {
+  type: 'SET_QUARTER';
+  quarter: number;
+};
+
+declare type UpdateCoursesAction = {
+  type: 'UPDATE_COURSES';
+  courses: Course[];
+};
+
 declare type SignOutAction = {
   type: 'SIGN_OUT';
 };
@@ -73,6 +83,8 @@ declare type ActionTypes =
   | LeaveChatAction
   | SetTokenDataAction
   | RefreshTokenDataAction
+  | SetQuarterAction
+  | UpdateCoursesAction
   | SignOutAction
   | ClearStoreAction;
 
@@ -83,6 +95,7 @@ declare type Data = {
   chatmap: Chatmap;
   coursemap: Coursemap;
   tokenData: TokenData | null;
+  quarter: number;
 };
 
 declare type ReduxState = {
@@ -121,6 +134,7 @@ declare type User = {
   email: string;
   firstName?: string | null;
   lastName?: string | null;
+  perm: number;
   preferredName?: string | null;
   photo?: string | null;
   chats?: string[] | null;
@@ -174,7 +188,6 @@ declare type TimeLocation = {
 };
 
 declare type Course = {
-  memberIds: string[];
   courseId: string;
   quarter: string;
   enrollCode: string;
@@ -184,5 +197,4 @@ declare type Course = {
   session: string;
   repeatTypeCode: string;
   timeLocations: TimeLocation[];
-  waitlist: boolean;
 };
