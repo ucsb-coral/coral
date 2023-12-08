@@ -100,6 +100,12 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
 
         const {beginTime, buildingRoom, days, endTime, instructors} =
           course.timeLocations[0];
+        const section_day = course.timeLocations[1]?.days;
+        const section_beginTime = course.timeLocations[1]?.beginTime;
+        const section_endTime = course.timeLocations[1]?.endTime;
+        const section_buildingRoom = course.timeLocations[1]?.buildingRoom;
+        const section_instructors = course.timeLocations[1]?.instructors;
+
         return {
           uid: courseId,
           courseId: course.courseId,
@@ -108,6 +114,12 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           buildingRoom,
           days,
           endTime,
+          instructors,
+          section_day,
+          section_beginTime,
+          section_endTime,
+          section_buildingRoom,
+          section_instructors,
           // instructors
         };
       })
@@ -144,6 +156,12 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     // console.log('days', days);
     const endTime = extractCoursesInfo?.endTime;
     // console.log('endTime', endTime);
+    const section_day = extractCoursesInfo?.section_day;
+    // console.log('section_day', section_day);
+    const section_beginTime = extractCoursesInfo?.section_beginTime;
+    // console.log('section_beginTime', section_beginTime);
+    const section_endTime = extractCoursesInfo?.section_endTime;
+    // console.log('section_endTime', section_endTime);
 
     const CourseBeginHours = splitTime(beginTime);
     console.log('CourseBeginHours', CourseBeginHours);
@@ -175,6 +193,40 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
         eventColor: eventColor, // Assign the event color
         uid: uid,
       });
+    }
+    if (section_day) {
+      const section_day_num = weekDayToNum(section_day);
+      const section_beginHours = splitTime(section_beginTime);
+      const section_endHours = splitTime(section_endTime);
+      for (let i = 0; i < section_day_num.length; i++) {
+        const section_day = section_day_num[i];
+        const interval = current_day - section_day;
+        const sectionDate = new Date(
+          today.getTime() - interval * 24 * 60 * 60 * 1000,
+        );
+        const year = sectionDate.getFullYear();
+        const month = sectionDate.getMonth();
+        const date = sectionDate.getDate();
+        testingEvents.push({
+          title: courseid + ' - ' + courseTitle,
+          start: new Date(
+            year,
+            month,
+            date,
+            section_beginHours[0],
+            section_beginHours[1],
+          ),
+          end: new Date(
+            year,
+            month,
+            date,
+            section_endHours[0],
+            section_endHours[1],
+          ),
+          eventColor: eventColor,
+          uid: uid,
+        });
+      }
     }
 
     return testingEvents;
