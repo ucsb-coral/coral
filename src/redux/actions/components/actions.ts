@@ -30,13 +30,6 @@ const joinChatAction: Action<JoinChatAction> = props => {
   };
 };
 
-const setChatsAction: Action<SetChatsAction> = props => {
-  return {
-    type: 'SET_CHATS',
-    ...props,
-  };
-};
-
 const leaveChatAction: Action<LeaveChatAction> = props => {
   return {
     type: 'LEAVE_CHAT',
@@ -84,12 +77,25 @@ const clearStoreAction: Action<ClearStoreAction> = () => {
   };
 };
 
+const newMessagesAction: Action<NewMessagesAction> = props => {
+  return {
+    type: 'NEW_MESSAGES',
+    ...props,
+  };
+};
+
+const editUsersAction: Action<EditUsersAction> = props => {
+  return {
+    type: 'EDIT_USERS',
+    ...props,
+  };
+};
+
 export {
   setAuthStateAction,
   setMyUserAction,
   updateMyUserAction,
   joinChatAction,
-  setChatsAction,
   leaveChatAction,
   setTokenDataAction,
   refreshTokenDataAction,
@@ -97,4 +103,6 @@ export {
   setQuarterAction,
   signOutAction,
   clearStoreAction,
+  newMessagesAction,
+  editUsersAction,
 };

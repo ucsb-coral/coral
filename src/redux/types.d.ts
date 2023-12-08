@@ -17,12 +17,6 @@ declare type UpdateMyUserAction = {
 declare type JoinChatAction = {
   type: 'JOIN_CHAT';
   id: string;
-  chat: Chat;
-};
-
-declare type SetChatsAction = {
-  type: 'SET_CHATS';
-  chatmap: Chatmap;
 };
 
 declare type LeaveChatAction = {
@@ -59,11 +53,22 @@ declare type ClearStoreAction = {
   type: 'CLEAR_STORE';
 };
 
+declare type NewMessagesAction = {
+  type: 'NEW_MESSAGES';
+  chatId: string;
+  messages: string[];
+  messageMap: Messagemap;
+};
+
+declare type EditUsersAction = {
+  type: 'EDIT_USERS';
+  data: Usermap;
+};
+
 declare type ActionTypes =
   | SetAuthStateAction
   | SetMyUserAction
   | JoinChatAction
-  | SetChatsAction
   | UpdateMyUserAction
   | LeaveChatAction
   | SetTokenDataAction
@@ -71,7 +76,9 @@ declare type ActionTypes =
   | SetQuarterAction
   | UpdateCoursesAction
   | SignOutAction
-  | ClearStoreAction;
+  | ClearStoreAction
+  | NewMessagesAction
+  | EditUsersAction;
 
 declare type Data = {
   authState: AuthState;
@@ -164,7 +171,6 @@ declare type Message = {
 };
 
 declare type Chat = {
-  memberIds: string[];
   messages: string[];
   messagemap: Messagemap;
 };

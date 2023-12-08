@@ -1,7 +1,12 @@
 import firestore from '@react-native-firebase/firestore';
 import {store} from '../redux/useRedux';
 import {useEffect} from 'react';
-import {joinChatAction, leaveChatAction} from '../redux/actions';
+import {
+  editUsersAction,
+  joinChatAction,
+  leaveChatAction,
+  newMessagesAction,
+} from '../redux/actions';
 import {getUserDocumentRef} from './useUserData';
 import {Alert} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -11,42 +16,22 @@ const getChatDocumentRef = (courseId: string) =>
 
 const joinCourseChat = async (courseId: string) => {
   const myUserId = store.getState().data.myUserId;
-  let chatToSet: Chat;
   const chatDocumentRef = getChatDocumentRef(courseId);
   const myUserDocumentRef = getUserDocumentRef(myUserId);
-
-  const chatDocSnapshot = await chatDocumentRef.get();
-  if (chatDocSnapshot.exists) {
-    const data = chatDocSnapshot.data() as Chat;
-    data.memberIds.push(myUserId);
-    chatToSet = data;
-    chatDocumentRef.update({memberIds: data.memberIds});
-  } else {
-    chatToSet = {
-      memberIds: [myUserId],
-      messages: [],
-      messagemap: {},
-    };
-    await chatDocumentRef.set(chatToSet);
-  }
+  await chatDocumentRef.collection('memberIds').doc(myUserId).set({});
   const userDocSnapshot = await myUserDocumentRef.get();
   const user = userDocSnapshot.data() as User;
   const chatsToSet = user.chats ?? [];
   chatsToSet.push(courseId);
   await myUserDocumentRef.update({chats: chatsToSet});
-  store.dispatch(joinChatAction({id: courseId, chat: chatToSet}));
+  store.dispatch(joinChatAction({id: courseId}));
 };
 
 const leaveCourseChat = async (courseId: string) => {
   const myUserId = store.getState().data.myUserId;
   const chatDocumentRef = getChatDocumentRef(courseId);
   const myUserDocumentRef = getUserDocumentRef(myUserId);
-
-  const chatDocSnapshot = await chatDocumentRef.get();
-  const data = chatDocSnapshot.data() as Chat;
-  data.memberIds = data.memberIds.filter(id => id !== myUserId);
-  await chatDocumentRef.update({memberIds: data.memberIds});
-
+  await chatDocumentRef.collection('memberIds').doc(myUserId).delete();
   const userDocSnapshot = await myUserDocumentRef.get();
   const user = userDocSnapshot.data() as User;
   var chatsToSet = user.chats ?? [];
@@ -81,9 +66,6 @@ const handleSendTextMessage = async (
   return handleSendMessage(message, chatId);
 };
 
-const handleMessagesUpdate = (chatId: string, messages: Message[]) => {};
-const handleMemberIdsUpdate = (chatId: string, memberIds: string[]) => {};
-
 export default function useChatData() {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chats = useSelector(
@@ -99,25 +81,53 @@ export default function useChatData() {
         .collection('messages')
         .orderBy('createdAt', 'desc')
         .onSnapshot(snapshot => {
-          const messages = snapshot.docs.map(
-            doc =>
-              ({
-                ...doc.data(),
-              } as Message),
+          const messageMap: Messagemap = {};
+          const messages = snapshot.docs.map(doc => {
+            const id = doc.id;
+            const data = doc.data() as Message;
+            messageMap[id] = data;
+            return id;
+          });
+          store.dispatch(
+            newMessagesAction({
+              chatId,
+              messages,
+              messageMap,
+            }),
           );
-          handleMessagesUpdate(chatId, messages);
         });
       const memberIdsSubscription = ref
         .collection('memberIds')
         .onSnapshot(snapshot => {
-          // const memberIds = snapshot.docs.map(
-          //   doc =>
-          //     ({
-          //       ...doc.data(),
-          //     } as string),
-          // );
-          // handleMemberIdsUpdate(chatId, memberIds);
+          console.log('WEFVEWF', chatId, snapshot.docChanges());
+          const userPromises: Promise<void>[] = [];
+          const usermapToSet: Usermap = {};
+          snapshot
+            .docChanges()
+            .filter(
+              docChange =>
+                docChange.type !== 'removed' && docChange.doc.id !== myUserId,
+            )
+            .forEach(docChange => {
+              console.log('WEFVEWF');
+              const id = docChange.doc.id;
+              const add = async () => {
+                const userRef = getUserDocumentRef(id);
+                const data = (await userRef.get()).data() as User;
+                usermapToSet[id] = data;
+              };
+              userPromises.push(add());
+            });
+          Promise.all(userPromises).then(() =>
+            store.dispatch(
+              editUsersAction({
+                data: usermapToSet,
+              }),
+            ),
+          );
         });
+      subscrions.push(messagesSubscription);
+      subscrions.push(memberIdsSubscription);
     });
 
     return () => subscrions.forEach(unsubscribe => unsubscribe());

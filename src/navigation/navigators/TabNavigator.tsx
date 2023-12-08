@@ -37,7 +37,7 @@ export default function TabNavigator() {
   return (
     <Tab.Navigator
       id={'tab-navigator'}
-      initialRouteName={'chats'}
+      initialRouteName={'schedule'}
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarActiveTintColor: coral,

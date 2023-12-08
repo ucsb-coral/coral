@@ -27,15 +27,11 @@ export default function ChatScreen({
   const {id} = route.params;
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chat = useSelector((state: ReduxState) => state.data.chatmap[id]);
+  const {messages, messagemap} = chat ?? {};
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
   const [message, setMessage] = useState<string>('');
   const [selectedInput, setSelectedInput] = useState<string>('');
   const courseTitle = coursemap[id].courseId;
-
-  // console.log('chat:', chat); // chat: {"memberIds": ["usr7G8ipgY9FMYgq4fbYaPVPb2Wqb73"], "messages": []}
-  // console.log('course title:', courseTitle);
-  // console.log('roomid:', id);
-  const [messages, setMessages] = useState<Message[]>([]);
   const flatListRef = useRef<FlatList<Message>>(null);
 
   const userName = useSelector(
@@ -72,12 +68,12 @@ export default function ChatScreen({
               appStackNavigate(navigation, 'chatSettings', {id})
             }
           />
-          <ChatDisplay
+          {/* <ChatDisplay
             myUserId={myUserId}
             messages={messages}
             messagemap={{}}
             setSelectedInput={setSelectedInput}
-          />
+          /> */}
         </View>
       </KeyboardAvoidingView>
     </Loading>

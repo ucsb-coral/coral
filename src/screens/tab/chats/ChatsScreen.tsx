@@ -40,21 +40,6 @@ export default function ChatsScreen({
   );
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
 
-  let resolvedChats = chats ?? ['NONE'];
-  console.log(resolvedChats);
-
-  // filter out all chats that only joined in the chat
-  // const joinedCourses = resolvedChats.filter((chatId) => {
-  //   return coursemap[chatId]?.courseTitle;
-  // });
-  const [joinedChats, setJoinedChats] = useState<string[]>([]);
-  useEffect(() => {
-    const filteredChats = Object.keys(coursemap).filter(courseId =>
-      chats?.includes(courseId),
-    );
-    setJoinedChats(filteredChats);
-  }, [chats]);
-
   return (
     <View style={{flex: 1, backgroundColor: white}}>
       <Header

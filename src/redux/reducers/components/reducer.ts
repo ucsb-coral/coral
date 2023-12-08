@@ -35,30 +35,20 @@ export function reducer(
       return {...state, usermap: {...usermap}};
     }
     case 'JOIN_CHAT': {
-      const {id, chat} = action;
+      const {id} = action;
       const myUserId = state.myUserId;
-      const chatmap = state.chatmap;
       const usermap = state.usermap;
       const myUser = usermap[myUserId!];
-      if (!myUser.chats) myUser.chats = [];
-      chatmap[id] = chat;
+      myUser.chats = myUser.chats ?? [];
+      myUser.chats.push(id);
       return {
         ...state,
-        chatmap: {...chatmap},
         usermap: {
           ...usermap,
           [myUserId!]: {
             ...myUser,
-            chats: [...myUser.chats, id],
           },
         },
-      };
-    }
-    case 'SET_CHATS': {
-      const {chatmap} = action;
-      return {
-        ...state,
-        chatmap: {...state.chatmap, ...chatmap},
       };
     }
     case 'LEAVE_CHAT': {
@@ -138,6 +128,26 @@ export function reducer(
     case 'CLEAR_STORE': {
       return {
         ...initialData,
+      };
+    }
+    case 'NEW_MESSAGES': {
+      const {chatId, messageMap, messages} = action;
+      const chatmap = state.chatmap;
+      chatmap[chatId] = {
+        messagemap: messageMap,
+        messages,
+      };
+      return {
+        ...state,
+        chatmap: {...chatmap},
+      };
+    }
+    case 'EDIT_USERS': {
+      const {data} = action;
+      const usermap = {...state.usermap, ...data};
+      return {
+        ...state,
+        usermap,
       };
     }
     default:

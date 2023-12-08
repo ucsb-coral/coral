@@ -1,16 +1,9 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-// import {
-//   GoogleSignin,
-//   statusCodes,
-//   User as GoogleUser,
-// } from '@react-native-google-signin/google-signin';
 import {useSelector} from 'react-redux';
 import {store} from '../src/redux/useRedux';
 import {
   setTokenDataAction,
-  clearStoreAction,
   setAuthStateAction,
-  setChatsAction,
   setMyUserAction,
   signOutAction,
   setQuarterAction,
@@ -35,7 +28,7 @@ const abortSignIn = () => {
   signOut();
   if (platform === 'ios') WebBrowser.dismissAuthSession();
 };
-
+// abortSignIn();
 export const handleSignIn = async (url: string) => {
   try {
     const urlObject = new URL(url);
@@ -50,20 +43,6 @@ export const handleSignIn = async (url: string) => {
     const myUserDocumentRef = getUserDocumentRef(userId);
     const userData = (await myUserDocumentRef.get()).data() as User | undefined;
     if (!userData) throw new Error('User does not exist');
-    if (userData.chats) {
-      const chatPromises: Promise<void>[] = [];
-      const chatmapToSet: Chatmap = {};
-      userData.chats.forEach(id => {
-        const add = async () => {
-          const chatRef = getChatDocumentRef(id);
-          const data = (await chatRef.get()).data() as Chat;
-          chatmapToSet[id] = data;
-        };
-        chatPromises.push(add());
-      });
-      await Promise.all(chatPromises);
-      store.dispatch(setChatsAction({chatmap: chatmapToSet}));
-    }
     store.dispatch(setMyUserAction({id: userId, data: userData}));
     store.dispatch(
       setTokenDataAction({
@@ -96,7 +75,6 @@ export const signIn = async () => {
       authlink,
       redirectUri,
     )) as WebBrowser.WebBrowserRedirectResult;
-    console.log('WEFVEFWVFE', result);
     if (platform === 'ios') {
       if (!result?.url) throw new Error('No url returned');
       handleSignIn(result.url);
@@ -122,6 +100,10 @@ export default function useAuth() {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
+
+  useEffect(() => {
+    console.log('state', state);
+  }, [state]);
 
   return {authState};
 }
