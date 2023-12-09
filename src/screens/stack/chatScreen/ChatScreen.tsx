@@ -28,6 +28,7 @@ export default function ChatScreen({
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chat = useSelector((state: ReduxState) => state.data.chatmap[id]);
   const {messages, messagemap} = chat ?? {};
+  console.log('WEFVWEFV', chat);
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
   const usermap = useSelector((state: ReduxState) => state.data.usermap);
   const [message, setMessage] = useState<string>('');

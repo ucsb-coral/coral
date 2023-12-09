@@ -58,13 +58,13 @@ export default function ChatDisplay({
 
   function renderItem({item, index}: {item: string; index: number}) {
     const {fromUserId, type, content} = messagemap[item];
+    console.log('ITEM', item, messagemap[item]);
     const fromUser = usermap[fromUserId];
     const isMyMessage = fromUserId === myUserId;
     const commonProps = {
       fromUser,
       isMyMessage,
     };
-    console.log('dsasdasd', content);
     switch (type) {
       case 'text': {
         const props = {...commonProps, ...(content as TextMessageContent)};
@@ -84,7 +84,7 @@ export default function ChatDisplay({
       }
     }
   }
-
+  console.log('MESSAGES', messages);
   return (
     <View
       style={{
@@ -107,6 +107,7 @@ export default function ChatDisplay({
         overScrollMode={'never'}
         onScroll={() => {}}
         onContentSizeChange={() => {}}
+        extraData={messages?.length}
         keyExtractor={(item: string, index: number) => {
           return item;
         }}

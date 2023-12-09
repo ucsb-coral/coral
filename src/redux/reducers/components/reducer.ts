@@ -37,17 +37,15 @@ export function reducer(
     case 'JOIN_CHAT': {
       const {id} = action;
       const myUserId = state.myUserId;
-      const usermap = state.usermap;
-      const myUser = usermap[myUserId!];
-      myUser.chats = myUser.chats ?? [];
+      const usermap = {...state.usermap};
+      const myUser = {...usermap[myUserId!]};
+      myUser.chats = [...(myUser.chats ?? [])];
       myUser.chats.push(id);
       return {
         ...state,
         usermap: {
-          ...usermap,
-          [myUserId!]: {
-            ...myUser,
-          },
+          ...state.usermap,
+          [myUserId!]: {...state.usermap[myUserId!], ...myUser},
         },
       };
     }
@@ -119,11 +117,7 @@ export function reducer(
       };
     }
     case 'SIGN_OUT': {
-      return {
-        ...state,
-        authState: 'NONE',
-        myUserId: '',
-      };
+      return {...initialData};
     }
     case 'CLEAR_STORE': {
       return {
@@ -132,19 +126,23 @@ export function reducer(
     }
     case 'NEW_MESSAGES': {
       const {chatId, messageMap, messages} = action;
-      const chatmap = state.chatmap;
-      chatmap[chatId] = {
-        messagemap: messageMap,
-        messages,
-      };
       return {
         ...state,
-        chatmap: {...chatmap},
+        chatmap: {
+          ...state.chatmap,
+          [chatId]: {
+            messagemap: messageMap,
+            messages,
+          },
+        },
       };
     }
     case 'EDIT_USERS': {
       const {data} = action;
+      console.log('EDIT_USERS', data);
+
       const usermap = {...state.usermap, ...data};
+      console.log('EDIT_USERS', usermap);
       return {
         ...state,
         usermap,
