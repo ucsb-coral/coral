@@ -43,7 +43,7 @@ export default function UserProfilePage({
   // Appstacknavigate(nav,"ur screen",{id:myUserId}
   const {id} = route.params;
   const {email, photo, preferredName, firstName, lastName, bio, status} =
-    useSelector((state: ReduxState) => state.data.usermap[id!]);
+    useSelector((state: ReduxState) => state.data.usermap[id!] ?? {});
 
   const [boxHeight, setBoxHeight] = useState(0);
   const [newStatus, setNewStatus] = useState(status);

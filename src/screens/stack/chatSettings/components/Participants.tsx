@@ -84,7 +84,7 @@ function ParticipantCard({
   user,
   navigation,
 }: ParticipantCardProps) {
-  const {firstName, lastName, preferredName, status} = user;
+  const {firstName, lastName, preferredName, status} = user ?? {};
   const displayName = preferredName ?? `${firstName} ${lastName}`;
   return (
     <IconButton

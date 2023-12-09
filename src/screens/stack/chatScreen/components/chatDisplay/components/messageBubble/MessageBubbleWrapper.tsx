@@ -16,7 +16,7 @@ export default function MessageBubbleWrapper({
   fromUser,
   children,
 }: MessageBubbleWrapperProps & {children: ReactNode}) {
-  const {status, lastName, firstName, preferredName} = fromUser;
+  const {status, lastName, firstName, preferredName} = fromUser ?? {};
   const displayName = preferredName ?? `${firstName} ${lastName}`;
   const statusIcon = getStatusIcon(status);
 

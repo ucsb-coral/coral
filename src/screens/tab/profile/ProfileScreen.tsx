@@ -43,7 +43,7 @@ type ProfilePageProps = CompositeScreenProps<
 export default function ProfileScreen({route, navigation}: ProfilePageProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const {email, photo, preferredName, firstName, lastName, bio, status} =
-    useSelector((state: ReduxState) => state.data.usermap[myUserId!]);
+    useSelector((state: ReduxState) => state.data.usermap[myUserId!] ?? {});
 
   const [boxHeight, setBoxHeight] = useState(0);
   const [newStatus, setNewStatus] = useState(status);
