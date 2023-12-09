@@ -91,6 +91,13 @@ const editUsersAction: Action<EditUsersAction> = props => {
   };
 };
 
+const setUserAction: Action<SetUserAction> = props => {
+  return {
+    type: 'SET_USER',
+    ...props,
+  };
+};
+
 export {
   setAuthStateAction,
   setMyUserAction,
@@ -105,4 +112,5 @@ export {
   clearStoreAction,
   newMessagesAction,
   editUsersAction,
+  setUserAction,
 };

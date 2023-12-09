@@ -67,6 +67,12 @@ declare type EditUsersAction = {
   memberIds: string[];
 };
 
+declare type SetUserAction = {
+  type: 'SET_USER';
+  userId: string;
+  data: User;
+};
+
 declare type ActionTypes =
   | SetAuthStateAction
   | SetMyUserAction
@@ -80,7 +86,8 @@ declare type ActionTypes =
   | SignOutAction
   | ClearStoreAction
   | NewMessagesAction
-  | EditUsersAction;
+  | EditUsersAction
+  | SetUserAction;
 
 declare type Data = {
   authState: AuthState;

@@ -18,6 +18,7 @@ import useChatData from '../../firebaseReduxUtilities/useChatData';
 import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../utilities/scale';
 import useCourseData from '../../firebaseReduxUtilities/useCourseData';
+import useUserData from '../../firebaseReduxUtilities/useUserData';
 
 type TabNavigatorScreens = {
   profile: ProfileScreenProps;
@@ -30,6 +31,7 @@ type TabNavigatorPages = keyof TabNavigatorScreens;
 const Tab = createBottomTabNavigator<TabNavigatorScreens>();
 
 export default function TabNavigator() {
+  useUserData();
   useChatData();
   useCourseData();
 

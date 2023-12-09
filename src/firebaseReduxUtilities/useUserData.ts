@@ -1,8 +1,14 @@
 import firestore from '@react-native-firebase/firestore';
 import {store} from '../redux/useRedux';
-import {setMyUserAction, updateMyUserAction} from '../redux/actions';
+import {
+  setMyUserAction,
+  setUserAction,
+  updateMyUserAction,
+} from '../redux/actions';
 import storage from '@react-native-firebase/storage';
 import {uploadImage} from '../utilities/images';
+import {useEffect} from 'react';
+import {useSelector} from 'react-redux';
 
 const getUserDocumentRef = (userId: string) =>
   firestore().collection('users').doc(userId);
@@ -65,7 +71,32 @@ const updateUserImage = async (url: string) => {
   }
 };
 
+export default function useUserData() {
+  const usermap = useSelector((state: ReduxState) => state.data.usermap);
+  const users = Object.keys(usermap);
+
+  useEffect(() => {
+    const subscrions: (() => void)[] = [];
+    if (!users) return;
+    users.forEach((userId: string) => {
+      console.log('useUserData snapshot');
+      const ref = getUserDocumentRef(userId);
+      const userSubscription = ref.onSnapshot(snapshot => {
+        console.log('useUserData snapshot2', userId);
+        const data = snapshot.data() as User;
+        store.dispatch(setUserAction({userId, data}));
+      });
+      subscrions.push(userSubscription);
+    });
+
+    return () => subscrions.forEach(unsubscribe => unsubscribe());
+  }, [users?.length]);
+
+  return {};
+}
+
 export {
+  useUserData,
   getUserDocumentRef,
   updateMyUser,
   updateMyUserWithBuffer,

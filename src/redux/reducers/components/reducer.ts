@@ -155,6 +155,18 @@ export function reducer(
         },
       };
     }
+    case 'SET_USER': {
+      const {userId, data} = action;
+      return {
+        ...state,
+        usermap: {
+          ...state.usermap,
+          [userId]: {
+            ...data,
+          },
+        },
+      };
+    }
     default:
       return state;
   }
