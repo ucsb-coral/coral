@@ -70,8 +70,9 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const refreshTimeout = useRef<NodeJS.Timeout | null>(null);
   var today = new Date();
   var current_day = new Date().getDay();
-
+  console.log('current_day', courses, coursemap);
   function splitTime(time: string) {
+    if (!time) return [];
     const parts = time.split(':');
     return [parseInt(parts[0]), parseInt(parts[1])];
   }
