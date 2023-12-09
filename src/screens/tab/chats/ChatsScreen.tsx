@@ -32,7 +32,7 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
     (state: ReduxState) => state.data.usermap[myUserId!].chats ?? [],
   );
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
-
+  console.log('FDVWEFV', chats);
   return (
     <View style={{flex: 1, backgroundColor: white}}>
       <Header centerElement={'Chat List'} />
