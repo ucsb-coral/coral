@@ -45,13 +45,6 @@ export default function SettingsScreen({
             style={{marginTop: 5}}
             iconSize={scale(17)}
           />
-          <IconButton
-            onPress={() => appStackNavigate(navigation, 'settings')}
-            label="Settings"
-            Icon={Ionicons}
-            iconName={'settings-outline'}
-            style={{marginTop: 5}}
-          />
         </View>
 
         <View style={styles.signOutContainer}>

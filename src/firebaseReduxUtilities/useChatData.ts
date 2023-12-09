@@ -34,6 +34,8 @@ const joinCourseChat = async (courseId: string) => {
   const user = userDocSnapshot.data() as User;
   const chatsToSet = user.chats ?? [];
   if (!chatsToSet.includes(courseId)) chatsToSet.push(courseId);
+  console.log('chatsToSet', chatsToSet);
+  await myUserDocumentRef.update({chats: chatsToSet});
   store.dispatch(joinChatAction({id: courseId}));
 };
 
