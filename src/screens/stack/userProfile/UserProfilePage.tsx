@@ -67,7 +67,6 @@ export default function UserProfilePage({
             </View>
           </View>
         </View>
-        <View style={styles.userBioContainer}>{bio}</View>
 
         <View style={styles.userBioContainer}>
           <View style={styles.userBioTextContainer}>
