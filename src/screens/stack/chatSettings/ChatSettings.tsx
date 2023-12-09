@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
-  TextInput,
-  Image,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {
@@ -21,6 +19,8 @@ import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../../utilities/scale';
 import {black} from '../../../utilities/colors';
 import {leaveCourseChat} from '../../../firebaseReduxUtilities/useChatData';
+import Participants from './components/Participants';
+import IconButton from '../../../components/iconButton/IconButton';
 
 export type ChatSettingsProps = {
   id: string;
@@ -41,56 +41,62 @@ export default function ChatSettings({
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
+      <Header leftHandler={navigation.goBack} centerElement={'Chat Settings'} />
       <SafeAreaView>
         <ScrollView style={styles.ScrollView}>
-          <Header
-            leftHandler={navigation.goBack}
-            centerElement={'Chat Settings'}
-          />
-          <View style={styles.settingBarContainer}>
-            {/* <TouchableOpacity
-              style={[styles.UserNewNameBox]}
-              activeOpacity={0.6}
-              onPress={() => setIsSelected(!isSelected)}>
-              <Text style={styles.UserNewNameText}>Chat Name : </Text>
-              <TextInput
-                style={styles.UserNewName}
-                placeholder="new name"
-              />
-            </TouchableOpacity> */}
-
-            <TouchableOpacity
-              style={styles.longBox}
-              activeOpacity={0.6}
+          <Participants chatId={currentChatID} navigation={navigation} />
+          <View style={styles.signOutContainer}>
+            <IconButton
+              label="Leave Chat"
+              Icon={Ionicons}
+              iconName={'trash-outline'}
+              style={{marginTop: 5}}
               onPress={() => {
                 () => setIsSelected(!isSelected);
                 leaveCourseChat(currentChatID);
-                // leaveCourse(currentChatID);
                 appStackNavigate(navigation, 'tabNavigator');
-              }}>
-              <Text style={styles.longBarText}>Leave Chat</Text>
-              <Ionicons
-                name={'trash-outline'}
-                size={scale(25)}
-                color={black}
-                style={styles.longBoxIcon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.longBox}
-              activeOpacity={0.6}
-              onPress={() => setIsSelected(!isSelected)}>
-              <Text style={styles.longBarText}>Course About</Text>
-              <Ionicons
-                name={'information-circle-outline'}
-                size={scale(25)}
-                color={black}
-                style={styles.longBoxIcon}
-              />
-            </TouchableOpacity>
+              }}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
     </View>
   );
 }
+
+// <View style={styles.container}>
+//   <StatusBar backgroundColor={white} barStyle="dark-content" />
+//   <Header leftHandler={navigation.goBack} centerElement={'Settings'} />
+//   <ScrollView style={styles.ScrollView}>
+//     {/* go to different pages */}
+//     <View style={styles.settingBarContainer}>
+//       <IconButton
+//         onPress={() => {
+//           appStackNavigate(navigation, 'editProfile');
+//         }}
+//         label="Edit Profile"
+//         Icon={FontAwesome5}
+//         iconName={'user-edit'}
+//         style={{marginTop: 5}}
+//         iconSize={scale(17)}
+//       />
+//       <IconButton
+//         onPress={() => appStackNavigate(navigation, 'settings')}
+//         label="Settings"
+//         Icon={Ionicons}
+//         iconName={'settings-outline'}
+//         style={{marginTop: 5}}
+//       />
+//     </View>
+
+//     <View style={styles.signOutContainer}>
+//       <IconButton
+//         onPress={signOut}
+//         label="Sign Out"
+//         Icon={Ionicons}
+//         iconName={'log-out-outline'}
+//         iconColor={'red'}
+//       />
+//     </View>
+//   </ScrollView>
+// </View>;

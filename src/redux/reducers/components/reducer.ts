@@ -131,6 +131,7 @@ export function reducer(
         chatmap: {
           ...state.chatmap,
           [chatId]: {
+            ...state.chatmap[chatId],
             messagemap: {...messageMap},
             messages: [...messages],
           },
@@ -138,14 +139,20 @@ export function reducer(
       };
     }
     case 'EDIT_USERS': {
-      const {data} = action;
-      console.log('EDIT_USERS', data);
-
-      const usermap = {...state.usermap, ...data};
-      console.log('EDIT_USERS', usermap);
+      const {chatId, data, memberIds} = action;
       return {
         ...state,
-        usermap,
+        chatmap: {
+          ...state.chatmap,
+          [chatId]: {
+            ...state.chatmap[chatId],
+            memberIds: [...memberIds],
+          },
+        },
+        usermap: {
+          ...state.usermap,
+          ...data,
+        },
       };
     }
     default:

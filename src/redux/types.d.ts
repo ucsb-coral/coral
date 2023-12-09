@@ -62,7 +62,9 @@ declare type NewMessagesAction = {
 
 declare type EditUsersAction = {
   type: 'EDIT_USERS';
+  chatId: string;
   data: Usermap;
+  memberIds: string[];
 };
 
 declare type ActionTypes =
@@ -173,6 +175,7 @@ declare type Message = {
 declare type Chat = {
   messages: string[];
   messagemap: Messagemap;
+  memberIds: string[];
 };
 
 declare type TimeLocation = {

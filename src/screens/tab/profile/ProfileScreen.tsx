@@ -30,6 +30,7 @@ import firestore from '@react-native-firebase/firestore';
 import genericUserImagePng from '../../../assets/pngs/userImage.png';
 import {updateMyUserWithBuffer} from '../../../firebaseReduxUtilities/useUserData';
 import {getNextStatus, getStatusIcon} from '../../../utilities/status';
+import IconButton from '../../../components/iconButton/IconButton';
 
 export type ProfileScreenProps = EmptyProps;
 
@@ -111,36 +112,20 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
             </TouchableOpacity>
           </View>
           <View style={styles.settingBarContainer}>
-            <TouchableOpacity
-              style={[
-                styles.longBox,
-                // isActive ? {backgroundColor: '#F883793D'} : {},
-              ]}
-              activeOpacity={0.6}
-              // onPressIn={() => setIsActive(true)}
-              // onPressOut={() => setIsActive(false)}
-              onPress={toggleStatus}>
-              <Text style={styles.longBarText}>Status</Text>
-              <Ionicons
-                name={getStatusIcon(newStatus)}
-                size={scale(25)}
-                color={black}
-                style={styles.longBoxIcon}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.longBox}
-              activeOpacity={0.6}
-              onPress={() => appStackNavigate(navigation, 'settings')}>
-              <Text style={styles.longBarText}>Settings</Text>
-              <Ionicons
-                name={'settings-outline'}
-                size={scale(25)}
-                color={black}
-                style={styles.longBoxIcon}
-              />
-            </TouchableOpacity>
+            <IconButton
+              onPress={toggleStatus}
+              label="Status"
+              Icon={Ionicons}
+              iconName={getStatusIcon(newStatus)}
+              style={{marginTop: 5}}
+            />
+            <IconButton
+              onPress={() => appStackNavigate(navigation, 'settings')}
+              label="Settings"
+              Icon={Ionicons}
+              iconName={'settings-outline'}
+              style={{marginTop: 5}}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>

@@ -11,6 +11,7 @@ import {
   ButtonBackground,
 } from '../../../utilities/colors';
 import {buttonFont, NameFont, EmailFont} from '../../../utilities/textfont';
+import {scale} from '../../../utilities/scale';
 
 export const styles = StyleSheet.create({
   container: {
@@ -133,6 +134,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     padding: 40,
+    paddingLeft: scale(16),
+    paddingRight: scale(16),
     justifyContent: 'space-between',
   },
   BioBarContainer: {
@@ -264,6 +267,8 @@ export const styles = StyleSheet.create({
   signOutContainer: {
     bottom: 0,
     padding: 40,
+    paddingLeft: scale(16),
+    paddingRight: scale(16),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
