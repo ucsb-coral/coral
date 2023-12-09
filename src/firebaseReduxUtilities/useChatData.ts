@@ -10,14 +10,12 @@ import {
   newMessagesAction,
 } from '../redux/actions';
 import {getUserDocumentRef} from './useUserData';
-import {Alert} from 'react-native';
 import {useSelector} from 'react-redux';
 
 const getChatDocumentRef = (courseId: string) =>
   firestore().collection('chats').doc(courseId);
 
 const joinCourseChat = async (courseId: string) => {
-  console.log('afadfaf');
   const myUserId = store.getState().data.myUserId;
   const chatDocumentRef = getChatDocumentRef(courseId);
   const myUserDocumentRef = getUserDocumentRef(myUserId);
@@ -26,7 +24,7 @@ const joinCourseChat = async (courseId: string) => {
     .collection('memberIds')
     .get()
     .then(snap => handleMemberIdsSnapshot(courseId, myUserId, snap));
-  chatDocumentRef
+  await chatDocumentRef
     .collection('messages')
     .orderBy('createdAt', 'desc')
     .get()
@@ -37,7 +35,6 @@ const joinCourseChat = async (courseId: string) => {
   const chatsToSet = user.chats ?? [];
   if (!chatsToSet.includes(courseId)) chatsToSet.push(courseId);
   await myUserDocumentRef.update({chats: chatsToSet});
-  console.log('join1');
   store.dispatch(joinChatAction({id: courseId}));
 };
 
@@ -143,6 +140,8 @@ const handleMemberIdsSnapshot = (
 ) => {
   const userPromises: Promise<void>[] = [];
   const usermapToSet: Usermap = {};
+  console.log('setListeners handleMemberIdsSnapshot');
+  const memberIds = snapshot.docs.map(doc => doc.id);
   snapshot
     .docChanges()
     .filter(
@@ -150,7 +149,6 @@ const handleMemberIdsSnapshot = (
         docChange.type !== 'removed' && docChange.doc.id !== myUserId,
     )
     .forEach(docChange => {
-      console.log('WEFVEWF');
       const id = docChange.doc.id;
       const add = async () => {
         const userRef = getUserDocumentRef(id);
@@ -162,7 +160,9 @@ const handleMemberIdsSnapshot = (
   Promise.all(userPromises).then(() =>
     store.dispatch(
       editUsersAction({
+        chatId,
         data: usermapToSet,
+        memberIds,
       }),
     ),
   );

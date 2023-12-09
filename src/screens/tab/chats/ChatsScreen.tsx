@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
-import {
-  TabPageProps,
-  tabNavigate,
-} from '../../../navigation/navigators/TabNavigator';
-
+import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 import {styles} from './ChatPageStyles';
 import {CompositeScreenProps, useNavigation} from '@react-navigation/native';
 import {
@@ -30,10 +26,7 @@ const joinButton = (
   <Button label="Join" rounded style={{height: scale(34), width: scale(72)}} />
 );
 
-export default function ChatsScreen({
-  route,
-  navigation,
-}: TabPageProps<'chats'>) {
+export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats ?? [],
@@ -42,15 +35,7 @@ export default function ChatsScreen({
 
   return (
     <View style={{flex: 1, backgroundColor: white}}>
-      <Header
-        centerElement={'Chat List'}
-        rightHandler={() => navigation.navigate('schedule', {})}
-        rightElement={joinButton}
-      />
-
-      {/* Current Class List*/}
-      {/* <Text style={styles.category}>Current Classes</Text> */}
-
+      <Header centerElement={'Chat List'} />
       {chats?.length === 0 ? (
         <Text
           style={{
@@ -58,7 +43,7 @@ export default function ChatsScreen({
             marginTop: 20,
             fontFamily: avenirBlackCentered,
             fontSize: 20,
-            color: 'black',
+            color: black,
           }}>
           You have not joined any chats
         </Text>
@@ -78,18 +63,11 @@ export default function ChatsScreen({
                 name={'chevron-forward-outline'}
                 size={scale(25)}
                 color={black}
-                //style={styles.longBoxIcon}
               />
-              {/* <Text style={styles.chatMessage}>
-              Sender: This is a placeholder of the last sent msg ...
-            </Text> */}
             </TouchableOpacity>
           ))}
         </ScrollView>
       )}
-
-      {/* Waitlist Class List */}
-      {/* <Text style={styles.category}>Waitlist Class</Text> */}
     </View>
   );
 }

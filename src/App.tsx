@@ -6,9 +6,6 @@ import {Provider} from 'react-redux';
 import Navigation from './navigation/Navigation';
 import {loadFonts} from './utilities/textfont';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
-import {signOut} from '../auth/useAuth';
-import {clearStoreAction} from './redux/actions';
-import {withTokens} from './firebaseReduxUtilities/tokens';
 
 export default function App() {
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -21,7 +18,7 @@ export default function App() {
     }
     prepare();
   }, []);
-  // store.dispatch(clearStoreAction({}));
+
   return (
     <Provider store={store}>
       <PersistGate loading={<></>} persistor={persistor}>

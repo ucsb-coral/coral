@@ -267,8 +267,6 @@ export const styles = StyleSheet.create({
   signOutContainer: {
     bottom: 0,
     padding: 40,
-    paddingLeft: scale(16),
-    paddingRight: scale(16),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

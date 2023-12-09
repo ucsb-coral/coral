@@ -1,4 +1,12 @@
-import React, {Dispatch, Key, SetStateAction, useState, useEffect} from 'react';
+import React, {
+  Dispatch,
+  useRef,
+  Key,
+  SetStateAction,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 import {
   View,
   Text,
@@ -9,6 +17,8 @@ import {
   FlatList,
   RecursiveArray,
   ViewStyle,
+  RefreshControl,
+  Alert,
 } from 'react-native';
 import {
   AppStackPageProps,
@@ -35,6 +45,7 @@ import dayjs from 'dayjs';
 import {styles} from './ScheduleScreenStyles';
 import Button from '../../../components/button/Button';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
+import {getCurrentCourses} from '../../../firebaseReduxUtilities/useCourseData';
 // import { current } from '@reduxjs/toolkit';
 
 // import { avenirBlackCentered } from '../../../utilities/textfont';
@@ -58,15 +69,17 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>('');
   const [showCourses, setShowCourses] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const refreshTimeout = useRef<NodeJS.Timeout | null>(null);
   var today = new Date();
   var current_day = new Date().getDay();
-
+  console.log('current_day', courses, coursemap);
   function splitTime(time: string) {
+    if (!time) return [];
     const parts = time.split(':');
     return [parseInt(parts[0]), parseInt(parts[1])];
   }
   function weekDayToNum(daysString: string) {
-
     const daysMap: {[key: string]: number} = {
       S: 0, // Sunday
       M: 1, // Monday
@@ -82,18 +95,6 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return dayNumbers;
   }
 
-  // const hr = splitTime('10:19')[0];
-  // const min = splitTime('10:19')[1];
-  // console.log("testing", hr);
-  // console.log("testing", min);
-
-  // console.log('userCourses', userCourses);
-
-  // function extractCourseInfo(userCourses: string[]) {
-  //   return userCoursemap[userCourses[0]]?.courseId;
-  // }
-  // console.log('testing extractCourseInfo', extractCourseInfo(userCourses));
-
   function extractCourseInfo1() {
     return courses
       .map((courseId: string) => {
@@ -106,8 +107,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           return null; // here to filter out null values
         }
 
-        const {beginTime, days, endTime} =
-          course.timeLocations[0];
+        const {beginTime, days, endTime} = course.timeLocations[0];
         const section_day = course.timeLocations[1]?.days;
         const section_beginTime = course.timeLocations[1]?.beginTime;
         const section_endTime = course.timeLocations[1]?.endTime;
@@ -181,6 +181,8 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
 
   console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
   function generateEventFromCourse(extractCoursesInfo: any) {
+    console.log('generating events');
+
     if (!extractCoursesInfo) {
       return []; // Return an empty array if no courses are available
     }
@@ -280,49 +282,50 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return testingEvents;
   }
 
-  const extractCoursesLength = extractCoursesInfo.length;
-  // console.log('extractCoursesLength', extractCoursesLength);
-  const combinedEvents = [];
-  for (let i = 0; i < extractCoursesLength; i++) {
-    const eventsForCourse = generateEventFromCourse(extractCoursesInfo[i]);
-    combinedEvents.push(...eventsForCourse); // Spread the events into the combinedEvents array
+  function generateCombinedEvents() {
+    const extractCoursesLength = extractCoursesInfo.length;
+    const combinedEvents = [];
+    for (let i = 0; i < extractCoursesLength; i++) {
+      const eventsForCourse = generateEventFromCourse(extractCoursesInfo[i]);
+      combinedEvents.push(...eventsForCourse); // Spread the events into the combinedEvents array
+    }
+    combinedEvents.sort(function (a, b) {
+      return a.start - b.start;
+    });
+    return combinedEvents;
   }
 
-  combinedEvents.sort(function (a, b) {
-    return a.start - b.start;
-  });
+  const combinedEvents = useMemo(() => generateCombinedEvents(), [coursemap]);
 
-  // console.log('combinedEvents', combinedEvents);
-
-  // const testingEvents = [
-  //   {
-  //     title: 'Meeting1',
-  //     start: new Date(2023, 11, 7, 15, 45),
-  //     end: new Date(2023, 11, 7, 17, 30),
-  //   },
-  //   {
-  //     title: 'Meeting2',
-  //     start: new Date(2023, 11, 8, 15, 45),
-  //     end: new Date(2023, 11, 8, 16, 30),
-  //   },
-  // ];
-
-  // end of calendar dummy data for testing
   const openCourseModal = (id: string) => {
     setModalData(id);
     setModalVisible(true);
   };
 
-  const convertTime = (time: string | undefined) => {
-    if (!time) return '';
-    let hours_24 = parseInt(time.slice(0, 2));
-    console.log("hours_23",hours_24);
-    // let suffix = hours_24 <= 12 ? 'AM' : 'PM';
-    // let hours_12 = (((hours_24 + 11) % 12) + 1).toString();
-    // return `${hours_12 + time.slice(2)} ${suffix}`;
-    let timer = ( hours_24 + time.slice(2)).toString();
-    return timer + " "
-  };
+  function convertTime(time: string | undefined) {
+    if (!time) {
+      return '';
+    }
+    // Split the input time into hours and minutes
+    const [hours, minutes] = time.split(':');
+
+    // Convert hours to a number
+    let hoursNum = parseInt(hours, 10);
+
+    // Determine AM or PM
+    const period = hoursNum >= 12 ? 'PM' : 'AM';
+
+    // Convert to 12-hour format
+    hoursNum = hoursNum % 12 || 12;
+
+    // Pad single-digit minutes with a leading zero
+    const minutesWithZero = minutes.padStart(2, '0');
+
+    // Form the 12-hour time string
+    const time12 = `${hoursNum}:${minutesWithZero} ${period} `;
+
+    return time12;
+  }
 
   type CourseInfoModalProps = {
     isOpen: boolean;
@@ -452,6 +455,20 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     );
   }
 
+  const onRefresh = React.useCallback(() => {
+    console.log('refreshing');
+    setRefreshing(true);
+    refreshTimeout.current = setTimeout(() => {
+      Alert.alert('Error', 'Failed to refresh courses');
+      setRefreshing(false);
+    }, 5000);
+    getCurrentCourses({}).then(res => {
+      if (res) {
+        if (refreshTimeout.current) clearTimeout(refreshTimeout.current);
+        setRefreshing(false);
+      }
+    });
+  }, []);
   return (
     <View style={{flex: 1, backgroundColor: white}}>
       <Header centerElement={'Your Courses'} />
@@ -470,11 +487,19 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           </Text>
         ) : showCourses ? (
           <FlatList
-            style={{}}
             contentContainerStyle={styles.courseFlatListStyle}
             data={courses}
             renderItem={renderItem}
-            bounces={false}
+            bounces={true}
+            refreshControl={
+              <RefreshControl
+                enabled
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
+            }
+            // refreshing={refreshing}
+            // onRefresh={onRefresh}
           />
         ) : (
           <Calendar

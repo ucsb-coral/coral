@@ -21,6 +21,7 @@ import {coral} from '../../../utilities/colors';
 
 import {scale, standardMargin} from '../../../utilities/scale';
 import {withTokens} from '../../../firebaseReduxUtilities/tokens';
+import IconButton from '../../../components/iconButton/IconButton';
 
 export type SettingsScreenProps = {};
 export default function SettingsScreen({
@@ -30,53 +31,37 @@ export default function SettingsScreen({
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={white} barStyle="dark-content" />
+      <Header leftHandler={navigation.goBack} centerElement={'Settings'} />
       <ScrollView style={styles.ScrollView}>
-        <Header leftHandler={navigation.goBack} centerElement={'Settings'} />
-
         {/* go to different pages */}
         <View style={styles.settingBarContainer}>
-          <TouchableOpacity
+          <IconButton
             onPress={() => {
               appStackNavigate(navigation, 'editProfile');
             }}
-            style={styles.longBox}
-            activeOpacity={0.6}>
-            <Text style={styles.longBarText}>Edit Profile</Text>
-            <FontAwesome5
-              name="user-edit"
-              size={scale(17)}
-              color="black"
-              style={styles.longBoxIcon}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => appStackNavigate(navigation, 'about')}
-            style={styles.longBox}
-            activeOpacity={0.6}>
-            <Text style={styles.longBarText}>About Coral</Text>
-            <Ionicons
-              name="information-circle-outline"
-              size={scale(25)}
-              color="black"
-              style={styles.longBoxIcon}
-            />
-          </TouchableOpacity>
+            label="Edit Profile"
+            Icon={FontAwesome5}
+            iconName={'user-edit'}
+            style={{marginTop: 5}}
+            iconSize={scale(17)}
+          />
+          <IconButton
+            onPress={() => appStackNavigate(navigation, 'settings')}
+            label="Settings"
+            Icon={Ionicons}
+            iconName={'settings-outline'}
+            style={{marginTop: 5}}
+          />
         </View>
 
         <View style={styles.signOutContainer}>
-          <TouchableOpacity
-            style={[styles.signOutBox, {borderBottomWidth: 0}]}
-            activeOpacity={0.6}
-            onPress={signOut}>
-            <Text style={styles.signOutText}>{'Sign Out'}</Text>
-            <Ionicons
-              name="log-out-outline"
-              size={scale(20)}
-              color={'red'}
-              style={{marginLeft: scale(5)}}
-            />
-          </TouchableOpacity>
+          <IconButton
+            onPress={signOut}
+            label="Sign Out"
+            Icon={Ionicons}
+            iconName={'log-out-outline'}
+            iconColor={'red'}
+          />
         </View>
       </ScrollView>
     </View>
