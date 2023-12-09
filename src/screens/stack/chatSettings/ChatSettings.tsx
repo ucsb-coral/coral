@@ -50,6 +50,7 @@ export default function ChatSettings({
               label="Leave Chat"
               Icon={Ionicons}
               iconName={'trash-outline'}
+              iconColor="red"
               style={{marginTop: 5}}
               onPress={() => {
                 () => setIsSelected(!isSelected);
