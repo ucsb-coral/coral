@@ -7,6 +7,8 @@ import {
   Modal,
   TouchableOpacity,
   FlatList,
+  RecursiveArray,
+  ViewStyle,
 } from 'react-native';
 import {
   AppStackPageProps,
@@ -28,7 +30,8 @@ import {scale, standardMargin} from '../../../utilities/scale';
 import Header from '../../../components/header/Header';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
-import {Calendar} from 'react-native-big-calendar';
+import {Calendar, EventRenderer, ICalendarEventBase, formatStartEnd} from 'react-native-big-calendar';
+import dayjs from 'dayjs';
 import {styles} from './ScheduleScreenStyles';
 import Button from '../../../components/button/Button';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
@@ -74,7 +77,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       U: 6, // Saturday
     };
 
-    const dayNumbers = daysString.split('').map(day => daysMap[day]);
+    const dayNumbers = daysString.replaceAll(/\s+/g, ' ').trim().split(' ').map(day => daysMap[day]);
 
     return dayNumbers;
   }
@@ -132,6 +135,52 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   function generateTestingEvents2(extractCoursesInfo: any) {}
   // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
 
+  // interface MyCustomEventType extends ICalendarEventBase {
+  //   color?: string
+  // }
+
+  // const customEventRenderer: EventRenderer<MyCustomEventType> = (
+  //   event,
+  //   touchableOpacityProps,
+  // ) => {
+  //   console.log('event', event);
+  //   return (
+  //     <TouchableOpacity
+  //       {...touchableOpacityProps}
+  //       style={
+  //         {
+  //           backgroundColor: event.color ? opacity(event.color, 0.2) : 'lightgrey',
+  //           borderWidth: 1,
+  //           borderColor: event.color ? opacity(event.color, 0.2) : 'lightgrey',
+  //           borderLeftColor: event.color ? opacity(event.color, 0.2) : 'lightgrey',
+  //           borderLeftWidth: 10,
+  //           borderStyle: 'solid',
+  //           borderRadius: 6,
+  //           alignItems: 'center',
+  //           justifyContent: 'center'
+  //         }
+  //       }
+  //     >
+  //       {dayjs(event.end).diff(event.start, 'minute') < 32 ? (
+  //         <Text style={[{ color: 'black' }]}>
+  //           {event.title},
+  //           <Text style={[{ color: 'black' }]}>{dayjs(event.start).format('HH:mm')}</Text>
+  //         </Text>
+  //       ) : (
+  //         <>
+  //           <Text style={[{ color: 'black' }]}>{event.title}</Text>
+  //           <Text style={[{ color: 'black' }]}>
+  //             {formatStartEnd(event.start, event.end, 'HH:mm')}
+  //           </Text>
+  //           {event.children && event.children}
+  //         </>
+  //       )}
+  //     </TouchableOpacity>
+  //   )
+  // }
+
+  let i: number = 0;
+
   console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
   function generateEventFromCourse(extractCoursesInfo: any) {
     if (!extractCoursesInfo) {
@@ -139,7 +188,8 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     }
 
     const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF3366', '#33FFFF'];
-    const eventColor = colors[Math.floor(Math.random() * colors.length)]; // Assign a random color
+    const eventColor = colors[i];
+    // console.log('eventColor', eventColor);
 
     const uid = extractCoursesInfo?.uid;
     const beginTime = extractCoursesInfo?.beginTime;
@@ -188,7 +238,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           CourseBeginHours[1],
         ),
         end: new Date(year, month, date, CourseEndHours[0], CourseEndHours[1]),
-        eventColor: eventColor, // Assign the event color
+        color: eventColor, // Assign the event color
         uid: uid,
       });
     }
@@ -221,12 +271,14 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             section_endHours[0],
             section_endHours[1],
           ),
-          eventColor: eventColor,
+          color: eventColor, // Assign the event color
           uid: uid,
         });
       }
     }
 
+    i++;
+    console.log('testingEvents', testingEvents);
     return testingEvents;
   }
   const testingEvents = generateEventFromCourse(extractCoursesInfo[0]);
@@ -298,7 +350,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
         onPress={() => openCourseModal(courseId)}>
         <Text style={styles.eachCourseTitle}>{title}</Text>
         <Text style={styles.courseText}>
-          {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()}-{' '}
+          {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
           {timeLocation?.beginTime
             ? `${convertTime(timeLocation?.beginTime)} to ${convertTime(timeLocation?.endTime)}`
             : 'TBA'
@@ -441,6 +493,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             // showTime={false}
             // eventCellStyle={{ backgroundColor: coral }}
             scrollOffsetMinutes={300}
+            // renderEvent={customEventRenderer}
           />
         )}
       </View>
