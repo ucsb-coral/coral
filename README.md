@@ -42,6 +42,9 @@ Only valid UCSB students will be able to login and use the app.
 - **Real-time Chat Functionality**: Considering using WebSockets for real-time chat functionality.
 - Firebase for Auth
 
+## Deployment
+Download the latest version [link](https://github.com/ucsb-cs184-f23/pj-react-04/releases)
+
 ## Installation
 ### Prerequisites
 - An Android device with Android 5.0 or higher, or an Android emulator
