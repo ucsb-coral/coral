@@ -286,7 +286,10 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     }`;
     const timeLocation = course?.timeLocations?.find(
       timeloc => timeloc?.instructionTypeCode === 'LEC',
-    );
+    ) ||
+      course?.timeLocations?.find(
+        timeloc => timeloc?.instructionTypeCode === 'LAB',
+      );
     const instructors = timeLocation?.instructors[0];
     return (
       <Pressable
@@ -296,8 +299,10 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
         <Text style={styles.eachCourseTitle}>{title}</Text>
         <Text style={styles.courseText}>
           {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()}-{' '}
-          {convertTime(timeLocation?.beginTime)}
-          to {convertTime(timeLocation?.endTime)}
+          {timeLocation?.beginTime
+            ? `${convertTime(timeLocation?.beginTime)} to ${convertTime(timeLocation?.endTime)}`
+            : 'TBA'
+          }
         </Text>
         <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
         <Text style={styles.courseText}>{instructors?.name}</Text>
@@ -333,26 +338,42 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       return (
         <View>
           <Text style={styles.eachCourseInfoTitle}>{title}</Text>
-          <Text style={styles.courseText}>
-            Lecture: { '\n' }
-            {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-            {convertTime(timeLocation_LEC?.beginTime)}  to{' '}
-            {convertTime(timeLocation_LEC?.endTime)}
-          </Text>
-          <Text style={styles.courseText}>{timeLocation_LEC?.buildingRoom}</Text>
-          <Text style={styles.courseText}>
-            {instructors_LEC?.map(instructor => instructor?.name).join(', ')}
-          </Text>
-          <Text style={styles.courseText}>
-            Section:  { '\n' }
-            {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-            {convertTime(timeLocation_SEC?.beginTime)}  to{' '}
-            {convertTime(timeLocation_SEC?.endTime)}
-          </Text>
-          <Text style={styles.courseText}>{timeLocation_SEC?.buildingRoom}</Text>
-          <Text style={styles.courseText}>
-            {instructors_SEC?.map(instructor => instructor?.name).join(', ')}
-          </Text>
+          {
+            timeLocation_LEC ? (
+              <View>
+                <Text style={styles.courseText}>
+                  Lecture: { '\n' }
+                  {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+                  {convertTime(timeLocation_LEC?.beginTime)} to{' '}
+                  {convertTime(timeLocation_LEC?.endTime)}
+                </Text>
+                <Text style={styles.courseText}>{timeLocation_LEC?.buildingRoom}</Text>
+                <Text style={styles.courseText}>
+                  {instructors_LEC?.map(instructor => instructor?.name).join(', ')}
+                </Text>
+              </View>
+            ) : null
+          }
+          
+          {
+            timeLocation_SEC ? (
+              <View>
+                <Text style={styles.courseText}>
+                  {
+                    timeLocation_SEC?.instructionTypeCode === 'DIS' ? 'Section: ' : 'Lab: '
+                  }
+                  { '\n'}
+                  {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+                  {convertTime(timeLocation_SEC?.beginTime)} to{' '}
+                  {convertTime(timeLocation_SEC?.endTime)}
+                </Text>
+                <Text style={styles.courseText}>{timeLocation_SEC?.buildingRoom}</Text>
+                <Text style={styles.courseText}>
+                  {instructors_SEC?.map(instructor => instructor?.name).join(', ')}
+                </Text>
+              </View>
+            ) : null
+          }
         </View>
       );
     }
