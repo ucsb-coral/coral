@@ -21,7 +21,7 @@ export default function App() {
     }
     prepare();
   }, []);
-  store.dispatch(clearStoreAction({}));
+  // store.dispatch(clearStoreAction({}));
   return (
     <Provider store={store}>
       <PersistGate loading={<></>} persistor={persistor}>

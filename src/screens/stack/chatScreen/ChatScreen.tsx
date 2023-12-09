@@ -26,9 +26,12 @@ export default function ChatScreen({
 }: AppStackPageProps<'chat'>) {
   const {id} = route.params;
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
-  const chat = useSelector((state: ReduxState) => state.data.chatmap[id]);
-  const {messages, messagemap} = chat ?? {};
-  console.log('WEFVWEFV', chat);
+  const messages = useSelector(
+    (state: ReduxState) => state.data.chatmap[id]?.messages,
+  );
+  const messagemap = useSelector(
+    (state: ReduxState) => state.data.chatmap[id]?.messagemap,
+  );
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
   const usermap = useSelector((state: ReduxState) => state.data.usermap);
   const [message, setMessage] = useState<string>('');
@@ -46,7 +49,7 @@ export default function ChatScreen({
   };
 
   return (
-    <Loading isReady={!!chat}>
+    <Loading isReady={!!messages}>
       <KeyboardAvoidingView
         style={{flex: 1, display: 'flex', flexDirection: 'column-reverse'}}>
         <InputFooter

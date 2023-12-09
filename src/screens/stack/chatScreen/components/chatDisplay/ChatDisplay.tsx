@@ -107,7 +107,7 @@ export default function ChatDisplay({
         overScrollMode={'never'}
         onScroll={() => {}}
         onContentSizeChange={() => {}}
-        extraData={messages?.length}
+        extraData={messages}
         keyExtractor={(item: string, index: number) => {
           return item;
         }}

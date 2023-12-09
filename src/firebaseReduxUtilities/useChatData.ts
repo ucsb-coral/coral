@@ -22,15 +22,16 @@ const joinCourseChat = async (courseId: string) => {
   const chatDocumentRef = getChatDocumentRef(courseId);
   const myUserDocumentRef = getUserDocumentRef(myUserId);
   await chatDocumentRef.collection('memberIds').doc(myUserId).set({});
+  await chatDocumentRef
+    .collection('memberIds')
+    .get()
+    .then(snap => handleMemberIdsSnapshot(courseId, myUserId, snap));
   chatDocumentRef
     .collection('messages')
     .orderBy('createdAt', 'desc')
     .get()
     .then(snap => handleMessagesSnapshot(courseId, snap));
-  chatDocumentRef
-    .collection('memberIds')
-    .get()
-    .then(snap => handleMemberIdsSnapshot(courseId, myUserId, snap));
+
   const userDocSnapshot = await myUserDocumentRef.get();
   const user = userDocSnapshot.data() as User;
   const chatsToSet = user.chats ?? [];

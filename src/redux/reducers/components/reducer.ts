@@ -131,8 +131,8 @@ export function reducer(
         chatmap: {
           ...state.chatmap,
           [chatId]: {
-            messagemap: messageMap,
-            messages,
+            messagemap: {...messageMap},
+            messages: [...messages],
           },
         },
       };
