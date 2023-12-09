@@ -135,49 +135,47 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   function generateTestingEvents2(extractCoursesInfo: any) {}
   // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
 
-  // interface MyCustomEventType extends ICalendarEventBase {
-  //   color?: string
-  // }
+  interface MyCustomEventType extends ICalendarEventBase {
+    color?: string
+  }
 
-  // const customEventRenderer: EventRenderer<MyCustomEventType> = (
-  //   event,
-  //   touchableOpacityProps,
-  // ) => {
-  //   console.log('event', event);
-  //   return (
-  //     <TouchableOpacity
-  //       {...touchableOpacityProps}
-  //       style={
-  //         {
-  //           backgroundColor: event.color ? opacity(event.color, 0.2) : 'lightgrey',
-  //           borderWidth: 1,
-  //           borderColor: event.color ? opacity(event.color, 0.2) : 'lightgrey',
-  //           borderLeftColor: event.color ? opacity(event.color, 0.2) : 'lightgrey',
-  //           borderLeftWidth: 10,
-  //           borderStyle: 'solid',
-  //           borderRadius: 6,
-  //           alignItems: 'center',
-  //           justifyContent: 'center'
-  //         }
-  //       }
-  //     >
-  //       {dayjs(event.end).diff(event.start, 'minute') < 32 ? (
-  //         <Text style={[{ color: 'black' }]}>
-  //           {event.title},
-  //           <Text style={[{ color: 'black' }]}>{dayjs(event.start).format('HH:mm')}</Text>
-  //         </Text>
-  //       ) : (
-  //         <>
-  //           <Text style={[{ color: 'black' }]}>{event.title}</Text>
-  //           <Text style={[{ color: 'black' }]}>
-  //             {formatStartEnd(event.start, event.end, 'HH:mm')}
-  //           </Text>
-  //           {event.children && event.children}
-  //         </>
-  //       )}
-  //     </TouchableOpacity>
-  //   )
-  // }
+  const customEventRenderer: EventRenderer<MyCustomEventType> = (
+    event,
+    touchableOpacityProps,
+  ) => {
+    console.log('event', event);
+    return (
+      <TouchableOpacity
+        {...touchableOpacityProps}
+        style={
+          [
+            ...(touchableOpacityProps.style as RecursiveArray<ViewStyle>),
+            {
+            backgroundColor: event.color,
+            borderWidth: 1,
+            borderColor: event.color,
+            borderLeftColor: event.color,
+            borderLeftWidth: 3,
+            borderStyle: 'solid',
+            borderRadius: 6,
+            //alignItems: 'center',
+            //justifyContent: 'center'
+          }]
+        }
+      >
+        {dayjs(event.end).diff(event.start, 'minute') < 32 ? (
+          <Text style={[{ color: 'black', fontSize: 10}]}>
+            {event.title},
+            <Text style={[{ color: 'black' }]}>{dayjs(event.start).format('HH:mm')}</Text>
+          </Text>
+        ) : (
+          <>
+            <Text style={[{ color: 'black', fontSize: 10}]}>{event.title}</Text>
+          </>
+        )}
+      </TouchableOpacity>
+    )
+  }
 
   let i: number = 0;
 
@@ -187,7 +185,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       return []; // Return an empty array if no courses are available
     }
 
-    const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF3366', '#33FFFF'];
+    const colors = ['#F4CCCC', '#FCE5CD', '#FFF2CC', '#D9EAD3', '#D0E0E3', '#CFE2F3', '#D9D2E9', '#EAD1DC'];
     const eventColor = colors[i];
     // console.log('eventColor', eventColor);
 
@@ -277,11 +275,11 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       }
     }
 
-    i++;
+    i = (i + 1) % colors.length;
     console.log('testingEvents', testingEvents);
     return testingEvents;
   }
-  const testingEvents = generateEventFromCourse(extractCoursesInfo[0]);
+
   const extractCoursesLength = extractCoursesInfo.length;
   // console.log('extractCoursesLength', extractCoursesLength);
   const combinedEvents = [];
@@ -493,7 +491,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             // showTime={false}
             // eventCellStyle={{ backgroundColor: coral }}
             scrollOffsetMinutes={300}
-            // renderEvent={customEventRenderer}
+            renderEvent={customEventRenderer}
           />
         )}
       </View>
