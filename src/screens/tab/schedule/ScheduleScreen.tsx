@@ -40,7 +40,12 @@ import {scale, standardMargin} from '../../../utilities/scale';
 import Header from '../../../components/header/Header';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
-import {Calendar, EventRenderer, ICalendarEventBase, formatStartEnd} from 'react-native-big-calendar';
+import {
+  Calendar,
+  EventRenderer,
+  ICalendarEventBase,
+  formatStartEnd,
+} from 'react-native-big-calendar';
 import dayjs from 'dayjs';
 import {styles} from './ScheduleScreenStyles';
 import Button from '../../../components/button/Button';
@@ -90,7 +95,11 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       U: 6, // Saturday
     };
 
-    const dayNumbers = daysString.replaceAll(/\s+/g, ' ').trim().split(' ').map(day => daysMap[day]);
+    const dayNumbers = daysString
+      .replaceAll(/\s+/g, ' ')
+      .trim()
+      .split(' ')
+      .map(day => daysMap[day]);
 
     return dayNumbers;
   }
@@ -136,7 +145,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
 
   interface MyCustomEventType extends ICalendarEventBase {
-    color?: string
+    color?: string;
   }
 
   const customEventRenderer: EventRenderer<MyCustomEventType> = (
@@ -147,10 +156,9 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return (
       <TouchableOpacity
         {...touchableOpacityProps}
-        style={
-          [
-            ...(touchableOpacityProps.style as RecursiveArray<ViewStyle>),
-            {
+        style={[
+          ...(touchableOpacityProps.style as RecursiveArray<ViewStyle>),
+          {
             backgroundColor: event.color,
             borderWidth: 1,
             borderColor: event.color,
@@ -160,22 +168,23 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             borderRadius: 6,
             //alignItems: 'center',
             //justifyContent: 'center'
-          }]
-        }
-      >
+          },
+        ]}>
         {dayjs(event.end).diff(event.start, 'minute') < 32 ? (
-          <Text style={[{ color: 'black', fontSize: 10}]}>
+          <Text style={[{color: 'black', fontSize: 10}]}>
             {event.title},
-            <Text style={[{ color: 'black' }]}>{dayjs(event.start).format('HH:mm')}</Text>
+            <Text style={[{color: 'black'}]}>
+              {dayjs(event.start).format('HH:mm')}
+            </Text>
           </Text>
         ) : (
           <>
-            <Text style={[{ color: 'black', fontSize: 10}]}>{event.title}</Text>
+            <Text style={[{color: 'black', fontSize: 10}]}>{event.title}</Text>
           </>
         )}
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   let i: number = 0;
 
@@ -187,7 +196,16 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       return []; // Return an empty array if no courses are available
     }
 
-    const colors = ['#F4CCCC', '#FCE5CD', '#FFF2CC', '#D9EAD3', '#D0E0E3', '#CFE2F3', '#D9D2E9', '#EAD1DC'];
+    const colors = [
+      '#F4CCCC',
+      '#FCE5CD',
+      '#FFF2CC',
+      '#D9EAD3',
+      '#D0E0E3',
+      '#CFE2F3',
+      '#D9D2E9',
+      '#EAD1DC',
+    ];
     const eventColor = colors[i];
     // console.log('eventColor', eventColor);
 
@@ -337,9 +355,10 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     const title = `${course?.courseId?.replaceAll(/\s+/g, ' ').trim()} - ${
       course?.courseTitle
     }`;
-    const timeLocation = course?.timeLocations?.find(
-      timeloc => timeloc?.instructionTypeCode === 'LEC',
-    ) ||
+    const timeLocation =
+      course?.timeLocations?.find(
+        timeloc => timeloc?.instructionTypeCode === 'LEC',
+      ) ||
       course?.timeLocations?.find(
         timeloc => timeloc?.instructionTypeCode === 'LAB',
       );
@@ -353,9 +372,10 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
         <Text style={styles.courseText}>
           {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
           {timeLocation?.beginTime
-            ? `${convertTime(timeLocation?.beginTime)} to ${convertTime(timeLocation?.endTime)}`
-            : 'TBA'
-          }
+            ? `${convertTime(timeLocation?.beginTime)} to ${convertTime(
+                timeLocation?.endTime,
+              )}`
+            : 'TBA'}
         </Text>
         <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
         <Text style={styles.courseText}>{instructors?.name}</Text>
@@ -384,49 +404,55 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       );
       const instructors_LEC = timeLocation_LEC?.instructors;
       const timeLocation_SEC = course?.timeLocations?.find(
-        timeloc => timeloc?.instructionTypeCode === 'DIS' || timeloc?.instructionTypeCode === 'LAB',
+        timeloc =>
+          timeloc?.instructionTypeCode === 'DIS' ||
+          timeloc?.instructionTypeCode === 'LAB',
       );
       const instructors_SEC = timeLocation_SEC?.instructors;
 
       return (
         <View>
           <Text style={styles.eachCourseInfoTitle}>{title}</Text>
-          {
-            timeLocation_LEC ? (
-              <View>
-                <Text style={styles.courseText}>
-                  Lecture: { '\n' }
-                  {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-                  {convertTime(timeLocation_LEC?.beginTime)} to{' '}
-                  {convertTime(timeLocation_LEC?.endTime)}
-                </Text>
-                <Text style={styles.courseText}>{timeLocation_LEC?.buildingRoom}</Text>
-                <Text style={styles.courseText}>
-                  {instructors_LEC?.map(instructor => instructor?.name).join(', ')}
-                </Text>
-              </View>
-            ) : null
-          }
-          
-          {
-            timeLocation_SEC ? (
-              <View>
-                <Text style={styles.courseText}>
-                  {
-                    timeLocation_SEC?.instructionTypeCode === 'DIS' ? 'Section: ' : 'Lab: '
-                  }
-                  { '\n'}
-                  {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-                  {convertTime(timeLocation_SEC?.beginTime)} to{' '}
-                  {convertTime(timeLocation_SEC?.endTime)}
-                </Text>
-                <Text style={styles.courseText}>{timeLocation_SEC?.buildingRoom}</Text>
-                <Text style={styles.courseText}>
-                  {instructors_SEC?.map(instructor => instructor?.name).join(', ')}
-                </Text>
-              </View>
-            ) : null
-          }
+          {timeLocation_LEC ? (
+            <View>
+              <Text style={styles.courseText}>
+                Lecture: {'\n'}
+                {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+                {convertTime(timeLocation_LEC?.beginTime)} to{' '}
+                {convertTime(timeLocation_LEC?.endTime)}
+              </Text>
+              <Text style={styles.courseText}>
+                {timeLocation_LEC?.buildingRoom}
+              </Text>
+              <Text style={styles.courseText}>
+                {instructors_LEC
+                  ?.map(instructor => instructor?.name)
+                  .join(', ')}
+              </Text>
+            </View>
+          ) : null}
+
+          {timeLocation_SEC ? (
+            <View>
+              <Text style={styles.courseText}>
+                {timeLocation_SEC?.instructionTypeCode === 'DIS'
+                  ? 'Section: '
+                  : 'Lab: '}
+                {'\n'}
+                {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+                {convertTime(timeLocation_SEC?.beginTime)} to{' '}
+                {convertTime(timeLocation_SEC?.endTime)}
+              </Text>
+              <Text style={styles.courseText}>
+                {timeLocation_SEC?.buildingRoom}
+              </Text>
+              <Text style={styles.courseText}>
+                {instructors_SEC
+                  ?.map(instructor => instructor?.name)
+                  .join(', ')}
+              </Text>
+            </View>
+          ) : null}
         </View>
       );
     }
