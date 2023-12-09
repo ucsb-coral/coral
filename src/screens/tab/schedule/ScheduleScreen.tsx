@@ -1,4 +1,4 @@
-import React, {Dispatch, Key, SetStateAction, useState, useEffect} from 'react';
+import React, {Dispatch, Key, SetStateAction, useState, useEffect, useMemo} from 'react';
 import {
   View,
   Text,
@@ -79,18 +79,6 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return dayNumbers;
   }
 
-  // const hr = splitTime('10:19')[0];
-  // const min = splitTime('10:19')[1];
-  // console.log("testing", hr);
-  // console.log("testing", min);
-
-  // console.log('userCourses', userCourses);
-
-  // function extractCourseInfo(userCourses: string[]) {
-  //   return userCoursemap[userCourses[0]]?.courseId;
-  // }
-  // console.log('testing extractCourseInfo', extractCourseInfo(userCourses));
-
   function extractCourseInfo1() {
     return courses
       .map((courseId: string) => {
@@ -124,16 +112,10 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       .filter(courseInfo => courseInfo !== null); // here to filter out null values
   }
 
-  const extractCoursesInfo = extractCourseInfo1();
-  // console.log('extractCoursesInfo: \n', extractCoursesInfo);
-
-  // console.log('testing', extractCoursesInfo[0]?.beginTime);
-
-  function generateTestingEvents2(extractCoursesInfo: any) {}
-  // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
-
-  console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
-  function generateEventFromCourse(extractCoursesInfo: any) {
+  
+  function generateEventFromCourse(extractCoursesInfo: any) {  
+    console.log('generating events');
+      
     if (!extractCoursesInfo) {
       return []; // Return an empty array if no courses are available
     }
@@ -229,50 +211,54 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
 
     return testingEvents;
   }
-  const testingEvents = generateEventFromCourse(extractCoursesInfo[0]);
-  const extractCoursesLength = extractCoursesInfo.length;
-  // console.log('extractCoursesLength', extractCoursesLength);
-  const combinedEvents = [];
-  for (let i = 0; i < extractCoursesLength; i++) {
-    const eventsForCourse = generateEventFromCourse(extractCoursesInfo[i]);
-    combinedEvents.push(...eventsForCourse); // Spread the events into the combinedEvents array
+  
+  function generateCombinedEvents() {
+    const extractCoursesInfo = extractCourseInfo1();
+    console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
+    const extractCoursesLength = extractCoursesInfo.length;
+    const combinedEvents = [];
+    for (let i = 0; i < extractCoursesLength; i++) {
+      const eventsForCourse = generateEventFromCourse(extractCoursesInfo[i]);
+      combinedEvents.push(...eventsForCourse); // Spread the events into the combinedEvents array
+    }
+    combinedEvents.sort(function (a, b) {
+      return a.start - b.start;
+    });
+    return combinedEvents;
   }
 
-  combinedEvents.sort(function (a, b) {
-    return a.start - b.start;
-  });
+  const combinedEvents = useMemo(() => generateCombinedEvents(), [coursemap]);
 
-  // console.log('combinedEvents', combinedEvents);
-
-  // const testingEvents = [
-  //   {
-  //     title: 'Meeting1',
-  //     start: new Date(2023, 11, 7, 15, 45),
-  //     end: new Date(2023, 11, 7, 17, 30),
-  //   },
-  //   {
-  //     title: 'Meeting2',
-  //     start: new Date(2023, 11, 8, 15, 45),
-  //     end: new Date(2023, 11, 8, 16, 30),
-  //   },
-  // ];
-
-  // end of calendar dummy data for testing
   const openCourseModal = (id: string) => {
     setModalData(id);
     setModalVisible(true);
   };
 
-  const convertTime = (time: string | undefined) => {
-    if (!time) return '';
-    let hours_24 = parseInt(time.slice(0, 2));
-    console.log("hours_23",hours_24);
-    // let suffix = hours_24 <= 12 ? 'AM' : 'PM';
-    // let hours_12 = (((hours_24 + 11) % 12) + 1).toString();
-    // return `${hours_12 + time.slice(2)} ${suffix}`;
-    let timer = ( hours_24 + time.slice(2)).toString();
-    return timer + " "
-  };
+    function convertTime(time: string | undefined) {
+      if (!time) {
+        return '';
+      }
+      // Split the input time into hours and minutes
+      const [hours, minutes] = time.split(':');
+    
+      // Convert hours to a number
+      let hoursNum = parseInt(hours, 10);
+    
+      // Determine AM or PM
+      const period = hoursNum >= 12 ? 'PM' : 'AM';
+    
+      // Convert to 12-hour format
+      hoursNum = hoursNum % 12 || 12;
+    
+      // Pad single-digit minutes with a leading zero
+      const minutesWithZero = minutes.padStart(2, '0');
+    
+      // Form the 12-hour time string
+      const time12 = `${hoursNum}:${minutesWithZero} ${period} `;
+    
+      return time12;
+    }
+  
 
   type CourseInfoModalProps = {
     isOpen: boolean;
