@@ -9,6 +9,21 @@ const downloadFile = async (url: string, name: string) => {
     decodedUrl.lastIndexOf('/') + 1,
     decodedUrl.indexOf('?'),
   );
+  if (Platform.OS === 'ios') {
+    Alert.alert(
+      'Temporary not support download file on iOS',
+      'Please wait for next update.',
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed'),
+          style: 'cancel',
+        },
+      ],
+      {cancelable: true},
+    );
+    return;
+  }
   if (!fileName) {
     console.error('No file name found in URL');
     // show a Alert here
