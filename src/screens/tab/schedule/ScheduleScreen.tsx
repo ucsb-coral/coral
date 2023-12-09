@@ -326,7 +326,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       );
       const instructors_LEC = timeLocation_LEC?.instructors;
       const timeLocation_SEC = course?.timeLocations?.find(
-        timeloc => timeloc?.instructionTypeCode === 'DIS',
+        timeloc => timeloc?.instructionTypeCode === 'DIS' || timeloc?.instructionTypeCode === 'LAB',
       );
       const instructors_SEC = timeLocation_SEC?.instructors;
 
