@@ -60,9 +60,12 @@ export default function MessageBubbleWrapper({
         )}
       </View>
       <View
-        style={
-          isMyMessage ? styles.myMessageContainer : styles.otherMessageContainer
-        }>
+        style={{
+          ...(isMyMessage
+            ? styles.myMessageContainer
+            : styles.otherMessageContainer),
+          ...{overflow: 'hidden'},
+        }}>
         {children}
       </View>
     </View>
