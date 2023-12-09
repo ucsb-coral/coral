@@ -135,7 +135,7 @@ export default function EditProfileScreen({
           placeholder="What would you like to be called?"
           value={newPreferredName}
           onChangeText={setNewPreferredName}
-          maxLength={80}
+          maxLength={15}
         />
         <Input
           label="New bio"
