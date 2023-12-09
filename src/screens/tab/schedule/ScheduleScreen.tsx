@@ -1,4 +1,11 @@
-import React, {Dispatch, Key, SetStateAction, useState, useEffect} from 'react';
+import React, {
+  Dispatch,
+  Key,
+  SetStateAction,
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import {
   View,
   Text,
@@ -7,6 +14,8 @@ import {
   Modal,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
+  Alert,
 } from 'react-native';
 import {
   AppStackPageProps,
@@ -32,6 +41,7 @@ import {Calendar} from 'react-native-big-calendar';
 import {styles} from './ScheduleScreenStyles';
 import Button from '../../../components/button/Button';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
+import {getCurrentCourses} from '../../../firebaseReduxUtilities/useCourseData';
 // import { current } from '@reduxjs/toolkit';
 
 // import { avenirBlackCentered } from '../../../utilities/textfont';
@@ -55,6 +65,8 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<string>('');
   const [showCourses, setShowCourses] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const refreshTimeout = useRef<NodeJS.Timeout | null>(null);
   var today = new Date();
   var current_day = new Date().getDay();
 
@@ -63,7 +75,6 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return [parseInt(parts[0]), parseInt(parts[1])];
   }
   function weekDayToNum(daysString: string) {
-
     const daysMap: {[key: string]: number} = {
       S: 0, // Sunday
       M: 1, // Monday
@@ -103,8 +114,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           return null; // here to filter out null values
         }
 
-        const {beginTime, days, endTime} =
-          course.timeLocations[0];
+        const {beginTime, days, endTime} = course.timeLocations[0];
         const section_day = course.timeLocations[1]?.days;
         const section_beginTime = course.timeLocations[1]?.beginTime;
         const section_endTime = course.timeLocations[1]?.endTime;
@@ -242,21 +252,6 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     return a.start - b.start;
   });
 
-  // console.log('combinedEvents', combinedEvents);
-
-  // const testingEvents = [
-  //   {
-  //     title: 'Meeting1',
-  //     start: new Date(2023, 11, 7, 15, 45),
-  //     end: new Date(2023, 11, 7, 17, 30),
-  //   },
-  //   {
-  //     title: 'Meeting2',
-  //     start: new Date(2023, 11, 8, 15, 45),
-  //     end: new Date(2023, 11, 8, 16, 30),
-  //   },
-  // ];
-
   // end of calendar dummy data for testing
   const openCourseModal = (id: string) => {
     setModalData(id);
@@ -266,12 +261,12 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const convertTime = (time: string | undefined) => {
     if (!time) return '';
     let hours_24 = parseInt(time.slice(0, 2));
-    console.log("hours_23",hours_24);
+    console.log('hours_23', hours_24);
     // let suffix = hours_24 <= 12 ? 'AM' : 'PM';
     // let hours_12 = (((hours_24 + 11) % 12) + 1).toString();
     // return `${hours_12 + time.slice(2)} ${suffix}`;
-    let timer = ( hours_24 + time.slice(2)).toString();
-    return timer + " "
+    let timer = (hours_24 + time.slice(2)).toString();
+    return timer + ' ';
   };
 
   type CourseInfoModalProps = {
@@ -334,22 +329,26 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
         <View>
           <Text style={styles.eachCourseInfoTitle}>{title}</Text>
           <Text style={styles.courseText}>
-            Lecture: { '\n' }
+            Lecture: {'\n'}
             {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-            {convertTime(timeLocation_LEC?.beginTime)}  to{' '}
+            {convertTime(timeLocation_LEC?.beginTime)} to{' '}
             {convertTime(timeLocation_LEC?.endTime)}
           </Text>
-          <Text style={styles.courseText}>{timeLocation_LEC?.buildingRoom}</Text>
+          <Text style={styles.courseText}>
+            {timeLocation_LEC?.buildingRoom}
+          </Text>
           <Text style={styles.courseText}>
             {instructors_LEC?.map(instructor => instructor?.name).join(', ')}
           </Text>
           <Text style={styles.courseText}>
-            Section:  { '\n' }
+            Section: {'\n'}
             {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-            {convertTime(timeLocation_SEC?.beginTime)}  to{' '}
+            {convertTime(timeLocation_SEC?.beginTime)} to{' '}
             {convertTime(timeLocation_SEC?.endTime)}
           </Text>
-          <Text style={styles.courseText}>{timeLocation_SEC?.buildingRoom}</Text>
+          <Text style={styles.courseText}>
+            {timeLocation_SEC?.buildingRoom}
+          </Text>
           <Text style={styles.courseText}>
             {instructors_SEC?.map(instructor => instructor?.name).join(', ')}
           </Text>
@@ -381,6 +380,20 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     );
   }
 
+  const onRefresh = React.useCallback(() => {
+    console.log('refreshing');
+    setRefreshing(true);
+    refreshTimeout.current = setTimeout(() => {
+      Alert.alert('Error', 'Failed to refresh courses');
+      setRefreshing(false);
+    }, 5000);
+    getCurrentCourses({}).then(res => {
+      if (res) {
+        if (refreshTimeout.current) clearTimeout(refreshTimeout.current);
+        setRefreshing(false);
+      }
+    });
+  }, []);
   return (
     <View style={{flex: 1, backgroundColor: white}}>
       <Header centerElement={'Your Courses'} />
@@ -399,11 +412,19 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           </Text>
         ) : showCourses ? (
           <FlatList
-            style={{}}
             contentContainerStyle={styles.courseFlatListStyle}
             data={courses}
             renderItem={renderItem}
-            bounces={false}
+            bounces={true}
+            refreshControl={
+              <RefreshControl
+                enabled
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
+            }
+            // refreshing={refreshing}
+            // onRefresh={onRefresh}
           />
         ) : (
           <Calendar

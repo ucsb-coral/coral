@@ -34,9 +34,12 @@ const getCurrentCourses = async ({
       }),
     });
     const courses = (await request.json()) as Course[];
+    console.log('courses', courses);
     store.dispatch(updateCoursesAction({courses}));
+    return true;
   } catch (error) {
     throw new Error('Failed to get current courses: ' + error);
+    return false;
   }
 };
 
