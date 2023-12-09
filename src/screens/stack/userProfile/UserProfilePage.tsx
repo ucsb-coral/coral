@@ -30,7 +30,8 @@ import firestore from '@react-native-firebase/firestore';
 import genericUserImagePng from '../../../assets/pngs/userImage.png';
 import IconButton from '../../../components/iconButton/IconButton';
 import Header from '../../../components/header/Header';
-import {getStatusIcon} from '../../../utilities/status';
+import {getNextStatus, getStatusIcon} from '../../../utilities/status';
+import {updateMyUserWithBuffer} from '../../../firebaseReduxUtilities/useUserData';
 
 export type UserProfileScreenProps = {
   id: string;
@@ -42,11 +43,16 @@ export default function UserProfilePage({
 }: AppStackPageProps<'userProfile'>) {
   // Appstacknavigate(nav,"ur screen",{id:myUserId}
   const {id} = route.params;
+  const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const {email, photo, preferredName, firstName, lastName, bio, status} =
     useSelector((state: ReduxState) => state.data.usermap[id!] ?? {});
-
-  const [boxHeight, setBoxHeight] = useState(0);
   const [newStatus, setNewStatus] = useState(status);
+
+  const toggleStatusIfMyUser = () => {
+    const statusToSet = getNextStatus(newStatus);
+    setNewStatus(statusToSet);
+    updateMyUserWithBuffer({status: statusToSet});
+  };
 
   const displayName = `${firstName} ${lastName}`;
 
@@ -67,7 +73,6 @@ export default function UserProfilePage({
             </View>
           </View>
         </View>
-
         <View style={styles.userBioContainer}>
           <View style={styles.userBioTextContainer}>
             <ReadMore
@@ -85,8 +90,9 @@ export default function UserProfilePage({
             label="Status"
             Icon={Ionicons}
             iconName={getStatusIcon(newStatus)}
+            onPress={toggleStatusIfMyUser}
             style={{marginTop: 5}}
-            disabled
+            disabled={myUserId !== id}
           />
         </View>
       </ScrollView>

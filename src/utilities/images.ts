@@ -44,9 +44,9 @@ const pickSquareImage = async () => {
   getImagePermission();
   let pickerResult = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.All,
-    quality: 1.0,
     allowsEditing: true,
     aspect: [4, 4],
+    quality: ImagePicker.UIImagePickerControllerQualityType.Low,
   });
   if (pickerResult.canceled) return null;
   return pickerResult.assets?.[0]?.uri ?? null;
