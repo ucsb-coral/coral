@@ -1,20 +1,21 @@
-import React, {useState, useEffect, useRef, ReactNode} from 'react';
+import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import MessageBubbleWrapper, {
   MessageBubbleWrapperProps,
 } from '../MessageBubbleWrapper';
-import {Image, Modal, Pressable, Text, View} from 'react-native';
-import {black} from '../../../../../../../../utilities/colors';
+import { Image, Modal, Pressable, Text, View } from 'react-native';
+import { black } from '../../../../../../../../utilities/colors';
 
 export type Props = MessageBubbleWrapperProps & MediaMessageContent;
 // fileName not used yet
 const MAX_WIDTH = 200; // if image width is greater than this, scale down
 const MAX_HEIGHT = 200; // otherwise, the image will be too big and the layout will be messed up
 
-export default function ImageMessageBubble({url, ...rest}: Props) {
+export default function ImageMessageBubble({ url, ...rest }: Props) {
   const [isImageViewVisible, setImageViewVisible] = useState(false);
-  const [imageSize, setImageSize] = useState({width: 0, height: 0});
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
   const handleImagePress = () => {
+    // console.log('image pressed');
     setImageViewVisible(true);
   };
 
@@ -30,7 +31,7 @@ export default function ImageMessageBubble({url, ...rest}: Props) {
           newHeight = Math.min(height, MAX_HEIGHT);
           newWidth = (width / height) * newHeight;
         }
-        setImageSize({width: newWidth, height: newHeight});
+        setImageSize({ width: newWidth, height: newHeight });
       },
       error => {
         console.error('Failed to load image', error);
@@ -43,8 +44,8 @@ export default function ImageMessageBubble({url, ...rest}: Props) {
       <MessageBubbleWrapper {...rest}>
         <Pressable onPress={handleImagePress}>
           <Image
-            source={{uri: url}}
-            style={{width: imageSize.width, height: imageSize.height}}
+            source={{ uri: url }}
+            style={{ width: imageSize.width, height: imageSize.height }}
           />
         </Pressable>
       </MessageBubbleWrapper>
@@ -52,22 +53,9 @@ export default function ImageMessageBubble({url, ...rest}: Props) {
         visible={isImageViewVisible}
         transparent={true}
         onRequestClose={() => setImageViewVisible(false)}>
-        <Pressable onPress={() => setImageViewVisible(false)}>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={{uri: url}}
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-              resizeMode="contain"
-            />
+        <Pressable onPress={() => setImageViewVisible(false)} style={{ flex: 1 }}>
+          <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.9)', justifyContent: 'center', alignItems: 'center' }}>
+            <Image source={{ uri: url }} style={{ width: '100%', height: '100%' }} resizeMode="contain" />
           </View>
         </Pressable>
       </Modal>
