@@ -43,7 +43,7 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
             marginTop: 20,
             fontFamily: avenirBlackCentered,
             fontSize: 20,
-            color: 'black',
+            color: black,
           }}>
           You have not joined any chats
         </Text>
