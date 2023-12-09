@@ -15,6 +15,8 @@ import {
   Modal,
   TouchableOpacity,
   FlatList,
+  RecursiveArray,
+  ViewStyle,
   RefreshControl,
   Alert,
 } from 'react-native';
@@ -38,7 +40,8 @@ import {scale, standardMargin} from '../../../utilities/scale';
 import Header from '../../../components/header/Header';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
-import {Calendar} from 'react-native-big-calendar';
+import {Calendar, EventRenderer, ICalendarEventBase, formatStartEnd} from 'react-native-big-calendar';
+import dayjs from 'dayjs';
 import {styles} from './ScheduleScreenStyles';
 import Button from '../../../components/button/Button';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
@@ -87,7 +90,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       U: 6, // Saturday
     };
 
-    const dayNumbers = daysString.split('').map(day => daysMap[day]);
+    const dayNumbers = daysString.replaceAll(/\s+/g, ' ').trim().split(' ').map(day => daysMap[day]);
 
     return dayNumbers;
   }
@@ -124,6 +127,59 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       .filter(courseInfo => courseInfo !== null); // here to filter out null values
   }
 
+  const extractCoursesInfo = extractCourseInfo1();
+  // console.log('extractCoursesInfo: \n', extractCoursesInfo);
+
+  // console.log('testing', extractCoursesInfo[0]?.beginTime);
+
+  function generateTestingEvents2(extractCoursesInfo: any) {}
+  // const testingEvents2 = generateTestingEvents2(extractCoursesInfo);
+
+  interface MyCustomEventType extends ICalendarEventBase {
+    color?: string
+  }
+
+  const customEventRenderer: EventRenderer<MyCustomEventType> = (
+    event,
+    touchableOpacityProps,
+  ) => {
+    console.log('event', event);
+    return (
+      <TouchableOpacity
+        {...touchableOpacityProps}
+        style={
+          [
+            ...(touchableOpacityProps.style as RecursiveArray<ViewStyle>),
+            {
+            backgroundColor: event.color,
+            borderWidth: 1,
+            borderColor: event.color,
+            borderLeftColor: event.color,
+            borderLeftWidth: 3,
+            borderStyle: 'solid',
+            borderRadius: 6,
+            //alignItems: 'center',
+            //justifyContent: 'center'
+          }]
+        }
+      >
+        {dayjs(event.end).diff(event.start, 'minute') < 32 ? (
+          <Text style={[{ color: 'black', fontSize: 10}]}>
+            {event.title},
+            <Text style={[{ color: 'black' }]}>{dayjs(event.start).format('HH:mm')}</Text>
+          </Text>
+        ) : (
+          <>
+            <Text style={[{ color: 'black', fontSize: 10}]}>{event.title}</Text>
+          </>
+        )}
+      </TouchableOpacity>
+    )
+  }
+
+  let i: number = 0;
+
+  console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
   function generateEventFromCourse(extractCoursesInfo: any) {
     console.log('generating events');
 
@@ -131,8 +187,9 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       return []; // Return an empty array if no courses are available
     }
 
-    const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF3366', '#33FFFF'];
-    const eventColor = colors[Math.floor(Math.random() * colors.length)]; // Assign a random color
+    const colors = ['#F4CCCC', '#FCE5CD', '#FFF2CC', '#D9EAD3', '#D0E0E3', '#CFE2F3', '#D9D2E9', '#EAD1DC'];
+    const eventColor = colors[i];
+    // console.log('eventColor', eventColor);
 
     const uid = extractCoursesInfo?.uid;
     const beginTime = extractCoursesInfo?.beginTime;
@@ -181,7 +238,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
           CourseBeginHours[1],
         ),
         end: new Date(year, month, date, CourseEndHours[0], CourseEndHours[1]),
-        eventColor: eventColor, // Assign the event color
+        color: eventColor, // Assign the event color
         uid: uid,
       });
     }
@@ -214,18 +271,18 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             section_endHours[0],
             section_endHours[1],
           ),
-          eventColor: eventColor,
+          color: eventColor, // Assign the event color
           uid: uid,
         });
       }
     }
 
+    i = (i + 1) % colors.length;
+    console.log('testingEvents', testingEvents);
     return testingEvents;
   }
 
   function generateCombinedEvents() {
-    const extractCoursesInfo = extractCourseInfo1();
-    console.log('extractCoursesInfo: \n', extractCoursesInfo[0]);
     const extractCoursesLength = extractCoursesInfo.length;
     const combinedEvents = [];
     for (let i = 0; i < extractCoursesLength; i++) {
@@ -282,7 +339,10 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     }`;
     const timeLocation = course?.timeLocations?.find(
       timeloc => timeloc?.instructionTypeCode === 'LEC',
-    );
+    ) ||
+      course?.timeLocations?.find(
+        timeloc => timeloc?.instructionTypeCode === 'LAB',
+      );
     const instructors = timeLocation?.instructors[0];
     return (
       <Pressable
@@ -291,9 +351,11 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
         onPress={() => openCourseModal(courseId)}>
         <Text style={styles.eachCourseTitle}>{title}</Text>
         <Text style={styles.courseText}>
-          {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()}-{' '}
-          {convertTime(timeLocation?.beginTime)}
-          to {convertTime(timeLocation?.endTime)}
+          {timeLocation?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+          {timeLocation?.beginTime
+            ? `${convertTime(timeLocation?.beginTime)} to ${convertTime(timeLocation?.endTime)}`
+            : 'TBA'
+          }
         </Text>
         <Text style={styles.courseText}>{timeLocation?.buildingRoom}</Text>
         <Text style={styles.courseText}>{instructors?.name}</Text>
@@ -322,37 +384,49 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
       );
       const instructors_LEC = timeLocation_LEC?.instructors;
       const timeLocation_SEC = course?.timeLocations?.find(
-        timeloc => timeloc?.instructionTypeCode === 'DIS',
+        timeloc => timeloc?.instructionTypeCode === 'DIS' || timeloc?.instructionTypeCode === 'LAB',
       );
       const instructors_SEC = timeLocation_SEC?.instructors;
 
       return (
         <View>
           <Text style={styles.eachCourseInfoTitle}>{title}</Text>
-          <Text style={styles.courseText}>
-            Lecture: {'\n'}
-            {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-            {convertTime(timeLocation_LEC?.beginTime)} to{' '}
-            {convertTime(timeLocation_LEC?.endTime)}
-          </Text>
-          <Text style={styles.courseText}>
-            {timeLocation_LEC?.buildingRoom}
-          </Text>
-          <Text style={styles.courseText}>
-            {instructors_LEC?.map(instructor => instructor?.name).join(', ')}
-          </Text>
-          <Text style={styles.courseText}>
-            Section: {'\n'}
-            {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
-            {convertTime(timeLocation_SEC?.beginTime)} to{' '}
-            {convertTime(timeLocation_SEC?.endTime)}
-          </Text>
-          <Text style={styles.courseText}>
-            {timeLocation_SEC?.buildingRoom}
-          </Text>
-          <Text style={styles.courseText}>
-            {instructors_SEC?.map(instructor => instructor?.name).join(', ')}
-          </Text>
+          {
+            timeLocation_LEC ? (
+              <View>
+                <Text style={styles.courseText}>
+                  Lecture: { '\n' }
+                  {timeLocation_LEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+                  {convertTime(timeLocation_LEC?.beginTime)} to{' '}
+                  {convertTime(timeLocation_LEC?.endTime)}
+                </Text>
+                <Text style={styles.courseText}>{timeLocation_LEC?.buildingRoom}</Text>
+                <Text style={styles.courseText}>
+                  {instructors_LEC?.map(instructor => instructor?.name).join(', ')}
+                </Text>
+              </View>
+            ) : null
+          }
+          
+          {
+            timeLocation_SEC ? (
+              <View>
+                <Text style={styles.courseText}>
+                  {
+                    timeLocation_SEC?.instructionTypeCode === 'DIS' ? 'Section: ' : 'Lab: '
+                  }
+                  { '\n'}
+                  {timeLocation_SEC?.days.replaceAll(/\s+/g, ' ').trim()} -{' '}
+                  {convertTime(timeLocation_SEC?.beginTime)} to{' '}
+                  {convertTime(timeLocation_SEC?.endTime)}
+                </Text>
+                <Text style={styles.courseText}>{timeLocation_SEC?.buildingRoom}</Text>
+                <Text style={styles.courseText}>
+                  {instructors_SEC?.map(instructor => instructor?.name).join(', ')}
+                </Text>
+              </View>
+            ) : null
+          }
         </View>
       );
     }
@@ -442,6 +516,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             // showTime={false}
             // eventCellStyle={{ backgroundColor: coral }}
             scrollOffsetMinutes={300}
+            renderEvent={customEventRenderer}
           />
         )}
       </View>
