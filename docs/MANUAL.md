@@ -75,6 +75,23 @@ From the schedule page, press a course to open an info modal. Then click "join c
 
 ![Screen 3](image.png)
 
+### 7.4 Screenshots---Final version!!!
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/1ee02c53-c14e-4b27-8935-c221f4a99483)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/c5e0f0dc-dc4a-449f-9435-cc5b5f081553)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/d20fbbcd-d4ea-4c33-84b0-39de33e748cc)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/e0f96345-d6ea-4128-96eb-ada960d3090c)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/0b88af50-8564-4a49-805d-f886250ec6e7)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/c6fbeb30-deba-4aeb-befb-039b0fc4a136)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/97f2e4d3-52c1-45a8-af5f-46147535c89b)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/2ef58320-d7ea-4bb9-b1ab-ccdc5ba5ee30)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/97f4ee4c-b68a-423c-9a94-3e9230d60936)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/bf76e2ce-a56b-4271-ac2a-e65b4ebdc02f)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/fecd3314-b311-4d6e-a28c-6deeef43b6be)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/d71a0f05-a112-48af-bbb2-a541d7bb89fa)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/7ce7b018-4163-42c3-a2d8-c8c522d7d442)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/0856b948-ea8c-4087-bfa6-8bade1f47629)
+![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/817c0768-fbd4-4256-8b3e-ade1777bcd32)
+
 ## 8. Troubleshooting
 
 ### 8.1 Unable to Join a Chat
