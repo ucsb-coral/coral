@@ -21,6 +21,12 @@
   - setup chat/user data listeners
   - streamline data management and make scalable
   - style adjustments and abstract components
+- Jinghan Zhang:
+  - Implementation of Join Chat page and function
+  - Implementation of profile editing function in Firebase and write the editing page
+  - Implementation of status function and display
+  - Create events and customized event card in Calendar
+  - Login Page UI adjustment and more style adjustment
 
 ## Other Contributions
 
@@ -37,3 +43,6 @@
 - Ethan Pletcher:
   - Logo
   - manual/docs
+
+- Jinghan Zhang:
+  - UI design
