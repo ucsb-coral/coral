@@ -2,17 +2,34 @@
 -----
 Schedule and group chat for UCSB student
 
-Team members: 
-* Binyu Zhong 
-  [binyuzhong](<https://github.com/binyuzhong>)
+Phase 1 Team Members: 
 * Ethan Pletcher
   [epletcher72](<https://github.com/epletcher72>)
+* Binyu Zhong 
+  [binyuzhong](<https://github.com/binyuzhong>)
 * Jinghan Zhang
   [xxzjh](<https://github.com/xxzjh>)
 * Sean Oh
   [seannoh](<https://github.com/seannoh>)
 * Wenjin Li
   [Wenjin09](<https://github.com/Wenjin09>)
+
+Current Team Members: 
+* Ethan Pletcher
+  [epletcher72](<https://github.com/epletcher72>)
+* Scott
+  [ScottUCSB](<https://github.com/ScottUCSB>)
+* James Fu
+  [james-y-f](<https://github.com/james-y-f>)
+* Daniel Lu
+  [FinalGale](<https://github.com/FinalGale>)
+* konarkv
+  [konarkv](<https://github.com/konarkv>)
+* Thomas Hale
+  [thomashale-ucsb](<https://github.com/thomashale-ucsb>)
+* Aarnav Kumar
+  [aarnavkumar](<https://github.com/aarnavkumar>)
+
 
 ## Project Plan
 
