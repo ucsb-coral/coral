@@ -53,6 +53,7 @@ Only valid UCSB students will be able to login and use the app.
 - react-native-bootsplash: for the splash screen
 - react-redux: for app state management
 - redux-persist: to persist the redux store on encrypted local device storage
+- https://github.com/ucsb-cs184-f23/pj-react-04/blob/main/package.json
 
 ### Installation Steps
 1. Head to [releases](https://github.com/ucsb-cs184-f23/pj-react-04/releases) and download the .apk file from the latest release onto your Android device or Android emulator
@@ -97,3 +98,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Deployment
+Download the [latest version](https://github.com/ucsb-cs184-f23/pj-react-04/releases/tag/v2.0.0)
