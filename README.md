@@ -23,7 +23,7 @@ Current Team Members:
   [james-y-f](<https://github.com/james-y-f>)
 * Daniel Lu
   [FinalGale](<https://github.com/FinalGale>)
-* konarkv
+* Konark Vinod
   [konarkv](<https://github.com/konarkv>)
 * Thomas Hale
   [thomashale-ucsb](<https://github.com/thomashale-ucsb>)
