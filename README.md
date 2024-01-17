@@ -17,7 +17,7 @@ Phase 1 Team Members:
 Current Team Members: 
 * Ethan Pletcher
   [epletcher72](<https://github.com/epletcher72>)
-* Scott
+* Scott Graham
   [ScottUCSB](<https://github.com/ScottUCSB>)
 * James Fu
   [james-y-f](<https://github.com/james-y-f>)
@@ -27,7 +27,7 @@ Current Team Members:
   [konarkv](<https://github.com/konarkv>)
 * Thomas Hale
   [thomashale-ucsb](<https://github.com/thomashale-ucsb>)
-* Aarnav Kumar
+* Arnav Kumar
   [aarnavkumar](<https://github.com/aarnavkumar>)
 
 
@@ -70,16 +70,16 @@ Only valid UCSB students will be able to login and use the app.
 - react-native-bootsplash: for the splash screen
 - react-redux: for app state management
 - redux-persist: to persist the redux store on encrypted local device storage
-- https://github.com/ucsb-cs184-f23/pj-react-04/blob/main/package.json
+- ...[here](/blob/main/package.json) 
 
 ### Installation Steps
-1. Head to [releases](https://github.com/ucsb-cs184-f23/pj-react-04/releases) and download the .apk file from the latest release onto your Android device or Android emulator
+1. Head to [releases](/releases) and download the .apk file from the latest release onto your Android device or Android emulator
 2. Open the file on your device and install the app
    - There will likely be some warnings about security of the app, but ignore and install anyways
 3. Once installed open the app and log in with your UCSB google account
 
 ## Functionality
-Once you have [installed](https://github.com/ucsb-cs184-f23/pj-react-04/edit/main/README.md#installation) the app and launched it, you will see a splash screen and then a login page. Click the Google signin button and follow the prompt instructions to sign in with your UCSB google email account (@ucsb.edu). The app will open to the Chats page initially where you can view the group chats you have joined (currently populated with dummy data). Navigate via the tabs on the bottom of the screen to the Schedule page to see a list of your enrolled courses (currently populated with dummy data). To join the chat corresponding to one of your courses, tap the course you want and tap "Join Chat". You will then see chat messages (currently populated with dummy data) and be able to send messages (not implemented). Navigating to the User page, you will see your information, links to GOLD and Canvas, as well as settings and a sign out button. 
+Once you have [installed](/blob/main/README.md#installation) the app and launched it, you will see a splash screen and then a login page. Click the Google signin button and follow the prompt instructions to sign in with your UCSB google email account (@ucsb.edu). The app will open to the Chats page initially where you can view the group chats you have joined (currently populated with dummy data). Navigate via the tabs on the bottom of the screen to the Schedule page to see a list of your enrolled courses (currently populated with dummy data). To join the chat corresponding to one of your courses, tap the course you want and tap "Join Chat". You will then see chat messages (currently populated with dummy data) and be able to send messages (not implemented). Navigating to the User page, you will see your information, links to GOLD and Canvas, as well as settings and a sign out button. 
 
 ## Known Problems
 Currently, much of the functionality with regards to your personal course information and interacting in the chat windows is not implemented yet in the MVP. We plan to gain UCSB API access and complete these features in future releases.
@@ -94,7 +94,8 @@ Currently not accepting contributions while in early development. In the future 
 
 
 ## License
-MIT License
+MIT License [here](/blob/main/LICENSE.md)
+
 
 Copyright (c) [2023] [Wenjin Li, Sean Oh, Ethan Pletcher, Binyu Zhong, Jinghan Zhang]
 
