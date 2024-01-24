@@ -1,20 +1,21 @@
 # Standup Log
 
-### Wed January 17
+## Wed January 17
 
-#### Attendance
+### Attendance
 
 - All Showed
 
-#### Minutes
+### Minutes
 
 - Brainstormed ideas
 
-#### Finished Projects
+### Finished Projects
+
 - Set up forked repos and access
 - Set up norms.md
 
-#### Current projects
+### Current projects
 
 - Talked to UCSB admin about cooperation with events API
 - Working on lab assignments
