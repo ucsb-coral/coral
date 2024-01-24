@@ -1,17 +1,18 @@
 # Standup Log
 
-### Fri January 12
+## Fri January 12
 
-#### Attendance
+### Attendance
 
 All showed
 
-#### Minutes
+### Minutes
 
 - Brainstormed ideas
 - Clarified general expectations for direction of project
 
-#### Current Projects
+### Current Projects
+
 - Set up forked repos and access
 - Set up norms.md
 - Set up development environments for individual members
