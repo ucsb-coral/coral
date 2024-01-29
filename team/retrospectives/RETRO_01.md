@@ -11,12 +11,10 @@
 * streamline this process and keep side comments for afterwards (for non retro meetings)
 * Attendance has been an issue. If self accountability is an issue then we will have to get core staff involved.
 * divy up tasks
-(Later edit by Konark Vinod)
-* setting up Android dev environment
+* (Later edit by Konark Vinod) setting up Android dev environment
 ## Stop
 * side tracking and distractions	
-(Later edit by Konark Vinod)
-* Notifying team about absences late
+* (Later edit by Konark Vinod)Notifying team about absences late
 ## Continue
 * respect/good friendly vibes/ no hard feelings
 ##  Shoutouts:
