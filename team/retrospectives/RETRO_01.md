@@ -12,7 +12,7 @@
 * Attendance has been an issue. If self accountability is an issue then we will have to get core staff involved.
 * divy up tasks
 (Later edit by Konark Vinod)
-* setting up Ansroid dev environment
+* setting up Android dev environment
 ## Stop
 * side tracking and distractions	
 (Later edit by Konark Vinod)
