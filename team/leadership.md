@@ -2,4 +2,4 @@
 
 | Date      | Name         | Activity                     |
 |-----------|--------------|------------------------------|
-| Mon 01/29 | Daniel Lu    | To lead sprint retro         |
+| Fri 01/26 | Daniel Lu    | To lead sprint retro         |
