@@ -1,10 +1,9 @@
-About me
+# About me
 
 First Name: Thomas
 Last Name: Hale
 
 I'm from the bay area yey
-
 
 I like playing games and keeping up with current events n biking n stuff
 idk
