@@ -20,3 +20,17 @@ topics covered:
 - Firebase
 - reducer (Redux) Maps, store the id's
 - Screens and their intricate layouts (use inline styling, not alt file approach)
+
+## ...Help(ers)
+- React native
+	 Ethan	01/30 https://ucsb-148-w24.slack.com/archives/C06FK0HBTTN/p1706647420567409
+ 		01/29 https://ucsb-148-w24.slack.com/archives/C06FK0HBTTN/p1706570725610389
+	thomas 	01/26 https://ucsb-148-w24.slack.com/archives/C06FK0HBTTN/p1706303518770429
+	Scott 	02/02 https://ucsb-148-w24.slack.com/archives/C06FK0HBTTN/p1706909571297229
+
+- Mobile Help
+	Konark	https://ucsb-148-w24.slack.com/archives/C06EF4C3V6G/p1705647240048509
+	Thomas 	https://ucsb-148-w24.slack.com/archives/C06EF4C3V6G/p1705529880306099
+
+- JS help
+	Thomas 	https://ucsb-148-w24.slack.com/archives/C06ECHC46DR/p1706749098581359
