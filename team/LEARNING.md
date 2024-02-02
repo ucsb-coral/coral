@@ -29,8 +29,8 @@ topics covered:
 	- Scott 	https://ucsb-148-w24.slack.com/archives/C06FK0HBTTN/p1706909571297229
 
 - Mobile Help
-	-Konark		https://ucsb-148-w24.slack.com/archives/C06EF4C3V6G/p1705647240048509
-	-Thomas 	https://ucsb-148-w24.slack.com/archives/C06EF4C3V6G/p1705529880306099
+	- Konark		https://ucsb-148-w24.slack.com/archives/C06EF4C3V6G/p1705647240048509
+	- Thomas 	https://ucsb-148-w24.slack.com/archives/C06EF4C3V6G/p1705529880306099
 
 - JS help
-	-Thomas 	https://ucsb-148-w24.slack.com/archives/C06ECHC46DR/p1706749098581359
+	- Thomas 	https://ucsb-148-w24.slack.com/archives/C06ECHC46DR/p1706749098581359
