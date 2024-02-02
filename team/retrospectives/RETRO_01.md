@@ -4,8 +4,13 @@
 * Present: Arnav Kumar(zoom), Daniel Lu, Ethan Pletcher, James Fu, Thomas Hale, Scott Graham
 * Absent: Konark Vinod
 
-## Start
+## Action item
+* a goal: Discipline/follow agendas/structures (back and forth on importance of structure vs creative freedom) with a conclusion that there needs to be a balance between when a meeting is declared that focus and attention be required in order to wrap up that meeting without it being a waste of time. All while allowing the team the freedom to work freely once the meeting is over.
+* a change/experiment: Respect the meeting/have faith in the AGILE process. 
+* a measurement: Pay attention to how long it takes to do the standup and the general value attained from it.
 
+## Optional
+## Start
 * Actually coding
 * Discipline/follow agendas/structures (back and forth on importance of structure vs creative freedom) with a conclusion that there needs to be a balance between when a meeting is declared that focus and attention be required in order to wrap up that meeting without it being a waste of time. All while allowing the team the freedom to work freely once the meeting is over.
 * streamline this process and keep side comments for afterwards (for non retro meetings)
@@ -23,5 +28,15 @@
 * Scott - Efforts in keeping team on task
 
 
-## 02/02 LAB_03 Experiment 
-We now have group buy in with regards to our standup meetings and efficiency has made a giant leap. In general meetings are more regulated and policed by all members. Distractions are caught and moved to the sidebar after the meeting.
+## Retro Assessment
+
+* We used the Start Stop Contiue outline/process 
+* It worked great. We really needed this. There are a ton of simple changes that were communicated.
+* I would tell the next person who runs the retro to take 15-20 min beforehand to prep. Having a rough idea of how you want this to shake out can make things run more smoothe also as a leader your team will follow you better the more confidence you project.
+
+
+## Experiment/Change
+
+* We all had verbally committed to making these changes towards our meetings. In short- we now have way more group buy in for the Agile proccess.
+* Productivity has jumped! We also are in better moods as we aren't pulling teeth just to get through the meetings. No one person is the enforcer either, all members police ourselves with keeping things on task and keep the meeting flow.
+* We absolutely will keep this.
