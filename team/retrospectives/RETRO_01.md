@@ -21,3 +21,7 @@
 * James - Team batman. Behind the scenes always making it happen and is not the hero we deserve but certainly the one we need.
 * Ethan - Helping everyone with setting up there environments
 * Scott - Efforts in keeping team on task
+
+
+## 02/02 LAB_03 Experiment 
+We now have group buy in with regards to our standup meetings and efficiency has made a giant leap. In general meetings are more regulated and policed by all members. Distractions are caught and moved to the sidebar after the meeting.
