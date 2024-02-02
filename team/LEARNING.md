@@ -22,6 +22,7 @@ topics covered:
 - Screens and their intricate layouts (use inline styling, not alt file approach)
 
 ## ...Help(ers)
+For LAB_03
 - React native
 	- Ethan		https://ucsb-148-w24.slack.com/archives/C06FK0HBTTN/p1706647420567409
  			https://ucsb-148-w24.slack.com/archives/C06FK0HBTTN/p1706570725610389
