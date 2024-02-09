@@ -22,11 +22,15 @@ import useUserData from '../../firebaseReduxUtilities/useUserData';
 import DiningScreen, {
   DiningScreenProps,
 } from '../../screens/tab/dining/DiningScreen';
+import EventsScreen, {
+  EventsScreenProps,
+} from '../../screens/tab/events/EventsScreen';
 
 type TabNavigatorScreens = {
   profile: ProfileScreenProps;
   chats: ChatsScreenProps;
   dining: DiningScreenProps;
+  events: EventsScreenProps;
   schedule: ScheduleScreenProps;
 };
 
@@ -59,6 +63,9 @@ export default function TabNavigator() {
             case 'dining':
               iconName = focused ? 'fast-food' : 'fast-food-outline';
               break;
+            case 'events':
+              iconName = focused ? 'list' : 'list-outline';
+              break;
             case 'profile':
               iconName = focused ? 'person' : 'person-outline';
               break;
@@ -77,6 +84,7 @@ export default function TabNavigator() {
       <Tab.Screen name={'schedule'} component={ScheduleScreen as any} />
       <Tab.Screen name={'chats'} component={ChatsScreen as any} />
       <Tab.Screen name={'dining'} component={DiningScreen as any} />
+      <Tab.Screen name={'events'} component={EventsScreen as any} />
       <Tab.Screen name={'profile'} component={ProfileScreen as any} />
     </Tab.Navigator>
   );

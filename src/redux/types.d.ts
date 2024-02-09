@@ -211,3 +211,10 @@ declare type Course = {
   repeatTypeCode: string;
   timeLocations: TimeLocation[];
 };
+
+declare type SchoolEvent = {
+  id: number;
+  title: string;
+  description: string;
+  photo: string;
+};
