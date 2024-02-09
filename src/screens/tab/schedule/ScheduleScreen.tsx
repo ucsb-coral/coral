@@ -51,6 +51,8 @@ import {styles} from './ScheduleScreenStyles';
 import Button from '../../../components/button/Button';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 import {getCurrentCourses} from '../../../firebaseReduxUtilities/useCourseData';
+import {addTestEventToCalendar} from '../../../tests/GoogleCalendar/Backend/Integration/ManualTestDemoEventPut';
+
 // import { current } from '@reduxjs/toolkit';
 
 // import { avenirBlackCentered } from '../../../utilities/textfont';
@@ -528,22 +530,34 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
             // onRefresh={onRefresh}
           />
         ) : (
-          <Calendar
-            // only show weekdays
-            mode="custom"
-            weekStartsOn={1}
-            weekEndsOn={5}
-            events={combinedEvents}
-            ampm={false}
-            height={600}
-            onPressEvent={(event: any) => openCourseModal(event.uid)}
-            overlapOffset={20}
-            swipeEnabled={false}
-            // showTime={false}
-            // eventCellStyle={{ backgroundColor: coral }}
-            scrollOffsetMinutes={300}
-            renderEvent={customEventRenderer}
-          />
+          <>
+            <Button
+              label="Add Test Event"
+              onPress={addTestEventToCalendar}
+              style={{
+                backgroundColor: '#4CAF50', // Example style, customize as needed
+                padding: 10,
+                margin: 10,
+              }}
+            />
+
+            <Calendar
+              // only show weekdays
+              mode="custom"
+              weekStartsOn={1}
+              weekEndsOn={5}
+              events={combinedEvents}
+              ampm={false}
+              height={600}
+              onPressEvent={(event: any) => openCourseModal(event.uid)}
+              overlapOffset={20}
+              swipeEnabled={false}
+              // showTime={false}
+              // eventCellStyle={{ backgroundColor: coral }}
+              scrollOffsetMinutes={300}
+              renderEvent={customEventRenderer}
+            />
+          </>
         )}
       </View>
       <CourseInfoModal
