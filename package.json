@@ -24,6 +24,7 @@
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
     "@reduxjs/toolkit": "^1.9.7",
+    "axios": "^1.6.7",
     "expo": "^49.0.0",
     "expo-document-picker": "~11.5.4",
     "expo-haptics": "~12.4.0",

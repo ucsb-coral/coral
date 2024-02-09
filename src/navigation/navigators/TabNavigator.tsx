@@ -19,10 +19,14 @@ import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../utilities/scale';
 import useCourseData from '../../firebaseReduxUtilities/useCourseData';
 import useUserData from '../../firebaseReduxUtilities/useUserData';
+import DiningScreen, {
+  DiningScreenProps,
+} from '../../screens/tab/dining/DiningScreen';
 
 type TabNavigatorScreens = {
   profile: ProfileScreenProps;
   chats: ChatsScreenProps;
+  dining: DiningScreenProps;
   schedule: ScheduleScreenProps;
 };
 
@@ -44,13 +48,16 @@ export default function TabNavigator() {
         tabBarActiveTintColor: coral,
         tabBarInactiveTintColor: grey,
         tabBarIcon: ({focused, color, size}) => {
-          let iconName: string;
+          var iconName: string;
           switch (route.name) {
             case 'schedule':
               iconName = focused ? 'calendar' : 'calendar-outline';
               break;
             case 'chats':
               iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+              break;
+            case 'dining':
+              iconName = focused ? 'fast-food' : 'fast-food-outline';
               break;
             case 'profile':
               iconName = focused ? 'person' : 'person-outline';
@@ -69,6 +76,7 @@ export default function TabNavigator() {
       })}>
       <Tab.Screen name={'schedule'} component={ScheduleScreen as any} />
       <Tab.Screen name={'chats'} component={ChatsScreen as any} />
+      <Tab.Screen name={'dining'} component={DiningScreen as any} />
       <Tab.Screen name={'profile'} component={ProfileScreen as any} />
     </Tab.Navigator>
   );
