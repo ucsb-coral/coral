@@ -51,7 +51,7 @@ import {styles} from './ScheduleScreenStyles';
 import Button from '../../../components/button/Button';
 import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 import {getCurrentCourses} from '../../../firebaseReduxUtilities/useCourseData';
-import {addTestEventToCalendar} from '../../../tests/GoogleCalendar/Backend/Integration/ManualTestDemoEventPut';
+//import {addTestEventToCalendar} from '../../../tests/GoogleCalendar/Backend/Integration/ManualTestDemoEventPut';
 
 // import { current } from '@reduxjs/toolkit';
 
