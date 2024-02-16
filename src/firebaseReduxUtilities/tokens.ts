@@ -1,6 +1,7 @@
 import {signOut} from '../../auth/useAuth';
 import {refreshTokenDataAction} from '../redux/actions';
 import {store} from '../redux/useRedux';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 type NewTokenData = {
   accessToken: string;
@@ -27,8 +28,14 @@ const getNewTokens = async (refreshToken: string) => {
   }
 };
 
+type AccessTokenData = TokenData & {
+  authToken: string;
+};
+
 export const withTokens = async () => {
   console.log('withTokens');
+  const fbUser = auth().currentUser!;
+  const authToken = await fbUser.getIdToken();
   const userId = store.getState().data.myUserId;
   const {refreshToken, expiry} =
     store.getState().data.usermap[userId].refreshData;
@@ -42,10 +49,10 @@ export const withTokens = async () => {
       refreshTokenDataAction({newExpiry: expiry, data: tokenData}),
     );
     console.log('withTokens refreshed', tokenData);
-    return tokenData;
+    return {...tokenData, authToken} as AccessTokenData;
   }
 
   const tokenData = store.getState().data.tokenData!;
   console.log('withTokens unrefreshed', tokenData, expiry - now);
-  return tokenData;
+  return {...tokenData, authToken} as AccessTokenData;
 };

@@ -19,8 +19,8 @@ const eventData = {
   // Additional event details...
 };
 
-export const getCalendarEvents = async ({idToken}: {idToken?: string}) => {
-  if (!idToken) idToken = (await withTokens()).idToken;
+export const getCalendarEvents = async () => {
+  const {idToken} = await withTokens();
   try {
     const response = await axios.get(
       'https://www.googleapis.com/calendar/v3/calendars/primary/events',

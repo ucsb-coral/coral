@@ -12,13 +12,11 @@ export const generateCourseId = (courseId: string, session: string) =>
 const getCurrentCourses = async ({
   quarter,
   perm,
-  idToken,
 }: {
   quarter?: number;
   perm?: number;
-  idToken?: string;
 }) => {
-  if (!idToken) idToken = (await withTokens()).idToken;
+  const {idToken, authToken} = await withTokens();
   if (!quarter) quarter = store.getState().data.quarter;
   if (!perm)
     perm = store.getState().data.usermap[store.getState().data.myUserId].perm;
@@ -29,6 +27,7 @@ const getCurrentCourses = async ({
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         idToken,
+        authToken,
         perm,
         quarter,
       }),

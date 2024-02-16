@@ -50,7 +50,7 @@ export const handleSignIn = async (url: string) => {
       }),
     );
     store.dispatch(setQuarterAction({quarter}));
-    await getCurrentCourses({idToken, quarter});
+    await getCurrentCourses({quarter});
     store.dispatch(setAuthStateAction({authState: 'AUTHENTICATED'}));
   } catch (error) {
     abortSignIn();

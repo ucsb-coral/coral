@@ -50,7 +50,7 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
       <Button title="Dinner" onPress={() => setMeal('dinner')} />
       {meal && <Button title={`Fetch ${meal} menus`} onPress={fetchMenus} />}
       {/* Display menus or a message indicating selection is needed */}
-      {menus.length > 0 ? (
+      {/* {menus.length > 0 ? (
         menus.map((menu: string, index: number) => (
           <Text key={index}>
             {diningCommons[index]} {JSON.stringify(menu)}
@@ -58,7 +58,7 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
         ))
       ) : (
         <Text>No menus fetched. Select a meal to begin.</Text>
-      )}
+      )} */}
     </View>
   );
 }

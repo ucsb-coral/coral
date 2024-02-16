@@ -57,7 +57,6 @@ import {addTestEventToCalendar} from '../../../tests/GoogleCalendar/Backend/Inte
 
 // import { avenirBlackCentered } from '../../../utilities/textfont';
 // import { buttonFont, NameFont, EmailFont } from '../../../utilities/textfont';
-// import { withTokens } from '../../../firebaseReduxUtilities/tokens';
 
 export type ScheduleScreenProps = EmptyProps;
 

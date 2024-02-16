@@ -20,7 +20,6 @@ import {Ionicons, FontAwesome5, FontAwesome} from '@expo/vector-icons';
 import {coral} from '../../../utilities/colors';
 
 import {scale, standardMargin} from '../../../utilities/scale';
-import {withTokens} from '../../../firebaseReduxUtilities/tokens';
 import IconButton from '../../../components/iconButton/IconButton';
 
 export type SettingsScreenProps = {};

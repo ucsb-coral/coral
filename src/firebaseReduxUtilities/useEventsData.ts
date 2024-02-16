@@ -7,6 +7,7 @@ const EVENTS_AL_URL = 'https://campuscalendar.ucsb.edu/api/2/events';
 export const getEventDetails = async () => {
   try {
     const response = await axios.get(EVENTS_AL_URL);
+
     // Extract only the name and code from each dining common
 
     /*
