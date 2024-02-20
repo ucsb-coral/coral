@@ -1,17 +1,27 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import {Card, Paragraph} from 'react-native-paper'
 
-const EventComponent = ({ data }) => {
+const EventComponent = ({ data }: { data: any[] }) => {
   return (
-    <View>
+    <Card>
       {data.map(item => ( 
         <View key={item.id}> 
-          <img src={item.photo}/> 
-          <Text>{item.description}</Text>
+          <Card.Title title={item.title} />
+          <Card.Content>
+            <Paragraph> {item.description} </Paragraph>
+          </Card.Content>
+          <Card.Cover source={{uri: item.photo}}/>
         </View>
       ))}
-    </View>
+      
+    </Card>
   );
 };
 
 export default EventComponent;
+
+/*
+<img src={item.photo}/> 
+          <Text>{item.description}</Text>
+          */
