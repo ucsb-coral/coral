@@ -17,11 +17,14 @@ const getFormattedDate = () => {
 
 // Function to get the menu for a specific dining common and meal (breakfast, lunch, or dinner) on the current day
 // note that the meal is a string, either 'breakfast', 'lunch', or 'dinner' and is selected by the user in the app
+// code is the dining common code, e.g. 'carrillo', 'de-la-guerra', 'ortega', 'portola'
 export const getMenusForCommon = async (code: string, meal: string) => {
   const date = getFormattedDate();
   try {
     const {authToken} = await withTokens();
     const url = `${MENU_URL_BASE}/${date}/${code}/${meal}`;
+    //const url = `${MENU_URL_BASE}/${date}/${common}/${code}/${meal}`;
+    
     console.log('timeStart');
     const request = await fetch(`${API_URL}/publicUcsbApi`, {
       method: 'POST',
