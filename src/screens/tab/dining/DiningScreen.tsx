@@ -32,7 +32,7 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
     'portola',
   ];
   //const [favorites, setFavorites] = React.useState({});
-  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
+  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({}); 
 
   const toggleFavorite = (itemName: string) => {
     setFavorites((currentFavorites) => {
@@ -45,6 +45,18 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
       return newFavorites;
     });
   };
+
+  //optional: sort the menus by favorited items.
+  // If we choose to use this then use the sortedMenus below instead of menus
+  const sortedMenus = menus.sort((a, b) => {
+    if (favorites[a] && !favorites[b]) {
+      return -1; 
+    }
+    if (!favorites[a] && favorites[b]) {
+      return 1; 
+    }
+    return 0;
+  });
 
 
   const fetchMenus = async () => {
@@ -86,26 +98,7 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
                         onPress={() => toggleFavorite(menu)}
                       />
                     </Card.Content>
-                   
                   </Card>
-
-                  /*
-                  <Button
-                      //title={favorites[menu] ? 'Unfavorite' : 'Favorite'}
-                      //onPress={() => toggleFavorite(menu)}
-                    />
-                    ////////
-                  <Card key={index} style={{marginBottom: 10}}>
-                    <Card.Content>
-                      <Title>{menu.trim()}</Title>
-                    </Card.Content>
-                  </Card>*/
-
-                  //<Text key={index}>
-                    //{/*diningCommons[index]} {JSON.stringify(menu)*/}
-                    //{/*JSON.stringify(menu)*/} 
-                    
-                  //</Text>
                 ))}
               </ScrollView>
             ) : null }
