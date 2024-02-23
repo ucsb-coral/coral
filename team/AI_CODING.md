@@ -8,6 +8,8 @@ I'm finding that this is no one stop shop but it can facilitate efficiency if ut
 I think I will be using this in any case possible moving forward.
 I will be implementing various elements on my own that will be integrated into the output of the two AI's.
 
+2/23 I used ChatGPT to help troubleshoot the toggle feature of the favorite button I had implemented on the dining tab
+
 ## Ethan - Amazon Codewhisperer, Github Copilot and Google Gemini
 
 I use Codewhisperer and Copilot for code suggestions and documentation generation.
