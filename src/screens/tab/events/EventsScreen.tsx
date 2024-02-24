@@ -7,6 +7,8 @@ import {getEventDetails} from '../../../firebaseReduxUtilities/useEventsData';
 import SchoolEvent from './components/SchoolEvent';
 //import { EventComponent } from './EventComponent'
 
+import { PaperProvider } from 'react-native-paper';
+
 //keeping for type example:
 //type Meal = 'breakfast' | 'lunch' | 'dinner' | null;
 
@@ -16,6 +18,7 @@ type EventsPageProps = CompositeScreenProps<
   AppStackPageProps<'tabNavigator'>,
   TabPageProps<'chats'>
 >;
+
 
 export default function EventsScreen({route, navigation}: EventsPageProps) {
   //const [meal, setMeal] = useState<Meal>(null);
@@ -58,12 +61,14 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
         <SchoolEvent key={event.id} {...event} />
       ))
         */
-
-        <FlatList
-          data={eventData}
-          renderItem={renderItem} // Render your custom component
-          keyExtractor={item => `${item.id}`}
-        />
+      <PaperProvider>
+          <FlatList
+            data={eventData}
+            renderItem={renderItem} // Render your custom component
+            keyExtractor={item => `${item.id}`}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+          />
+      </PaperProvider>
       }
       {/* */}
 
