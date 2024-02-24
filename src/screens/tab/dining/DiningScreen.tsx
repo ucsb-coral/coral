@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, ScrollView} from 'react-native';
 import {getMenusForCommon} from '../../../firebaseReduxUtilities/useDiningService'; // adjust the import path as necessary
 import {CompositeScreenProps} from '@react-navigation/native';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
+import { Card, Title, IconButton } from 'react-native-paper'; 
+//import IconButton from '../../../components/iconButton/IconButton';
+import favoriteImagePng from '../../../assets/pngs/favorite.png';
+import unfavoriteImagePng from '../../../assets/pngs/unfavorite.png';
 
 type Meal = 'breakfast' | 'lunch' | 'dinner' | null;
 type DiningCommon = 'carrillo' | 'de-la-guerra' | 'ortega' | 'portola';
@@ -19,6 +23,7 @@ type MenuItem = {name: string};
 
 export default function DiningScreen({route, navigation}: DiningPageProps) {
   const [meal, setMeal] = useState<Meal>(null);
+  const [common, setCommon] = useState<DiningCommon>('carrillo'); // default to carrillo
   const [menus, setMenus] = useState<string[]>([]);
   const diningCommons: DiningCommon[] = [
     'carrillo',
@@ -26,13 +31,36 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
     'ortega',
     'portola',
   ];
+  //const [favorites, setFavorites] = React.useState({});
+  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({}); 
+
+  const toggleFavorite = (itemName: string) => {
+    setFavorites((currentFavorites) => {
+      const newFavorites = { ...currentFavorites };
+      if (newFavorites[itemName]) {
+        delete newFavorites[itemName]; // Remove from favorites if it's already there
+      } else {
+        newFavorites[itemName] = true; // Add to favorites if it's not
+      }
+      return newFavorites;
+    });
+  };
+
+  //optional: sort the menus by favorited items.
+  // If we choose to use this then use the sortedMenus below instead of menus
+  const sortedMenus = menus.sort((a, b) => {
+    if (favorites[a] && !favorites[b]) {
+      return -1; 
+    }
+    if (!favorites[a] && favorites[b]) {
+      return 1; 
+    }
+    return 0;
+  });
+
 
   const fetchMenus = async () => {
-    const fetchedMenus = await Promise.all(
-      diningCommons.map(common =>
-        getMenusForCommon(common, meal ?? 'breakfast'),
-      ),
-    );
+    const fetchedMenus = await Promise.all([getMenusForCommon(common, meal ?? 'breakfast')]);
 
     // Process the fetched menus to extract the 'name' values
     const names = fetchedMenus.flatMap((menuItems: MenuItem[]) =>
@@ -44,21 +72,36 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Select a dining common:</Text>
+      <Button title="Carrillo" onPress={() => setCommon('carrillo')} />
+      <Button title="De La Guerra" onPress={() => setCommon('de-la-guerra')} />
+      <Button title="Ortega" onPress={() => setCommon('ortega')} />
+      <Button title="Portola" onPress={() => setCommon('portola')} />
       <Text>Please select a meal to view menus:</Text>
       <Button title="Breakfast" onPress={() => setMeal('breakfast')} />
       <Button title="Lunch" onPress={() => setMeal('lunch')} />
       <Button title="Dinner" onPress={() => setMeal('dinner')} />
-      {meal && <Button title={`Fetch ${meal} menus`} onPress={fetchMenus} />}
+      
+
+
+      {meal && <Button title={`Fetch ${meal} menus at ${common}`} onPress={fetchMenus} />}
       {/* Display menus or a message indicating selection is needed */}
-      {/* {menus.length > 0 ? (
-        menus.map((menu: string, index: number) => (
-          <Text key={index}>
-            {diningCommons[index]} {JSON.stringify(menu)}
-          </Text>
-        ))
-      ) : (
-        <Text>No menus fetched. Select a meal to begin.</Text>
-      )} */}
-    </View>
-  );
-}
+            { menus.length > 0 ? (
+              <ScrollView style={{flex: 1, padding: 10}}>
+                {menus.map((menu: string, index: number) => (
+                  <Card key={index} style={{ marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Card.Content style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Title>{menu.trim()}</Title>
+                      <IconButton
+                        icon={favorites[menu] ? 'heart' : 'heart-outline'} // Assuming you use MaterialCommunityIcons
+                        size={20}
+                        onPress={() => toggleFavorite(menu)}
+                      />
+                    </Card.Content>
+                  </Card>
+                ))}
+              </ScrollView>
+            ) : null }
+          </View>
+        );
+      }
