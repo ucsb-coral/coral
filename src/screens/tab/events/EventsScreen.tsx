@@ -39,6 +39,8 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
       title={item.title}
       description={item.description}
       photo={item.photo}
+      time={item.time}
+      location={item.location}
     />
   );
 
