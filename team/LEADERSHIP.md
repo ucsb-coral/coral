@@ -2,15 +2,15 @@
 
 | Date      | Name         | Activity                      |
 |-----------|--------------|-------------------------------|
-| Fri 02/23 |              | Product Owner                 |
-| Fri 02/23 |              | Scrum Master                  |
-| Fri 02/23 |              | Testing/QA Coordinator        |
-| Fri 02/23 |              | Retro 3 leader                |
-| Fri 02/23 |              | UX Coordinator                |
+| Fri 02/23 | Ethan P.     | Product Owner                 |
+| Fri 02/23 | James F.     | Scrum Master                  |
+| Fri 02/23 | Arov K.      | Testing/QA Coordinator        |
+| Fri 02/23 | Konark V.    | Retro 3 leader                |
+| Fri 02/23 | Arnov K.     | UX Coordinator                |
 | Fri 02/23 | Scott G.     | Design Document Coordinator   |
-| Fri 02/23 |              |Deployment Document Coordinator|
-| Fri 02/23 |              | User Manual Coordinator       |
-| Fri 02/23 |              | Final presentation leader     |
+| Fri 02/23 | Ethan P.     |Deployment Document Coordinator|
+| Fri 02/23 | Dan L.       | User Manual Coordinator       |
+| Fri 02/23 | Thomas H.    | Final presentation leader     |
 |-----------|--------------|-------------------------------|
 | Fri 02/16 | Scott G.     |  Lead Second sprint Retro     |
 |-----------|--------------|-------------------------------|
