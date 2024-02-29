@@ -5,7 +5,14 @@ import {StyleSheet} from 'react-native';
 
 export type Props = SchoolEvent;
 
-export default function SchoolEvent({title, description, photo, time, location}: Props) {
+function convertTime(time : Date) {
+  //return(time.toLocaleDateString('en-GB',{ year: 'numeric', month: 'long', day: 'numeric' }));
+  return time.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+const bigSentence = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
+
+export default function SchoolEvent({title, description, photo, time, location, room_number}: Props) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -13,8 +20,6 @@ export default function SchoolEvent({title, description, photo, time, location}:
   const closeModal = () => setModalVisible(false);
 
   const descString = description.substr(0,100) + "...";
-
-  const testString = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 
   const styles = StyleSheet.create({
     container: {
@@ -32,12 +37,13 @@ export default function SchoolEvent({title, description, photo, time, location}:
     //be sure to fix the styling so that the image size is bounded in case of too big photos if it messes up
     <View>
       <TouchableOpacity onPress={openModal}>
-        <Card style={{backgroundColor: '#fff'}}>
+        <Card style={{backgroundColor: '#fff', width: '100%'}}>
           <View style={{}}> 
             <Card.Title title={title} titleStyle={{fontWeight: '700', flexWrap: 'wrap'}} />
             <Card.Cover source={{uri: photo}} style={{backgroundColor: '#fff'}} resizeMode="contain"/>
-            <Card.Content>
-              <Paragraph> {descString} </Paragraph>
+            <Card.Content style={{width: '100%'}}>
+              <Paragraph> {convertTime(time)} </Paragraph>
+              <Paragraph> {room_number ? location + " " + room_number : location} </Paragraph>
             </Card.Content>
           </View>
         </Card>
@@ -52,13 +58,13 @@ export default function SchoolEvent({title, description, photo, time, location}:
                 </Text>
                 <Card.Cover source={{uri: photo}} style={{backgroundColor: '#fff'}} resizeMode="contain"/>
                 <Text style={{fontWeight: '500'}}>
-                  {time.toLocaleString()}
+                  {convertTime(time)}
                 </Text>
                 <Text>
                   {description}
                 </Text>
                 <Text style={{fontWeight: '500'}}>
-                  {location}
+                  {room_number ? location + " " + room_number : location}
                 </Text>
 
                 <IconButton icon="close" style={{ position: 'absolute', top: 0, right: 0 }} onPress={() => setModalVisible(false)} />

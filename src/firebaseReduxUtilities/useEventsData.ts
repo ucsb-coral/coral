@@ -23,14 +23,15 @@ export const getEventDetails = async () => {
     console.log('response data from API: ', response.data.events);
 
     const events = response.data.events.map((object: any) => {
-      const {id, title, description_text, photo_url, event_instances, location_name} = object.event;
+      const {id, title, description_text, photo_url, event_instances, location_name, room_number} = object.event;
       return {
         id,
         title,
         description: description_text,
         photo: photo_url,
-        time: event_instances[0]?.event_instance?.start,
-        location: location_name
+        time: new Date(event_instances[0]?.event_instance?.start),
+        location: location_name,
+        room_number: room_number
       } as SchoolEvent;
     });
 

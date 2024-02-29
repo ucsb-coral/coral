@@ -219,4 +219,5 @@ declare type SchoolEvent = {
   photo: string;
   time: Date;
   location: string;
+  room_number: string;
 };
