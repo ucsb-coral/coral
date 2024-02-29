@@ -10,16 +10,6 @@ export const getEventDetails = async () => {
 
     // Extract only the name and code from each dining common
 
-    /*
-    return response.data.events.map((common : any) => ({
-      title: common.title,  // The title of the event
-      description: common.description_text,   // The description text of the event. description also exists, but its pretty wonky
-      url: common.localist_url,   //the url to the event. Arguably I could probably just do venue_url but idk
-      photo: common.photo_url, //the url of the photo for the event
-      location: common.location_name, //the name of the location
-      urlname: common.urlname   //not sure what this is for, but I might need it later
-      //might add or remove some of these later
-    })); */
     console.log('response data from API: ', response.data.events);
 
     const events = response.data.events.map((object: any) => {

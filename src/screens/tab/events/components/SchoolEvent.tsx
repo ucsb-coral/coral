@@ -2,6 +2,7 @@ import {useState} from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Card, Paragraph, Button, Modal, Portal, IconButton} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 
 export type Props = SchoolEvent;
 
@@ -9,8 +10,6 @@ function convertTime(time : Date) {
   //return(time.toLocaleDateString('en-GB',{ year: 'numeric', month: 'long', day: 'numeric' }));
   return time.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
-
-const bigSentence = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
 
 export default function SchoolEvent({title, description, photo, time, location, room_number}: Props) {
 
@@ -60,14 +59,13 @@ export default function SchoolEvent({title, description, photo, time, location, 
                 <Text style={{fontWeight: '500'}}>
                   {convertTime(time)}
                 </Text>
-                <Text>
-                  {description}
-                </Text>
                 <Text style={{fontWeight: '500'}}>
                   {room_number ? location + " " + room_number : location}
                 </Text>
-
-                <IconButton icon="close" style={{ position: 'absolute', top: 0, right: 0 }} onPress={() => setModalVisible(false)} />
+                <Text>
+                  {description}
+                </Text>
+                <IconButton icon={() => <IoniconsIcon name="close-outline" style={{ fontSize: 30, color: 'black' }} />} size={30} style={{ position: 'absolute', top: 0, right: 0 }} onPress={() => setModalVisible(false)} />
               </View>
             </ScrollView>
           </View>
