@@ -4,11 +4,14 @@
 
 ![System Architecture](diagram.png)
 
-**Description:**
+## Description
 - The frontend client is composed of a React Native App optimized for both Android and IOS. 
 - The backend consists of Firebase cloud functions, database, and storage
 - The client authenticates with and uses the UCSB Student Data API through cloud functions
 - The client directly reads and updates data in the Firestore Database and Storage.
+
+**CS148 Changes:**
+- In this area, we have been adding new features within the framework, so the stack and system design has not changed significantly
 
 ## Team Decisions
 
