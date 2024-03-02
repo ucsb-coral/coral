@@ -12,6 +12,9 @@
 
 **CS148 Changes:**
 - In this area, we have been adding new features within the framework, so the stack and system design has not changed significantly
+- We have been using a direct get from the mobile devices to the UCSB API for dining services but are currently moving that utility to the firebase server. This is in keeping with the diagram above. The Firebase server will update the menus once a day and store them. The mobile devices will get() from our server.
+- We will have migrated the events api call to firebase as well by the end of the quarter.
+
 
 ## Team Decisions
 
