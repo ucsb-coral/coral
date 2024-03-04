@@ -241,18 +241,34 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     });
   }, []);
 
-  const syncCalendar = () => {
-    console.log('syncing courses');
+  const syncCalendar = async () => {
     setLoading(true);
     loadingTimeout.current = setTimeout(() => {
-      Alert.alert('Error', 'Failed to refresh courses');
+      Alert.alert('Error', 'Failed to sync courses');
       setLoading(false);
-    }, 8000);
+    }, 60000);
     syncCalendarEvents().then(() => {
       if (loadingTimeout.current) clearTimeout(loadingTimeout.current);
       setLoading(false);
     });
   };
+
+  const syncCalendarWithAlert = () =>
+    Alert.alert(
+      'Sync Google Calendar',
+      'Would you like to add your courses to your google calendar? This may take up to a minute.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Download',
+          onPress: syncCalendar,
+        },
+      ],
+      {cancelable: true},
+    );
 
   return (
     <LoadingOverlay isLoading={loading}>
