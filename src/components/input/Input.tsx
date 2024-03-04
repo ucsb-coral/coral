@@ -1,6 +1,7 @@
 import {Text, TextInput, TextInputProps, View} from 'react-native';
 import {
   GreyUseForButton,
+  black,
   coral,
   darkGrey,
   grey0,
@@ -60,6 +61,7 @@ export default function Input({
               minHeight: multiline ? scale(120) : scale(55),
               padding: 0,
               marginLeft: scale(12),
+              color: black,
             },
             ...(style as {}),
           }}

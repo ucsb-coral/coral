@@ -7,7 +7,8 @@ import {getEventDetails} from '../../../firebaseReduxUtilities/useEventsData';
 import SchoolEvent from './components/SchoolEvent';
 //import { EventComponent } from './EventComponent'
 
-import { PaperProvider } from 'react-native-paper';
+import {PaperProvider} from 'react-native-paper';
+import Loading from '../../../components/Loading';
 
 //keeping for type example:
 //type Meal = 'breakfast' | 'lunch' | 'dinner' | null;
@@ -19,10 +20,9 @@ type EventsPageProps = CompositeScreenProps<
   TabPageProps<'chats'>
 >;
 
-
 export default function EventsScreen({route, navigation}: EventsPageProps) {
   //const [meal, setMeal] = useState<Meal>(null);
-  const [eventData, setEventDetails] = useState<SchoolEvent[]>([]);
+  const [eventData, setEventDetails] = useState<SchoolEvent[] | null>(null);
   const [menus, setMenus] = useState<string[]>([]);
   const [requestString, setRequestString] = useState<string>('');
 
@@ -56,30 +56,36 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
         onPress={() => console.log(getEventDetails())}
       />
     */
-
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      {
-        //works but throws up stuff on screen
-        /*eventData.map((event: SchoolEvent, index: number) => (
+    <Loading isReady={eventData !== null}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        {
+          //works but throws up stuff on screen
+          /*eventData.map((event: SchoolEvent, index: number) => (
         <SchoolEvent key={event.id} {...event} />
       ))
         */
-      <View style={{ flex: 1, width: '100%' }}>
-        <PaperProvider>
-          <FlatList
-            data={eventData}
-            renderItem={renderItem} // Render your custom component
-            keyExtractor={item => `${item.id}`}
-            ItemSeparatorComponent={() => <View style={{height: 10}} />}
-          />
-        </PaperProvider>
-      </View>
-      }
-      {/* */}
+          <View style={{flex: 1, width: '100%'}}>
+            <PaperProvider>
+              <FlatList
+                data={eventData}
+                renderItem={renderItem} // Render your custom component
+                keyExtractor={item => `${item.id}`}
+                ItemSeparatorComponent={() => <View style={{height: 10}} />}
+                // contentContainerStyle={{
+                //   width: '100%',
+                //   display: 'flex',
+                //   flexDirection: 'column',
+                //   alignItems: 'center',
+                // }}
+              />
+            </PaperProvider>
+          </View>
+        }
+        {/* */}
 
-      {
-        //attept to display events
-        /* eventData.length > 0 ? (
+        {
+          //attept to display events
+          /* eventData.length > 0 ? (
       //console.log("eventData successfully proceded, with array ", eventData);
       eventData.map((event, index) => (
         <Text key={index}>
@@ -90,7 +96,8 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
       <Button title="Get Events" onPress={() => setEventDetails(getEventDetails())}/>
       )
       */
-      }
-    </View>
+        }
+      </View>
+    </Loading>
   );
 }

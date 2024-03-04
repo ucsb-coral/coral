@@ -85,7 +85,7 @@ export const signIn = async () => {
 };
 
 export default function useAuth() {
-  const state = useSelector((state: ReduxState) => state);
+  // const state = useSelector((state: ReduxState) => state);
   const authState = useSelector((state: ReduxState) => state.data.authState);
 
   useEffect(() => {
@@ -101,9 +101,9 @@ export default function useAuth() {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  useEffect(() => {
-    console.log('state', state);
-  }, [state]);
+  // useEffect(() => {
+  //   console.log('state', state);
+  // }, [state]);
 
   return {authState};
 }

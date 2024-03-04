@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {getMenusForCommon} from '../../../firebaseReduxUtilities/useDiningService'; // adjust the import path as necessary
 import {CompositeScreenProps} from '@react-navigation/native';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
-import { Card, Title, IconButton } from 'react-native-paper'; 
+import { Card, Title, IconButton, Button } from 'react-native-paper'; 
 //import IconButton from '../../../components/iconButton/IconButton';
 import favoriteImagePng from '../../../assets/pngs/favorite.png';
 import unfavoriteImagePng from '../../../assets/pngs/unfavorite.png';
@@ -33,6 +33,21 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
   ];
   //const [favorites, setFavorites] = React.useState({});
   const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({}); 
+  const [message, setMessage] = useState('');
+
+
+  useEffect(() => {
+    //No ortega and breakfast
+    if (common === 'ortega' && meal === 'breakfast') {
+      setMessage("Ortega doesn't serve Breakfast");
+    }
+    else{
+      setMessage('');
+      fetchMenus();
+    }
+    }, [common, meal]); // Fetch menus when common or meal changes
+
+
 
   const toggleFavorite = (itemName: string) => {
     setFavorites((currentFavorites) => {
@@ -60,6 +75,11 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
 
 
   const fetchMenus = async () => {
+    // more dont fetc ortega breakfast
+    if (common === 'ortega' && meal === 'breakfast') {
+      return;
+    }
+
     const fetchedMenus = await Promise.all([getMenusForCommon(common, meal ?? 'breakfast')]);
 
     // Process the fetched menus to extract the 'name' values
@@ -73,27 +93,87 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>Select a dining common:</Text>
-      <Button title="Carrillo" onPress={() => setCommon('carrillo')} />
-      <Button title="De La Guerra" onPress={() => setCommon('de-la-guerra')} />
-      <Button title="Ortega" onPress={() => setCommon('ortega')} />
-      <Button title="Portola" onPress={() => setCommon('portola')} />
-      <Text>Please select a meal to view menus:</Text>
-      <Button title="Breakfast" onPress={() => setMeal('breakfast')} />
-      <Button title="Lunch" onPress={() => setMeal('lunch')} />
-      <Button title="Dinner" onPress={() => setMeal('dinner')} />
-      
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
+        <Button
+          mode={common === 'carrillo' ? 'contained' : 'outlined'}
+          onPress={() => setCommon('carrillo')}
+          //buttonColor={common === 'carrillo' ? '#F88379' : undefined} // Text color for 'outlined' mode
+          theme={{ colors: { primary: common === 'carrillo' ? '#F88379' : '#000000' }}}
+          style={common === 'carrillo' ? { backgroundColor: '#F88379' } : {}}
+        >
+          Carrillo
+        
+        </Button>
+        <Button mode={common === 'de-la-guerra' ? 'contained' : 'outlined'} 
+        onPress={() => setCommon('de-la-guerra')}
+        //buttonColor={common === 'de-la-guerra' ? '#F88379' : undefined} // Text color for 'outlined' mode
+        theme = {{ colors: { primary: common === 'de-la-guerra' ? '#F88379' : '#000000' }}}
+        style={common === 'de-la-guerra' ? { backgroundColor: '#F88379' } : undefined}
+        >
+          De La Guerra
 
+        </Button>
+        <Button mode={common === 'ortega' ? 'contained' : 'outlined'} 
+        onPress={() => setCommon('ortega')}
+        //buttonColor={common === 'ortega' ? '#F88379' : undefined} // Text color for 'outlined' mode
+        theme = {{ colors: { primary: common === 'ortega' ? '#F88379' : '#000000' }}}
+        style={common === 'ortega' ? { backgroundColor: '#F88379' } : undefined}
+        >
+          Ortega
 
-      {meal && <Button title={`Fetch ${meal} menus at ${common}`} onPress={fetchMenus} />}
+        </Button>
+        <Button mode={common === 'portola' ? 'contained' : 'outlined'} 
+        onPress={() => setCommon('portola')}
+        theme = {{ colors: { primary: common === 'portola' ? '#F88379' : '#000000' }}}
+        //buttonColor={common === 'portola' ? '#F88379' : undefined} // Text color for 'outlined' mode
+        style={common === 'portola' ? { backgroundColor: '#F88379' } : undefined}
+        >
+          Portola
+        </Button>
+      </View>
+      <Text>Select meal:</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
+        <Button mode={meal === 'breakfast' ? 'contained' : 'outlined'} 
+        onPress={() => setMeal('breakfast')}
+        //buttonColor={meal === 'breakfast' ? '#F88379' : undefined} // Text color for 'outlined' mode
+        theme = {{ colors: { primary: meal === 'breakfast' ? '#F88379' : '#000000' }}}
+        style={meal === 'breakfast' ? { backgroundColor: '#F88379' } : undefined}
+        >
+          Breakfast
+        </Button>
+        <Button mode={meal === 'lunch' ? 'contained' : 'outlined'} 
+        onPress={() => setMeal('lunch')}
+        //buttonColor={meal === 'lunch' ? '#F88379' : undefined} // Text color for 'outlined' mode
+        theme = {{ colors: { primary: meal === 'lunch' ? '#F88379' : '#000000' }}}
+        style={meal === 'lunch' ? { backgroundColor: '#F88379' } : undefined}
+        >
+          Lunch
+        </Button>
+        <Button mode={meal === 'dinner' ? 'contained' : 'outlined'} 
+        onPress={() => setMeal('dinner')}
+        //buttonColor={meal === 'dinner' ? '#F88379' : undefined} // Text color for 'outlined' mode
+        theme = {{ colors: { primary: meal === 'dinner' ? '#F88379' : '#000000' }}}
+        style={meal === 'dinner' ? { backgroundColor: '#F88379' } : undefined}
+        >
+          Dinner
+        </Button>
+      </View>
+
+      {/*meal && <Button title={`Fetch ${meal} menus at ${common}`} onPress={fetchMenus} />*/}
+
       {/* Display menus or a message indicating selection is needed */}
-            { menus.length > 0 ? (
+
+            {message ? (
+              <Text>{message}</Text>
+            ) : 
+             menus.length > 0 ? (
               <ScrollView style={{flex: 1, padding: 10}}>
                 {menus.map((menu: string, index: number) => (
                   <Card key={index} style={{ marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Card.Content style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Title>{menu.trim()}</Title>
                       <IconButton
-                        icon={favorites[menu] ? 'heart' : 'heart-outline'} // Assuming you use MaterialCommunityIcons
+                        icon={favorites[menu] ? 'heart' : 'heart-outline'} 
                         size={20}
                         onPress={() => toggleFavorite(menu)}
                       />

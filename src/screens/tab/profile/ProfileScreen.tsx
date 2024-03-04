@@ -78,6 +78,7 @@ export default function ProfileScreen({route, navigation}: ProfilePageProps) {
               onPress={() => appStackNavigate(navigation, 'editProfile', {})}
               style={styles.userBioTextContainer}>
               <ReadMore
+                style={{color: black}}
                 numberOfLines={3}
                 seeMoreText="more"
                 seeMoreStyle={{color: coral}}

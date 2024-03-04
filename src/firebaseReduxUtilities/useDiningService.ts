@@ -45,3 +45,4 @@ export const getMenusForCommon = async (code: string, meal: string) => {
     throw error;
   }
 };
+

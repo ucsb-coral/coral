@@ -6,9 +6,10 @@ import {
 } from '../../../../utilities/textfont';
 import Button from '../../../../components/button/Button';
 import {joinCourseChat} from '../../../../firebaseReduxUtilities/useChatData';
-import {coral, grey0, opacity} from '../../../../utilities/colors';
+import {black, coral, grey0, opacity} from '../../../../utilities/colors';
 
 export type Props = {
+  id: string;
   course: Course;
   joined: boolean;
   openChat: (courseId: string) => void;
@@ -39,7 +40,7 @@ function convertTime(time: string | undefined) {
   return time12;
 }
 
-export default function CourseCard({course, joined, openChat}: Props) {
+export default function CourseCard({id, course, joined, openChat}: Props) {
   const {courseId, courseTitle, timeLocations} = course;
   const courseNumber = courseId?.replaceAll(/\s+/g, ' ').trim();
 
@@ -60,6 +61,7 @@ export default function CourseCard({course, joined, openChat}: Props) {
         style={{
           fontFamily: sfProTextBold,
           fontSize: 26,
+          color: black,
           //   marginBottom: 8,
         }}>
         {courseId}
@@ -116,10 +118,10 @@ export default function CourseCard({course, joined, openChat}: Props) {
         </View>
         <Button
           label={joined ? 'Open Chat' : 'Join Chat'}
-          style={{alignSelf: 'flex-end', backgroundColor: opacity(coral, 0.8)}}
+          style={{alignSelf: 'flex-end', backgroundColor: opacity(coral, 0.9)}}
           onPress={() => {
-            if (!joined) joinCourseChat(courseId);
-            openChat(courseId);
+            if (!joined) joinCourseChat(id);
+            openChat(id);
           }}
         />
       </View>

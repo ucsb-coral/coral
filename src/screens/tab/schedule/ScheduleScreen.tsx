@@ -129,6 +129,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     const course: Course = coursemap[courseId];
     return (
       <CourseCard
+        id={courseId}
         course={course}
         joined={!!chats?.includes(courseId)}
         openChat={openChat}
@@ -256,14 +257,14 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const syncCalendarWithAlert = () =>
     Alert.alert(
       'Sync Google Calendar',
-      'Would you like to add your courses to your google calendar? This may take up to a minute.',
+      'Would you like to add your courses to your ucsb.edu Google Calendar? This may take up to a minute.',
       [
         {
           text: 'Cancel',
           style: 'cancel',
         },
         {
-          text: 'Download',
+          text: 'Sync',
           onPress: syncCalendar,
         },
       ],
@@ -283,7 +284,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
                     Linking.openURL(
                       'https://calendar.google.com/calendar?authuser=your@email.com',
                     )
-                : syncCalendar
+                : syncCalendarWithAlert
             }
             style={{marginLeft: 16, marginRight: 16, marginBottom: 16}}
           />
@@ -305,8 +306,6 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
                   onRefresh={onRefresh}
                 />
               }
-              // refreshing={refreshing}
-              // onRefresh={onRefresh}
             />
           )}
         </View>
