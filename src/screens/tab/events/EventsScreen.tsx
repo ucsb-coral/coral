@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button, FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
@@ -9,8 +9,6 @@ import SchoolEvent from './components/SchoolEvent';
 
 import { PaperProvider } from 'react-native-paper';
 
-//keeping for type example:
-//type Meal = 'breakfast' | 'lunch' | 'dinner' | null;
 
 export type EventsScreenProps = EmptyProps;
 
