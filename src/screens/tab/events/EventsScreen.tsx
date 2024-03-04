@@ -39,6 +39,9 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
       title={item.title}
       description={item.description}
       photo={item.photo}
+      time={item.time}
+      location={item.location}
+      room_number={item.room_number}
     />
   );
 
@@ -61,14 +64,16 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
         <SchoolEvent key={event.id} {...event} />
       ))
         */
-      <PaperProvider>
+      <View style={{ flex: 1, width: '100%' }}>
+        <PaperProvider>
           <FlatList
             data={eventData}
             renderItem={renderItem} // Render your custom component
             keyExtractor={item => `${item.id}`}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
           />
-      </PaperProvider>
+        </PaperProvider>
+      </View>
       }
       {/* */}
 

@@ -218,6 +218,9 @@ declare type SchoolEvent = {
   title: string;
   description: string;
   photo: string;
+  time: Date;
+  location: string;
+  room_number: string;
 };
 
 declare type SyncedCalendar = {
