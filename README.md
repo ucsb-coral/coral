@@ -81,7 +81,7 @@ Only valid UCSB students will be able to login and use the app.
 
 ### Installation Steps
 
-1. Head to [releases](/releases) and download the .apk file from the latest release onto your Android device or Android emulator
+1. Head to [releases](/releases/tag/FEEDBACK) and download the .apk file from the latest release onto your Android device or Android emulator
 2. Open the file on your device and install the app
     * There will likely be some warnings about security of the app, but ignore and install anyways
 3. Once installed open the app and log in with your UCSB google account
