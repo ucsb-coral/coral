@@ -6,8 +6,10 @@ import {API_URL} from './constants';
 import {useEffect} from 'react';
 var shajs = require('sha.js');
 
-export const generateCourseId = (courseId: string, session: string) =>
-  shajs('sha256').update(`crs${courseId}${session}`).digest('hex');
+export const generateCourseId = (courseId: string, session: string | null) =>
+  shajs('sha256')
+    .update(`crs${courseId}${session ?? 'NONE'}`)
+    .digest('hex');
 
 const getCurrentCourses = async ({
   quarter,
