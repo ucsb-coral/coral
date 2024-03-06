@@ -7,7 +7,8 @@ import {getEventDetails} from '../../../firebaseReduxUtilities/useEventsData';
 import SchoolEvent from './components/SchoolEvent';
 //import { EventComponent } from './EventComponent'
 
-import { PaperProvider } from 'react-native-paper';
+import {PaperProvider} from 'react-native-paper';
+import Loading from '../../../components/Loading';
 
 
 export type EventsScreenProps = EmptyProps;
@@ -17,10 +18,9 @@ type EventsPageProps = CompositeScreenProps<
   TabPageProps<'chats'>
 >;
 
-
 export default function EventsScreen({route, navigation}: EventsPageProps) {
   //const [meal, setMeal] = useState<Meal>(null);
-  const [eventData, setEventDetails] = useState<SchoolEvent[]>([]);
+  const [eventData, setEventDetails] = useState<SchoolEvent[] | null>(null);
   const [menus, setMenus] = useState<string[]>([]);
   const [requestString, setRequestString] = useState<string>('');
 
@@ -54,11 +54,11 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
         onPress={() => console.log(getEventDetails())}
       />
     */
-
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      {
-        //works but throws up stuff on screen
-        /*eventData.map((event: SchoolEvent, index: number) => (
+    <Loading isReady={eventData !== null}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        {
+          //works but throws up stuff on screen
+          /*eventData.map((event: SchoolEvent, index: number) => (
         <SchoolEvent key={event.id} {...event} />
       ))
         */
@@ -75,9 +75,9 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
       }
       {/* */}
 
-      {
-        //attept to display events
-        /* eventData.length > 0 ? (
+        {
+          //attept to display events
+          /* eventData.length > 0 ? (
       //console.log("eventData successfully proceded, with array ", eventData);
       eventData.map((event, index) => (
         <Text key={index}>
@@ -88,7 +88,8 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
       <Button title="Get Events" onPress={() => setEventDetails(getEventDetails())}/>
       )
       */
-      }
-    </View>
+        }
+      </View>
+    </Loading>
   );
 }

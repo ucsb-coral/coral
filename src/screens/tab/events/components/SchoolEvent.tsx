@@ -17,6 +17,7 @@ export default function SchoolEvent({title, description, photo, time, location, 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -24,7 +25,11 @@ export default function SchoolEvent({title, description, photo, time, location, 
       backgroundColor: '#fff',
       padding: 20,
       margin: 10,
-    }})
+    },
+  });
+
+  const modalStyle = {padding: 10, backgroundColor: 'white'};
+  const modalStyle2 = {flex: 1, justifyContent: 'center', alignItems: 'center'};
 
     const modalStyle = { padding: 10, backgroundColor: 'white'};
     const modalStyle2 = { flex: 1, justifyContent: 'center', alignItems: 'center' };

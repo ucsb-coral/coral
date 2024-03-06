@@ -144,6 +144,7 @@ declare type MutableUser = {
   bio?: string;
   status?: Status;
   photo?: string;
+  syncedCalendar?: SyncedCalendar;
 };
 
 declare type User = MutableUser & {
@@ -185,6 +186,11 @@ declare type Chat = {
   memberIds: string[];
 };
 
+declare type Instructor = {
+  name: string;
+  functionCode: string;
+};
+
 declare type TimeLocation = {
   section: string;
   instructionTypeCode: string;
@@ -192,12 +198,7 @@ declare type TimeLocation = {
   beginTime: string;
   endTime: string;
   buildingRoom: string;
-  instructors: [
-    {
-      name: string;
-      functionCode: string;
-    },
-  ];
+  instructors: Instructor[];
 };
 
 declare type Course = {
@@ -207,8 +208,8 @@ declare type Course = {
   gradingOptionCode: string;
   unitsAttempted: number;
   courseTitle: string;
-  session: string;
-  repeatTypeCode: string;
+  session: string | null;
+  repeatTypeCode: string | null;
   timeLocations: TimeLocation[];
 };
 
@@ -220,4 +221,9 @@ declare type SchoolEvent = {
   time: Date;
   location: string;
   room_number: string;
+};
+
+declare type SyncedCalendar = {
+  quarter: number;
+  calendarId: string;
 };
