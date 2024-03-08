@@ -16,5 +16,3 @@
 |-----------|--------------|-------------------------------|
 | Fri 01/26 | Daniel Lu    | To lead first sprint retro    |
 | Mon 01/29 | Ethan P.     | Taught React Native class     |
-
-

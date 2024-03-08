@@ -76,6 +76,7 @@ From the schedule page, press a course to open an info modal. Then click "join c
 ![Screen 3](image.png)
 
 ### 7.4 Screenshots---Final version!!!
+
 ![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/1ee02c53-c14e-4b27-8935-c221f4a99483)
 ![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/c5e0f0dc-dc4a-449f-9435-cc5b5f081553)
 ![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/d20fbbcd-d4ea-4c33-84b0-39de33e748cc)
