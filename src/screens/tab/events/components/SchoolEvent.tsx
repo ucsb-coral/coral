@@ -28,11 +28,8 @@ export default function SchoolEvent({title, description, photo, time, location, 
     },
   });
 
-  const modalStyle = {padding: 10, backgroundColor: 'white'};
-  const modalStyle2 = {flex: 1, justifyContent: 'center', alignItems: 'center'};
-
-    const modalStyle = { padding: 10, backgroundColor: 'white'};
-    const modalStyle2 = { flex: 1, justifyContent: 'center', alignItems: 'center' };
+  const modalStyle = { padding: 10, backgroundColor: 'white'};
+  const modalStyle2 = { flex: 1, justifyContent: 'center', alignItems: 'center' };
 
   return (
     //be sure to fix the styling so that the image size is bounded in case of too big photos if it messes up

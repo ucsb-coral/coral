@@ -56,7 +56,11 @@ export default function SchoolModal({title, description, photo, time, location, 
               <Text>
                 {description}
               </Text>
-              <IconButton icon={() => <IoniconsIcon name="close-outline" style={{ fontSize: 30, color: 'black' }} />} size={30} style={{ position: 'absolute', top: 0, right: 0 }} onPress={closeModal} />
+              <IconButton                 
+                  icon="close"
+                  size={30}
+                  style={{ position: 'absolute', top: 0, right: 0 }} 
+                  onPress={closeModal} />
             </View>
           </ScrollView>
         </View>
