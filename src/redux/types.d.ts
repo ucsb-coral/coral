@@ -227,3 +227,9 @@ declare type SyncedCalendar = {
   quarter: number;
   calendarId: string;
 };
+
+declare type Menu ={
+  meal: string;
+  diningCommon: string;
+  plates: string[];
+};
