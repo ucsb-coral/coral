@@ -77,16 +77,20 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
       return;
     }
 
-    const fetchedMenus = await Promise.all([
-      getMenusForCommon(common, meal ?? 'breakfast'),
-    ]);
+    //const fetchedMenus = await Promise.all([
+    //  getMenusForCommon(common, meal ?? 'breakfast'),
+    //]);
 
     // Process the fetched menus to extract the 'name' values
-    const names = fetchedMenus.flatMap((menuItems: MenuItem[]) =>
-      menuItems.map(item => item.name),
-    );
+    //const names = fetchedMenus.flatMap((menuItems: MenuItem[]) =>
+    //  menuItems.map(item => item.name),
+    //);
+    const menuItems = await getMenusForCommon(common, meal ?? 'breakfast');
 
-    setMenus(names);
+    //setMenus(names);
+    setMenus(menuItems);
+
+    //console.log(names);
   };
 
   return (
@@ -216,7 +220,7 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                   }}>
-                  <Title>{menu.trim()}</Title>
+                  <Title>{menu}</Title> 
                   <IconButton
                     icon={favorites[menu] ? 'heart' : 'heart-outline'}
                     size={20}

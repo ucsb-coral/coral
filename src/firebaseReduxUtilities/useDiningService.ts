@@ -6,9 +6,8 @@ import {withTokens} from './tokens';
 import {API_URL} from './constants';
 import {useEffect} from 'react';
 import axios from 'axios';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 var shajs = require('sha.js');
-
-const url = `${API_URL}/getCurrentMenus`;
 
 const getFormattedDate = () => {
   const date = new Date();
@@ -18,45 +17,43 @@ const getFormattedDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-export const getMenusForCommon = async (
-  code: string, meal: string) => {
-  const date = getFormattedDate();
-  const {idToken, authToken} = await withTokens();
-  
-  try {
-    const request = await fetch(`${API_URL}/getCurrentMenus`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        code,
-        meal,
-      }),
-    });
-    
-    const menu = (await request.json()) as Menu[];
-    console.log('menus', menu);
-    return menu;
-    /*
-    const response = await fetch(`${API_URL}/getCurrentMenus`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({code, meal, date }),
-    });*/
 
-  } catch (error) {
-    console.error('Error fetching menus:', error);
-    // Additional logging for debugging
-    console.error('Request details:', {
-      code,
-      meal,
-      date,
-      API_URL,
-      //url,
+firestore().collection('dining').doc("apiData").collection("commons");
+
+const getDiningMealsRef = (meal : string) =>
+firestore().collection('dining').doc("apiData").collection("meals");
+
+const getDiningCommonsRef = (code: string) =>
+  firestore().collection('dining').doc("apiData").collection("commons");
+
+
+export const getMenusForCommon = async (
+  code: string,
+  meal: string) => {
+  //const date = getFormattedDate();
+  //const diningCommonsRef = getDiningCommonsRef(code);
+  const mealsRef = firestore().collection('dining').doc("apiData").collection("meals");
+  try {
+    const snapshot = await mealsRef
+      .where('common', '==', code)
+      .where('meal', '==', meal)
+      .get();
+
+    let menuItems: string[] = [];
+    snapshot.forEach((doc) => {
+      //console.log(doc.id, '=>', doc.data());
+      menuItems.push(doc.data().name); 
+      //console.log(menuItems[3]);
+      console.log(doc.data().name);
     });
-    // Re-throw the error to handle it further up the call stack
-    throw error;
-  }
+    return menuItems;
+  } catch (error) {
+    console.error("Error getting documents: ", error);
+    throw error; 
+    }
+  
 };
+
 
 
 
