@@ -64,7 +64,13 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
   //   return 0;
   // });
 
-  const renderItem = ({item: meal, index}: {item: Meal; index: number}) => {
+  const renderItem = ({
+    item: meal,
+    index,
+  }: {
+    item: MealWithId;
+    index: number;
+  }) => {
     return (
       <MealCard
         {...meal}

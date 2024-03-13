@@ -1,12 +1,8 @@
 import firestore from '@react-native-firebase/firestore';
-import {store} from '../redux/useRedux';
-import {updateCoursesAction} from '../redux/actions';
-import {withTokens} from './tokens';
-import {API_URL} from './constants';
 import {useEffect, useState} from 'react';
-import axios from 'axios';
-import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-var shajs = require('sha.js');
+import {getUserDocumentRef} from './useUserData';
+import {store} from '../redux/useRedux';
+import {useSelector} from 'react-redux';
 
 const diningCollectionRef = firestore().collection('dining');
 
@@ -16,17 +12,21 @@ const mealsCollectionRef = apiDataDocRef.collection('meals');
 
 const commonsCollectionRef = apiDataDocRef.collection('commons');
 
+const appDataDocRef = diningCollectionRef.doc('appData');
+
+const likesCollectionRef = appDataDocRef.collection('likes');
+
 export const getMenusForCommon = async (
   selectedCommons: Set<string>,
   mealtime: Mealtime,
 ) => {
   try {
-    let meals: Meal[] = [];
+    let meals: MealWithId[] = [];
     let promises: Promise<void>[] = [];
     selectedCommons.forEach((common: string) => {
       console.log('Getting', common, mealtime);
       const get = async () => {
-        let theseMeals: Meal[] = [];
+        let theseMeals: MealWithId[] = [];
         const snapshot = await mealsCollectionRef
           .where('common', '==', common)
           .where('meal', '==', mealtime)
@@ -35,7 +35,7 @@ export const getMenusForCommon = async (
         snapshot.forEach(doc => {
           const id = doc.id;
           const data = doc.data();
-          theseMeals.push({...data, id} as Meal);
+          theseMeals.push({...data, id} as MealWithId);
         });
         meals = meals.concat(theseMeals);
       };
@@ -49,14 +49,30 @@ export const getMenusForCommon = async (
 };
 
 export default function useDiningData() {
+  const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
+  const likes = useSelector((state: ReduxState) => state.data.likes);
   const [loadingData, setLoadingData] = useState<boolean>(true);
   const [commons, setCommons] = useState<DiningCommonsMap | null>(null);
-  const [meals, setMeals] = useState<Meal[] | null>(null);
+  const [meals, setMeals] = useState<MealWithId[] | null>(null);
   const [selectedCommons, setSelectedCommons] = useState<Set<string> | null>(
     null,
   );
   const [selectedMealtime, setSelectedMealtime] =
     useState<Mealtime>('breakfast');
+
+  const userDocRef = getUserDocumentRef(myUserId);
+  const userLikesCollectionRef = userDocRef.collection('likes');
+
+  const toggleLiked = (meal: MealWithId) => {
+    const mealDocRef = likesCollectionRef.doc(meal.id);
+    if (likes?.[meal.id]) {
+      mealDocRef.set(meal);
+    } else {
+      mealDocRef.delete();
+    }
+    // optimistic update
+    // store.dispatch();
+  };
 
   useEffect(() => {
     const commonsSubscription = commonsCollectionRef.onSnapshot(snapshot => {
@@ -68,6 +84,7 @@ export default function useDiningData() {
       });
       setCommons(commons);
     });
+
     return () => commonsSubscription();
   }, []);
 

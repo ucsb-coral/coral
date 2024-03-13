@@ -73,6 +73,11 @@ declare type SetUserAction = {
   data: User;
 };
 
+declare type SetUserLikesAction = {
+  type: 'SET_USER_LIKES';
+  data: LikesMap;
+};
+
 declare type ActionTypes =
   | SetAuthStateAction
   | SetMyUserAction
@@ -87,12 +92,14 @@ declare type ActionTypes =
   | ClearStoreAction
   | NewMessagesAction
   | EditUsersAction
-  | SetUserAction;
+  | SetUserAction
+  | SetUserLikesAction;
 
 declare type Data = {
   authState: AuthState;
   myUserId: string;
   usermap: Usermap;
+  likes: LikesMap;
   chatmap: Chatmap;
   coursemap: Coursemap;
   tokenData: TokenData | null;
@@ -240,6 +247,7 @@ declare type MapLocation = {
 };
 
 declare type DiningCommonsMap = {[key: string]: DiningCommon};
+declare type LikesMap = {[key: string]: Meal};
 
 declare type DiningCommon = {
   name: string;
@@ -253,9 +261,12 @@ declare type DiningCommon = {
 declare type Mealtime = 'breakfast' | 'lunch' | 'dinner';
 
 declare type Meal = {
-  id: string;
   name: string;
   station: string;
   common: string;
   meal: Mealtime;
+};
+
+declare type MealWithId = Meal & {
+  id: string;
 };
