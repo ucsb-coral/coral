@@ -228,8 +228,32 @@ declare type SyncedCalendar = {
   calendarId: string;
 };
 
-declare type Menu ={
+declare type Menu = {
   meal: string;
   diningCommon: string;
   plates: string[];
+};
+
+declare type MapLocation = {
+  latitude: number;
+  longitude: number;
+};
+
+declare type DiningCommon = {
+  name: string;
+  code: string;
+  hasSackMeal: boolean;
+  hasTakeOutMeal: boolean;
+  hasDiningCam: boolean;
+  location: MapLocation;
+};
+
+declare type Mealtime = 'breakfast' | 'lunch' | 'dinner';
+
+declare type Meal = {
+  id: string;
+  name: string;
+  station: string;
+  common: string;
+  meal: Mealtime;
 };
