@@ -3,6 +3,7 @@ import {store} from '../redux/useRedux';
 import {
   setMyUserAction,
   setUserAction,
+  setUserLikesAction,
   updateMyUserAction,
 } from '../redux/actions';
 import storage from '@react-native-firebase/storage';
@@ -76,6 +77,9 @@ export default function useUserData() {
   const usermap = useSelector((state: ReduxState) => state.data.usermap);
   const users = Object.keys(usermap);
 
+  const userDocRef = getUserDocumentRef(myUserId);
+  const userLikesCollectionRef = userDocRef.collection('likes');
+
   useEffect(() => {
     const subscrions: (() => void)[] = [];
     if (!users) return;
@@ -92,7 +96,19 @@ export default function useUserData() {
         subscrions.push(userSubscription);
       });
 
-    return () => subscrions.forEach(unsubscribe => unsubscribe());
+    const likesSubscription = userLikesCollectionRef.onSnapshot(snapshot => {
+      const likes: LikesMap = {};
+      snapshot.forEach(doc => {
+        const id = doc.id;
+        const data = doc.data() as Meal;
+        likes[id] = data;
+      });
+      store.dispatch(setUserLikesAction({data: likes}));
+    });
+    return () => {
+      subscrions.forEach(unsubscribe => unsubscribe());
+      likesSubscription();
+    };
   }, [users?.length]);
 
   return {};

@@ -1,4 +1,4 @@
-const getMenusForCommon = require('../src/firebaseReduxUtilities/useDiningService');
+const getMenusForCommon = require('../src/firebaseReduxUtilities/useDiningData');
 
 test('getMenu error test', async () => {
   try {

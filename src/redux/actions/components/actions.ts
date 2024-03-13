@@ -98,6 +98,13 @@ const setUserAction: Action<SetUserAction> = props => {
   };
 };
 
+const setUserLikesAction: Action<SetUserLikesAction> = props => {
+  return {
+    type: 'SET_USER_LIKES',
+    ...props,
+  };
+};
+
 export {
   setAuthStateAction,
   setMyUserAction,
@@ -113,4 +120,5 @@ export {
   newMessagesAction,
   editUsersAction,
   setUserAction,
+  setUserLikesAction,
 };

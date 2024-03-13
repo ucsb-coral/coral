@@ -73,6 +73,11 @@ declare type SetUserAction = {
   data: User;
 };
 
+declare type SetUserLikesAction = {
+  type: 'SET_USER_LIKES';
+  data: LikesMap;
+};
+
 declare type ActionTypes =
   | SetAuthStateAction
   | SetMyUserAction
@@ -87,12 +92,14 @@ declare type ActionTypes =
   | ClearStoreAction
   | NewMessagesAction
   | EditUsersAction
-  | SetUserAction;
+  | SetUserAction
+  | SetUserLikesAction;
 
 declare type Data = {
   authState: AuthState;
   myUserId: string;
   usermap: Usermap;
+  likes: LikesMap;
   chatmap: Chatmap;
   coursemap: Coursemap;
   tokenData: TokenData | null;
@@ -228,8 +235,38 @@ declare type SyncedCalendar = {
   calendarId: string;
 };
 
-declare type Menu ={
+declare type Menu = {
   meal: string;
   diningCommon: string;
   plates: string[];
+};
+
+declare type MapLocation = {
+  latitude: number;
+  longitude: number;
+};
+
+declare type DiningCommonsMap = {[key: string]: DiningCommon};
+declare type LikesMap = {[key: string]: Meal};
+
+declare type DiningCommon = {
+  name: string;
+  code: string;
+  hasSackMeal: boolean;
+  hasTakeOutMeal: boolean;
+  hasDiningCam: boolean;
+  location: MapLocation;
+};
+
+declare type Mealtime = 'breakfast' | 'lunch' | 'dinner';
+
+declare type Meal = {
+  name: string;
+  station: string;
+  common: string;
+  meal: Mealtime;
+};
+
+declare type MealWithId = Meal & {
+  id: string;
 };
