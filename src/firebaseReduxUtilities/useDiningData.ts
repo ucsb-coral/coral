@@ -24,6 +24,7 @@ export const getMenusForCommon = async (
     let meals: Meal[] = [];
     let promises: Promise<void>[] = [];
     selectedCommons.forEach((common: string) => {
+      console.log('Getting', common, mealtime);
       const get = async () => {
         let theseMeals: Meal[] = [];
         const snapshot = await mealsCollectionRef
@@ -49,9 +50,7 @@ export const getMenusForCommon = async (
 
 export default function useDiningData() {
   const [loadingData, setLoadingData] = useState<boolean>(true);
-  const [commons, setCommons] = useState<{[key: string]: DiningCommon} | null>(
-    null,
-  );
+  const [commons, setCommons] = useState<DiningCommonsMap | null>(null);
   const [meals, setMeals] = useState<Meal[] | null>(null);
   const [selectedCommons, setSelectedCommons] = useState<Set<string> | null>(
     null,
@@ -61,7 +60,7 @@ export default function useDiningData() {
 
   useEffect(() => {
     const commonsSubscription = commonsCollectionRef.onSnapshot(snapshot => {
-      const commons: {[key: string]: DiningCommon} = {};
+      const commons: DiningCommonsMap = {};
       snapshot.forEach(doc => {
         const id = doc.id;
         const data = doc.data() as DiningCommon;
@@ -73,14 +72,23 @@ export default function useDiningData() {
   }, []);
 
   useEffect(() => {
-    if (commons === null || selectedCommons == null) return;
-    const fetchMenus = async () => {
-      setLoadingData(true);
-      const meals = await getMenusForCommon(selectedCommons, selectedMealtime);
-      setMeals(meals);
-      setLoadingData(false);
-    };
-    fetchMenus();
+    if (selectedCommons === null) {
+      if (commons !== null) {
+        const newSelectedCommons = new Set(Object.keys(commons));
+        setSelectedCommons(newSelectedCommons);
+      }
+    } else {
+      const fetchMenus = async () => {
+        setLoadingData(true);
+        const meals = await getMenusForCommon(
+          selectedCommons,
+          selectedMealtime,
+        );
+        setMeals(meals);
+        setLoadingData(false);
+      };
+      fetchMenus();
+    }
   }, [selectedCommons, selectedMealtime, commons]);
 
   return {

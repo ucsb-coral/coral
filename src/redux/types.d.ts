@@ -239,6 +239,8 @@ declare type MapLocation = {
   longitude: number;
 };
 
+declare type DiningCommonsMap = {[key: string]: DiningCommon};
+
 declare type DiningCommon = {
   name: string;
   code: string;
