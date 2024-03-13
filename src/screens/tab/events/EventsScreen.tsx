@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button, FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {AppStackPageProps} from '../../../navigation/navigators/StackNavigator';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
@@ -10,8 +10,6 @@ import SchoolEvent from './components/SchoolEvent';
 import {PaperProvider} from 'react-native-paper';
 import Loading from '../../../components/Loading';
 
-//keeping for type example:
-//type Meal = 'breakfast' | 'lunch' | 'dinner' | null;
 
 export type EventsScreenProps = EmptyProps;
 
@@ -64,24 +62,18 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
         <SchoolEvent key={event.id} {...event} />
       ))
         */
-          <View style={{flex: 1, width: '100%'}}>
-            <PaperProvider>
-              <FlatList
-                data={eventData}
-                renderItem={renderItem} // Render your custom component
-                keyExtractor={item => `${item.id}`}
-                ItemSeparatorComponent={() => <View style={{height: 10}} />}
-                // contentContainerStyle={{
-                //   width: '100%',
-                //   display: 'flex',
-                //   flexDirection: 'column',
-                //   alignItems: 'center',
-                // }}
-              />
-            </PaperProvider>
-          </View>
-        }
-        {/* */}
+      <View style={{ flex: 1, width: '100%' }}>
+        <PaperProvider>
+          <FlatList
+            data={eventData}
+            renderItem={renderItem} // Render your custom component
+            keyExtractor={item => `${item.id}`}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+          />
+        </PaperProvider>
+      </View>
+      }
+      {/* */}
 
         {
           //attept to display events
