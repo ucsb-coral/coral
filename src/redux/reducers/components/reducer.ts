@@ -4,6 +4,7 @@ const initialData: Data = {
   authState: 'NONE',
   myUserId: '',
   usermap: {},
+  likes: {},
   chatmap: {},
   coursemap: {},
   tokenData: null,
@@ -26,6 +27,10 @@ export function reducer(
       const usermap = state.usermap;
       usermap[id] = {...usermap[id], ...data};
       return {...state, myUserId: id, usermap: {...usermap}};
+    }
+    case 'SET_USER_LIKES': {
+      const {data} = action;
+      return {...state, likes: data};
     }
     case 'UPDATE_MY_USER': {
       const {data} = action;
