@@ -40,29 +40,29 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
 
   const scrollToTop = () => {};
   console.log('efvefvefvfv', meals);
-  // const toggleFavorite = (itemName: string) => {
-  //   setFavorites(currentFavorites => {
-  //     const newFavorites = {...currentFavorites};
-  //     if (newFavorites[itemName]) {
-  //       delete newFavorites[itemName]; // Remove from favorites if it's already there
-  //     } else {
-  //       newFavorites[itemName] = true; // Add to favorites if it's not
-  //     }
-  //     return newFavorites;
-  //   });
-  // };
+   const toggleFavorite = (itemName: string) => {
+     setFavorites(currentFavorites => {
+       const newFavorites = {...currentFavorites};
+       if (newFavorites[itemName]) {
+         delete newFavorites[itemName]; // Remove from favorites if it's already there
+       } else {
+         newFavorites[itemName] = true; // Add to favorites if it's not
+       }
+       return newFavorites;
+     });
+   };
 
-  // //optional: sort the menus by favorited items.
-  // // If we choose to use this then use the sortedMenus below instead of menus
-  // const sortedMenus = menus.sort((a, b) => {
-  //   if (favorites[a] && !favorites[b]) {
-  //     return -1;
-  //   }
-  //   if (!favorites[a] && favorites[b]) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // });
+   //optional: sort the menus by favorited items.
+   // If we choose to use this then use the sortedMenus below instead of menus
+  const sortedMeals = meals?.sort((a, b) => {
+    if (favorites[a.id] && !favorites[b.id]) {
+      return -1;
+    }
+    if (!favorites[a.id] && favorites[b.id]) {
+      return 1;
+    }
+    return 0;
+  });
 
   const renderItem = ({
     item: meal,
@@ -75,8 +75,10 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
       <MealCard
         {...meal}
         commonName={commons?.[meal.common]?.name ?? ''}
-        isFavorited
-        toggleFavorited={() => {}}
+        //isFavorited
+        //toggleFavorited={() => {}}
+        isFavorited={favorites[meal.name]}
+        toggleFavorited={() => toggleFavorite(meal.name)}
       />
     );
   };
