@@ -23,9 +23,9 @@ type DiningPageProps = CompositeScreenProps<
   AppStackPageProps<'tabNavigator'>,
   TabPageProps<'dining'>
 >;
+export default function DiningScreen({ route, navigation }: DiningPageProps) {
+  const flatListRef = useRef<FlatList>(null);
 
-export default function DiningScreen({route, navigation}: DiningPageProps) {
-  const flatListRef = useRef<FlatList | null>(null);
   const {
     meals,
     selectedMealtime,
@@ -36,61 +36,51 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
     loadingData,
   } = useDiningData();
 
-  const [favorites, setFavorites] = useState<{[key: string]: boolean}>({});
+  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
+  const [sortedMeals, setSortedMeals] = useState(meals);
 
-  const scrollToTop = () => {};
-  console.log('efvefvefvfv', meals);
-   const toggleFavorite = (itemName: string) => {
-     setFavorites(currentFavorites => {
-       const newFavorites = {...currentFavorites};
-       if (newFavorites[itemName]) {
-         delete newFavorites[itemName]; // Remove from favorites if it's already there
-       } else {
-         newFavorites[itemName] = true; // Add to favorites if it's not
-       }
-       return newFavorites;
-     });
-   };
+  // Implement scrollToTop to scroll the FlatList to the top
+  const scrollToTop = () => {
+    flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
+  };
 
-   //optional: sort the menus by favorited items.
-   // If we choose to use this then use the sortedMenus below instead of menus
-  const sortedMeals = meals?.sort((a, b) => {
-    if (favorites[a.id] && !favorites[b.id]) {
-      return -1;
+  const toggleFavorite = (mealId: string) => {
+    setFavorites(currentFavorites => {
+      const newFavorites = { ...currentFavorites };
+      if (newFavorites[mealId]) {
+        delete newFavorites[mealId];
+      } else {
+        newFavorites[mealId] = true;
+      }
+      return newFavorites;
+    });
+  };
+
+  useEffect(() => {
+    if (meals) {
+      const sorted = meals.slice().sort((a, b) => {
+        const aFav = favorites[a.id] ? 1 : 0;
+        const bFav = favorites[b.id] ? 1 : 0;
+        return bFav - aFav; // This ensures favorites are on top
+      });
+      setSortedMeals(sorted);
     }
-    if (!favorites[a.id] && favorites[b.id]) {
-      return 1;
-    }
-    return 0;
-  });
+  }, [favorites, meals]); // Re-sort when favorites or meals change
 
-  const renderItem = ({
-    item: meal,
-    index,
-  }: {
-    item: MealWithId;
-    index: number;
-  }) => {
+  const renderItem = ({ item: meal, index }) => {
     return (
       <MealCard
         {...meal}
         commonName={commons?.[meal.common]?.name ?? ''}
-        //isFavorited
-        //toggleFavorited={() => {}}
-        isFavorited={favorites[meal.name]}
-        toggleFavorited={() => toggleFavorite(meal.name)}
+        isFavorited={favorites[meal.id]}
+        toggleFavorited={() => toggleFavorite(meal.id)}
       />
     );
   };
 
   return (
     <Loading isReady={meals !== null}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <CommonsSelector
           commons={commons!}
           selectedCommons={selectedCommons!}
@@ -102,35 +92,20 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
           setMealtime={setSelectedMealtime}
           scrollToTop={scrollToTop}
         />
-        <View
-          style={{
-            flex: 1,
-            width: '100%',
-          }}>
-          {meals !== null && meals.length > 0 ? (
+        <View style={{ flex: 1, width: '100%' }}>
+          {meals && meals.length > 0 ? (
             <FlatList
               ref={flatListRef}
-              contentContainerStyle={{
-                width: '100%',
-              }}
-              data={meals}
+              contentContainerStyle={{ width: '100%' }}
+              data={sortedMeals}
               renderItem={renderItem}
               bounces={true}
-              keyExtractor={item => item.id}
+              extraData={favorites}
+              keyExtractor={item => item.id.toString()}
             />
           ) : (
-            <View
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{
-                  fontSize: scale(20),
-                  fontFamily: sfProTextBold,
-                  color: grey0,
-                }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ fontSize: scale(20), fontFamily: sfProTextBold, color: grey0 }}>
                 {'No meals available'}
               </Text>
             </View>
