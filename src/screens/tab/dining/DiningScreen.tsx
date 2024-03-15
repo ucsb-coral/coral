@@ -16,6 +16,8 @@ import CommonsSelector from './components/commonsSelector/CommonsSelector';
 import {scale} from '../../../utilities/scale';
 import {sfProTextBold} from '../../../utilities/textfont';
 import {black, grey0, grey2} from '../../../utilities/colors';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from '../../../components/header/Header';
 
 export type DiningScreenProps = EmptyProps;
 
@@ -40,20 +42,20 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
 
   const scrollToTop = () => {};
   console.log('efvefvefvfv', meals);
-   const toggleFavorite = (itemName: string) => {
-     setFavorites(currentFavorites => {
-       const newFavorites = {...currentFavorites};
-       if (newFavorites[itemName]) {
-         delete newFavorites[itemName]; // Remove from favorites if it's already there
-       } else {
-         newFavorites[itemName] = true; // Add to favorites if it's not
-       }
-       return newFavorites;
-     });
-   };
+  const toggleFavorite = (itemName: string) => {
+    setFavorites(currentFavorites => {
+      const newFavorites = {...currentFavorites};
+      if (newFavorites[itemName]) {
+        delete newFavorites[itemName]; // Remove from favorites if it's already there
+      } else {
+        newFavorites[itemName] = true; // Add to favorites if it's not
+      }
+      return newFavorites;
+    });
+  };
 
-   //optional: sort the menus by favorited items.
-   // If we choose to use this then use the sortedMenus below instead of menus
+  //optional: sort the menus by favorited items.
+  // If we choose to use this then use the sortedMenus below instead of menus
   const sortedMeals = meals?.sort((a, b) => {
     if (favorites[a.id] && !favorites[b.id]) {
       return -1;
@@ -91,6 +93,7 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
+        <Header centerElement={'Dining'} />
         <CommonsSelector
           commons={commons!}
           selectedCommons={selectedCommons!}

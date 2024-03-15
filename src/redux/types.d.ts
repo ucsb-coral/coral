@@ -110,7 +110,7 @@ declare type ReduxState = {
   data: Data;
 };
 
-declare type AuthState = 'NONE' | 'LOADING' | 'AUTHENTICATED';
+declare type AuthState = 'NONE' | 'LOADING' | 'LINK_RECEIVED' | 'AUTHENTICATED';
 
 declare type Usermap = {
   [id: string]: User;

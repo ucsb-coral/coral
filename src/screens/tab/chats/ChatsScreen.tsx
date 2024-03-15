@@ -14,6 +14,7 @@ import {coral, white, black} from '../../../utilities/colors';
 import {scale} from '../../../utilities/scale';
 import {avenirBlackCentered} from '../../../utilities/textfont';
 import Button from '../../../components/button/Button';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export type ChatsScreenProps = EmptyProps;
 
@@ -22,20 +23,16 @@ type ChatsPageProps = CompositeScreenProps<
   TabPageProps<'chats'>
 >;
 
-const joinButton = (
-  <Button label="Join" rounded style={{height: scale(34), width: scale(72)}} />
-);
-
 export default function ChatsScreen({route, navigation}: ChatsPageProps) {
   const myUserId = useSelector((state: ReduxState) => state.data.myUserId);
   const chats = useSelector(
     (state: ReduxState) => state.data.usermap[myUserId!].chats ?? [],
   );
   const coursemap = useSelector((state: ReduxState) => state.data.coursemap);
-  console.log('FDVWEFV', chats);
+
   return (
-    <View style={{flex: 1, backgroundColor: white}}>
-      <Header centerElement={'Chat List'} />
+    <View style={{flex: 1}}>
+      <Header centerElement={'Chats'} />
       {chats?.length === 0 ? (
         <Text
           style={{

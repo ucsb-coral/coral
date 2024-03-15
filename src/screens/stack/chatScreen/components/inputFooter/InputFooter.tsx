@@ -27,6 +27,7 @@ import {
   handleSendFileMessage,
   handleSendMediaMessage,
 } from '../../../../../firebaseReduxUtilities/useChatData';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export type Props = {
   message: string;
@@ -48,6 +49,7 @@ export default function InputFooter({
   handleSendMessage,
   chatId,
 }: Props) {
+  const {bottom} = useSafeAreaInsets();
   const {showCustomActionSheet} = useCustomActionSheet();
   const inputRef = useRef<TextInput | null>(null);
   const MAX_BASE_HEIGHT = BASE_HEIGHT * 2.5;
@@ -294,6 +296,7 @@ export default function InputFooter({
         backgroundColor: white,
         borderTopWidth: 1,
         borderTopColor: grey5,
+        paddingBottom: bottom,
       }}>
       <Pressable
         onPress={() => setSelectedInput(INPUT_FOOTER_NAME)}

@@ -9,7 +9,7 @@ import SchoolEvent from './components/SchoolEvent';
 
 import {PaperProvider} from 'react-native-paper';
 import Loading from '../../../components/Loading';
-
+import Header from '../../../components/header/Header';
 
 export type EventsScreenProps = EmptyProps;
 
@@ -55,6 +55,7 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
       />
     */
     <Loading isReady={eventData !== null}>
+      <Header centerElement={'Upcoming Events'} />
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {
           //works but throws up stuff on screen
@@ -62,18 +63,18 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
         <SchoolEvent key={event.id} {...event} />
       ))
         */
-      <View style={{ flex: 1, width: '100%' }}>
-        <PaperProvider>
-          <FlatList
-            data={eventData}
-            renderItem={renderItem} // Render your custom component
-            keyExtractor={item => `${item.id}`}
-            ItemSeparatorComponent={() => <View style={{height: 10}} />}
-          />
-        </PaperProvider>
-      </View>
-      }
-      {/* */}
+          <View style={{flex: 1, width: '100%'}}>
+            <PaperProvider>
+              <FlatList
+                data={eventData}
+                renderItem={renderItem} // Render your custom component
+                keyExtractor={item => `${item.id}`}
+                ItemSeparatorComponent={() => <View style={{height: 10}} />}
+              />
+            </PaperProvider>
+          </View>
+        }
+        {/* */}
 
         {
           //attept to display events

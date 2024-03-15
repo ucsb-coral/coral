@@ -15,6 +15,7 @@ import firestore, {
 import {styles} from './ChatScreenStyles';
 import {black, white} from '../../../utilities/colors';
 import {handleSendTextMessage} from '../../../firebaseReduxUtilities/useChatData';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export type ChatScreenProps = {
   id: string;
@@ -49,6 +50,7 @@ export default function ChatScreen({
   };
 
   return (
+    // <View edges={['bottom']} style={{flex: 1}}>
     <Loading isReady={!!messages}>
       <KeyboardAvoidingView
         style={{flex: 1, display: 'flex', flexDirection: 'column-reverse'}}>
@@ -60,7 +62,7 @@ export default function ChatScreen({
           handleSendMessage={sendTextMessage}
           chatId={id}
         />
-        <View style={{flex: 1, backgroundColor: white}}>
+        <View style={{flex: 1}}>
           <Header
             centerElement={courseTitle}
             leftHandler={navigation.goBack}
@@ -78,5 +80,6 @@ export default function ChatScreen({
         </View>
       </KeyboardAvoidingView>
     </Loading>
+    // </View>
   );
 }

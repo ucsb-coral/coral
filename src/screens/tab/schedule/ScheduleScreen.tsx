@@ -58,6 +58,7 @@ import useCalendarData, {
   syncCalendarEvents,
 } from '../../../firebaseReduxUtilities/useCalendarData';
 import LoadingOverlay from '../../../components/LoadingOverlay';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export type ScheduleScreenProps = EmptyProps;
 
@@ -273,9 +274,9 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
 
   return (
     <LoadingOverlay isLoading={loading}>
-      <View style={{flex: 1, backgroundColor: white}}>
+      <View style={{flex: 1}}>
         <Header centerElement={'Your Courses'} />
-        <View style={{flex: 1, width: '100%', backgroundColor: white}}>
+        <View style={{flex: 1, width: '100%'}}>
           <Button
             label={isSynced ? 'Open Calendar' : 'Sync Google Calendar'}
             onPress={

@@ -5,6 +5,7 @@ import {coral, grey, grey5, white} from '../../utilities/colors';
 import {avenirBlack, avenirBlackCentered} from '../../utilities/textfont';
 import {scale, standardMargin, width} from '../../utilities/scale';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const headerHeight = scale(52);
 const activeOpacity = 0.5;
@@ -39,11 +40,14 @@ export default function Header({
       <Ionicons name="menu" size={scale(35)} color={grey} />
     ) : undefined);
 
+  const {top} = useSafeAreaInsets();
+
   return (
     <View
       pointerEvents={'box-none'}
       style={{
         ...{
+          paddingTop: top,
           backgroundColor: white,
           paddingBottom: scale(5),
           marginBottom: scale(5),
@@ -65,7 +69,6 @@ export default function Header({
           }}
           activeOpacity={activeOpacity}
           style={{
-          
             height: '100%',
             width: scale(80),
             left: 0,
@@ -103,7 +106,6 @@ export default function Header({
           </Text>
         ) : (
           <View
-          
             pointerEvents="box-none"
             style={{width: '100%', height: '100%'}}>
             {centerElement}

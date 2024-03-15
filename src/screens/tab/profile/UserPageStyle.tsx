@@ -16,7 +16,6 @@ import {scale} from '../../../utilities/scale';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   ScrollView: {},
   headerWrapper: {

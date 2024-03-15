@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import Navigation from './navigation/Navigation';
 import {loadFonts} from './utilities/textfont';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function App() {
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -23,9 +24,7 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={<></>} persistor={persistor}>
         <ActionSheetProvider>
-          <SafeAreaView style={{flex: 1}}>
-            {!!isReady && <Navigation />}
-          </SafeAreaView>
+          <SafeAreaProvider>{!!isReady && <Navigation />}</SafeAreaProvider>
         </ActionSheetProvider>
       </PersistGate>
     </Provider>
