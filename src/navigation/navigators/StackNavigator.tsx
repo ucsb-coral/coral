@@ -19,9 +19,6 @@ import ChatSettings, {
 import AboutScreen, {
   AboutScreenProps,
 } from '../../screens/stack/about/AboutScreen';
-import JoinChatsScreen, {
-  JoinChatsScreenProps,
-} from '../../screens/stack/joinChats/JoinChatsScreen';
 import SettingsScreen, {
   SettingsScreenProps,
 } from '../../screens/stack/settings/SettingsScreen';
@@ -47,7 +44,6 @@ type AppStackNavigatorScreens = {
   settings: SettingsScreenProps;
   editProfile: EditProfileScreenProps;
   about: AboutScreenProps;
-  joinChats: JoinChatsScreenProps;
   userProfile: UserProfileScreenProps;
   // ADD more app screens here
 };
@@ -76,16 +72,15 @@ export default function StackNavigator() {
           <Stack.Screen name={'chat'} component={ChatScreen} />
           <Stack.Screen name={'chatSettings'} component={ChatSettings} />
           <Stack.Screen name={'about'} component={AboutScreen} />
-          <Stack.Screen name={'joinChats'} component={JoinChatsScreen} />
           <Stack.Screen name={'settings'} component={SettingsScreen} />
           <Stack.Screen name={'editProfile'} component={EditProfileScreen} />
           <Stack.Screen name={'userProfile'} component={UserProfilePage} />
           {/* ADD more app stack screens here */}
         </>
-      ) : authState === 'LOADING' ? (
-        <Stack.Screen name={'loading'} component={LoadingScreen} />
-      ) : (
+      ) : authState === 'NONE' ? (
         <Stack.Screen name={'welcome'} component={WelcomeScreen} />
+      ) : (
+        <Stack.Screen name={'loading'} component={LoadingScreen} />
       )}
     </Stack.Navigator>
   );
@@ -95,13 +90,13 @@ export const authStackNavigate = <Page extends keyof AuthStackNavigatorScreens>(
   navigation: NativeStackNavigationProp<any>,
   screen: AuthStackNavigatorPages,
   params?: AuthStackNavigatorScreens[Page] | {},
-) => navigation.navigate(screen, params);
+) => navigation.push(screen, params);
 
 export const appStackNavigate = <Page extends keyof AppStackNavigatorScreens>(
   navigation: NativeStackNavigationProp<any>,
   screen: AppStackNavigatorPages,
   params?: AppStackNavigatorScreens[Page] | {},
-) => navigation.navigate(screen, params);
+) => navigation.push(screen, params);
 
 export type AuthStackPageProps<Page extends AuthStackNavigatorPages> =
   NativeStackScreenProps<AuthStackNavigatorScreens, Page, 'stack-navigator'>;

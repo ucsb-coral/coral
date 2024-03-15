@@ -16,6 +16,8 @@ import CommonsSelector from './components/commonsSelector/CommonsSelector';
 import {scale} from '../../../utilities/scale';
 import {sfProTextBold} from '../../../utilities/textfont';
 import {black, grey0, grey2} from '../../../utilities/colors';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from '../../../components/header/Header';
 
 export type DiningScreenProps = EmptyProps;
 
@@ -64,6 +66,7 @@ export default function DiningScreen({ route, navigation }: DiningPageProps) {
         return bFav - aFav; // This ensures favorites are on top
       });
       setSortedMeals(sorted);
+
     }
   }, [favorites, meals]); // Re-sort when favorites or meals change
 
@@ -80,7 +83,9 @@ export default function DiningScreen({ route, navigation }: DiningPageProps) {
 
   return (
     <Loading isReady={meals !== null}>
+
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
         <CommonsSelector
           commons={commons!}
           selectedCommons={selectedCommons!}

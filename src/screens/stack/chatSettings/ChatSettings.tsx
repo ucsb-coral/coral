@@ -42,25 +42,23 @@ export default function ChatSettings({
     <View style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Header leftHandler={navigation.goBack} centerElement={'Chat Settings'} />
-      <SafeAreaView>
-        <ScrollView style={styles.ScrollView}>
-          <Participants chatId={currentChatID} navigation={navigation} />
-          <View style={styles.signOutContainer}>
-            <IconButton
-              label="Leave Chat"
-              Icon={Ionicons}
-              iconName={'trash-outline'}
-              iconColor="red"
-              style={{marginTop: 5}}
-              onPress={() => {
-                () => setIsSelected(!isSelected);
-                leaveCourseChat(currentChatID);
-                appStackNavigate(navigation, 'tabNavigator');
-              }}
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <ScrollView style={styles.ScrollView}>
+        <Participants chatId={currentChatID} navigation={navigation} />
+        <View style={styles.signOutContainer}>
+          <IconButton
+            label="Leave Chat"
+            Icon={Ionicons}
+            iconName={'trash-outline'}
+            iconColor="red"
+            style={{marginTop: 5}}
+            onPress={() => {
+              () => setIsSelected(!isSelected);
+              leaveCourseChat(currentChatID);
+              appStackNavigate(navigation, 'tabNavigator');
+            }}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }

@@ -13,7 +13,7 @@ import ChatsScreen, {
 import ScheduleScreen, {
   ScheduleScreenProps,
 } from '../../screens/tab/schedule/ScheduleScreen';
-import {coral, grey} from '../../utilities/colors';
+import {coral, grey, white} from '../../utilities/colors';
 import useChatData from '../../firebaseReduxUtilities/useChatData';
 import {Ionicons} from '@expo/vector-icons';
 import {scale} from '../../utilities/scale';

@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   StatusBar,
   ScrollView,
@@ -29,6 +28,7 @@ import {
   updateUserImage,
 } from '../../../firebaseReduxUtilities/useUserData';
 import Button from '../../../components/button/Button';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export type EditProfileScreenProps = EmptyProps;
 export default function EditProfileScreen({
@@ -101,7 +101,7 @@ export default function EditProfileScreen({
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Header leftHandler={handleExit} centerElement={'Edit Profile'} />
       <ScrollView
@@ -147,14 +147,6 @@ export default function EditProfileScreen({
           maxLength={150}
         />
       </ScrollView>
-      {/* <FooterButton
-        label="Save"
-        style={{
-          opacity: isChangeMade ? 1 : 0.5,
-        }}
-        disabled={!isChangeMade}
-        onPress={handleSave}
-      /> */}
       <Button
         label="Save Changes"
         disabled={!isChangeMade}
@@ -165,6 +157,6 @@ export default function EditProfileScreen({
           opacity: isChangeMade ? 1 : 0.5,
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 }

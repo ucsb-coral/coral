@@ -39,8 +39,8 @@ const getCurrentCourses = async ({
     store.dispatch(updateCoursesAction({courses}));
     return true;
   } catch (error) {
-    throw new Error('Failed to get current courses: ' + error);
-    return false;
+    store.dispatch(updateCoursesAction({courses: []}));
+    return true;
   }
 };
 

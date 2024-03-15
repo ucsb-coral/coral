@@ -20,7 +20,7 @@ export default function AboutScreen({
   navigation,
 }: AppStackPageProps<'about'>) {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView style={styles.ScrollView}>
@@ -30,6 +30,6 @@ export default function AboutScreen({
           />
         </ScrollView>
       </SafeAreaView>
-    </View>
+    </SafeAreaView>
   );
 }
