@@ -10,30 +10,6 @@ import {updateMyUserAction} from '../redux/actions';
 
 const eventsCollection = firestore().collection('events');
 
-export const addEvent = async (eventId : string) => {
-  const myUserId = store.getState().data.myUserId;
-  const {accessToken, idToken, authToken} = await withTokens();
-
-  try {
-    const request = await fetch(`${API_URL}/addEventToGoogleCalendar`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        userId: myUserId,
-        accessToken: accessToken,
-        authToken: authToken,
-        eventId: eventId
-      }),
-    });
-
-    const data = await request.json();
-    if (data?.error) throw new Error(data?.error);
-    store.dispatch(updateMyUserAction({data}));
-  } catch (error) {
-    throw new Error('Failed to add event: ' + error);
-  }
-};
-
 // Functions to get dining commons and their "code" (used in the menu URL)
 export const getEventDetails = async () => {
   try {

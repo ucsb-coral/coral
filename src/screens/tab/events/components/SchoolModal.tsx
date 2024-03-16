@@ -4,7 +4,6 @@ import {Card, Paragraph, Button, Modal, Portal, IconButton} from 'react-native-p
 import {StyleSheet} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
-import { addEvent } from '../../../../firebaseReduxUtilities/useEventsData';
 
 export type Props = SchoolEvent;
 
@@ -58,17 +57,6 @@ export default function SchoolModal({id, title, description, photo, time, end_ti
     }})
 
     const modalStyle = { padding: 10, backgroundColor: 'white'};
-    const modalStyle2 = { flex: 1, justifyContent: 'center', alignItems: 'center' };
-    
-    const addEventToCalendar = () => {
-      console.log('add event to calendar');
-      addEvent(id);
-    }
-
-    const userId = useSelector((state : ReduxState) => state.data.myUserId);
-    const syncedCalendar = useSelector((state : ReduxState) => state.data.usermap[userId].syncedCalendar);
-    const quarter = useSelector((state : ReduxState) => state.data.quarter);
-    const isSynced = syncedCalendar?.quarter === quarter;
 
   return (
     //be sure to fix the styling so that the image size is bounded in case of too big photos if it messes up
@@ -81,17 +69,6 @@ export default function SchoolModal({id, title, description, photo, time, end_ti
                 {title}
               </Text>
               <Card.Cover source={{uri: photo}} style={{backgroundColor: '#fff'}} resizeMode="contain"/>
-              { isSynced &&
-              <View style={{ padding: 10 }}>
-                <Button 
-                  mode="contained" 
-                  onPress={addEventToCalendar}
-                  style={{ backgroundColor: '#EF5645'}}
-                >
-                  Add Event to Calendar
-                </Button>
-              </View>
-              }
               <Text style={{fontWeight: '500'}}>
                 {convertStartTime(time) + " - " + convertEndTime(end_time)}
               </Text>
