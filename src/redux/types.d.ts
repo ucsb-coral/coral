@@ -221,11 +221,12 @@ declare type Course = {
 };
 
 declare type SchoolEvent = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   photo: string;
   time: Date;
+  end_time: Date;
   location: string;
   room_number: string;
 };

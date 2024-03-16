@@ -1,5 +1,9 @@
 import axios from 'axios';
 import firestore from '@react-native-firebase/firestore';
+import {store} from '../redux/useRedux';
+import {withTokens} from './tokens';
+import {API_URL} from './constants';
+import {updateMyUserAction} from '../redux/actions';
 
 //const EVENTS_AL_URL = 'https://campuscalendar.ucsb.edu/api/2/events';
 //const MENU_URL_BASE = 'https://api.ucsb.edu/dining/menu/v1';
@@ -15,12 +19,14 @@ export const getEventDetails = async () => {
     snapshot.forEach(doc => {
       console.log('event data: ', doc.data());
       const data = doc.data();
-      const {title, description, photoUrl, start, locationName, roomNumber} = data;
+      const {title, description, photoUrl, start, end, locationName, roomNumber} = data;
       events.push({
+        id : doc.id,
         title,
         description,
         photo: photoUrl,
         time: start.toDate(),
+        end_time: end.toDate(),
         location: locationName,
         room_number: roomNumber
       } as SchoolEvent);
@@ -54,6 +60,7 @@ export const getEventDetails = async () => {
     throw error;
   } // I think this can be handled via .catch() as well, but this works still
 };
+
 
 // Usage in a React component
 /*

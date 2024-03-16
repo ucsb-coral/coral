@@ -3,26 +3,49 @@ import { View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Card, Paragraph, Button, Modal, Portal, IconButton} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 export type Props = SchoolEvent;
 
-function convertTime(time : Date) {
-  //return(time.toLocaleDateString('en-GB',{ year: 'numeric', month: 'long', day: 'numeric' }));
-  return time.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const nullDate = new Date('1970-01-01T00:00:00.000Z').getTime();
+
+function convertStartTime(time: Date) {
+  return time.toLocaleString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric', 
+    hour: 'numeric', // Add the hour component
+    minute: '2-digit', // Display minutes with two digits
+    hour12: true // Use 12-hour clock (optionally add AM/PM if desired)
+  });
+}
+
+function convertEndTime(time: Date) {
+  if (time.getTime() == nullDate || time == null) {
+    // console.log('null time');
+    return "All Day";
+  }
+  return time.toLocaleString('en-US', { 
+    hour: 'numeric', // Add the hour component
+    minute: '2-digit', // Display minutes with two digits
+    hour12: true // Use 12-hour clock (optionally add AM/PM if desired)
+  });
 }
 
 type ModalProps = {
+  id: string,
   title : String, 
   description : String, 
   photo : string, //for some reason, it must be kept to this for Card.Cover to understand it
   time : Date, 
+  end_time : Date,
   location : String, 
   room_number : String,
   modalVisible: boolean;
   closeModal: () => void;
 }
 
-export default function SchoolModal({title, description, photo, time, location, room_number, modalVisible, closeModal} : ModalProps) {
+export default function SchoolModal({id, title, description, photo, time, end_time, location, room_number, modalVisible, closeModal} : ModalProps) {
 
   const styles = StyleSheet.create({
     container: {
@@ -34,7 +57,6 @@ export default function SchoolModal({title, description, photo, time, location, 
     }})
 
     const modalStyle = { padding: 10, backgroundColor: 'white'};
-    const modalStyle2 = { flex: 1, justifyContent: 'center', alignItems: 'center' };
 
   return (
     //be sure to fix the styling so that the image size is bounded in case of too big photos if it messes up
@@ -48,7 +70,7 @@ export default function SchoolModal({title, description, photo, time, location, 
               </Text>
               <Card.Cover source={{uri: photo}} style={{backgroundColor: '#fff'}} resizeMode="contain"/>
               <Text style={{fontWeight: '500'}}>
-                {convertTime(time)}
+                {convertStartTime(time) + " - " + convertEndTime(end_time)}
               </Text>
               <Text style={{fontWeight: '500'}}>
                 {room_number ? location + " " + room_number : location}
