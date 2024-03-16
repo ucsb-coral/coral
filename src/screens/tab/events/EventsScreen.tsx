@@ -38,6 +38,7 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
       description={item.description}
       photo={item.photo}
       time={item.time}
+      end_time={item.end_time}
       location={item.location}
       room_number={item.room_number}
     />

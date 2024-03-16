@@ -15,12 +15,13 @@ export const getEventDetails = async () => {
     snapshot.forEach(doc => {
       console.log('event data: ', doc.data());
       const data = doc.data();
-      const {title, description, photoUrl, start, locationName, roomNumber} = data;
+      const {title, description, photoUrl, start, end, locationName, roomNumber} = data;
       events.push({
         title,
         description,
         photo: photoUrl,
         time: start.toDate(),
+        end_time: end.toDate(),
         location: locationName,
         room_number: roomNumber
       } as SchoolEvent);
