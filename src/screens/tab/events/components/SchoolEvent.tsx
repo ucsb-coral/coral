@@ -1,76 +1,126 @@
-import {useState} from 'react'
-import { View, TouchableOpacity} from 'react-native';
-import {Card, Paragraph} from 'react-native-paper';
-import {StyleSheet} from 'react-native';
-import SchoolModal from './SchoolModal'
+import React, {useState} from 'react';
+import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {Card, Title, Paragraph} from 'react-native-paper';
+import SchoolModal from './SchoolModal';
 
 export type Props = SchoolEvent;
 
 const nullDate = new Date('1970-01-01T00:00:00.000Z').getTime();
 
 function convertStartTime(time: Date) {
-  return time.toLocaleString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric', 
+  return time.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
     hour: 'numeric', // Add the hour component
     minute: '2-digit', // Display minutes with two digits
-    hour12: true // Use 12-hour clock (optionally add AM/PM if desired)
+    hour12: true, // Use 12-hour clock (optionally add AM/PM if desired)
   });
 }
 
 function convertEndTime(time: Date) {
   console.log('end time: ', time);
   console.log('null date: ', nullDate);
-  if (time.getTime() == nullDate || time == null) {
+  if (!time || time?.getTime() == nullDate) {
     console.log('null time');
-    return "All Day";
+    return 'All Day';
   }
-  return time.toLocaleString('en-US', { 
+  return time.toLocaleString('en-US', {
     hour: 'numeric', // Add the hour component
     minute: '2-digit', // Display minutes with two digits
-    hour12: true // Use 12-hour clock (optionally add AM/PM if desired)
+    hour12: true, // Use 12-hour clock (optionally add AM/PM if desired)
   });
 }
 
-export default function SchoolEvent({id, title, description, photo, time, end_time, location, room_number}: Props) {
-
+export default function SchoolEvent({
+  id,
+  title,
+  description,
+  photo,
+  time,
+  end_time,
+  location,
+  room_number,
+}: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'space-between',
-      backgroundColor: '#fff',
-      padding: 20,
+    cardContainer: {
       margin: 10,
+      borderWidth: 1, // Add border to the card
+      borderColor: 'lightgray', // Card border color
+      borderRadius: 8, // Rounded corners for the card
+      overflow: 'hidden', // Ensures child components do not bleed outside the border
+      backgroundColor: '#fff',
+    },
+    titleContainer: {
+      padding: 16, // Ample padding around the title
+    },
+    imageContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 16, // Padding from top and bottom
+    },
+    imageStyle: {
+      width: '90%', // Image takes most of the card width
+      height: 200, // Fixed height for image
+      resizeMode: 'contain',
+    },
+    timeLocationContainer: {
+      padding: 16, // Ample padding around time and location
+    },
+    modalStyle: {
+      padding: 10,
+      backgroundColor: 'white',
+    },
+    modalContainerStyle: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 
-  const modalStyle = { padding: 10, backgroundColor: 'white'};
-  const modalStyle2 = { flex: 1, justifyContent: 'center', alignItems: 'center' };
-
   return (
-    //be sure to fix the styling so that the image size is bounded in case of too big photos if it messes up
     <View>
-      <TouchableOpacity onPress={openModal}>
-        <Card style={{backgroundColor: '#fff', width: '100%'}}>
-          <View style={{}}> 
-            <Card.Title title={title} titleStyle={{fontWeight: '700', flexWrap: 'wrap'}} />
-            <Card.Cover source={{uri: photo}} style={{backgroundColor: '#fff'}} resizeMode="contain"/>
-            <Card.Content style={{width: '100%'}}>
-              <Paragraph> {convertStartTime(time) + " - " + convertEndTime(end_time)} </Paragraph>
-              <Paragraph> {room_number ? location + " " + room_number : location} </Paragraph>
-            </Card.Content>
+      <TouchableOpacity activeOpacity={0.5} onPress={openModal}>
+        <Card style={styles.cardContainer}>
+          <View style={styles.titleContainer}>
+            <Title
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={{fontWeight: '700'}}>
+              {title}
+            </Title>
+          </View>
+          <View style={styles.imageContainer}>
+            <Image source={{uri: photo}} style={styles.imageStyle} />
+          </View>
+          <View style={styles.timeLocationContainer}>
+            <Paragraph>
+              {' '}
+              {convertStartTime(time) + ' - ' + convertEndTime(end_time)}{' '}
+            </Paragraph>
+            <Paragraph>
+              {room_number ? `${location} ${room_number}` : location}
+            </Paragraph>
           </View>
         </Card>
       </TouchableOpacity>
-      <SchoolModal id = {id.toString()} title={title} description={description} photo={photo} time={time} end_time={end_time} location = {location} room_number={room_number} modalVisible={modalVisible} closeModal={closeModal}/>  
+      <SchoolModal
+        id={id.toString()}
+        title={title}
+        description={description}
+        photo={photo}
+        time={time}
+        end_time={end_time}
+        location={location}
+        room_number={room_number}
+        modalVisible={modalVisible}
+        closeModal={closeModal}
+      />
     </View>
   );
 }
-
-// Image doesn't work but Card.Cover does for some reason? <Image source={{uri: photo}} style={{backgroundColor: '#fff'}} resizeMode="contain"/>

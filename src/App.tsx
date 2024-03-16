@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
-import useRedux from './redux/useRedux';
+import {SafeAreaView} from 'react-native';
+import {Provider as StoreProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import {Provider} from 'react-redux';
+import {Provider as PaperProvider} from 'react-native-paper';
+import useRedux from './redux/useRedux';
 import Navigation from './navigation/Navigation';
 import {loadFonts} from './utilities/textfont';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
@@ -14,19 +15,25 @@ export default function App() {
 
   useEffect(() => {
     async function prepare() {
-      await loadFonts();
+      await loadFonts(); // Load any custom fonts
       setIsReady(true);
     }
     prepare();
   }, []);
 
+  if (!isReady) {
+    return null; // Render nothing or a loading spinner until fonts are loaded
+  }
+
   return (
-    <Provider store={store}>
-      <PersistGate loading={<></>} persistor={persistor}>
-        <ActionSheetProvider>
-          <SafeAreaProvider>{!!isReady && <Navigation />}</SafeAreaProvider>
-        </ActionSheetProvider>
+    <StoreProvider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <PaperProvider>
+          <ActionSheetProvider>
+            <SafeAreaProvider>{!!isReady && <Navigation />}</SafeAreaProvider>
+          </ActionSheetProvider>
+        </PaperProvider>
       </PersistGate>
-    </Provider>
+    </StoreProvider>
   );
 }

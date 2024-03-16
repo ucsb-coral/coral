@@ -110,7 +110,7 @@ export default function DiningScreen({route, navigation}: DiningPageProps) {
               renderItem={renderItem}
               bounces={true}
               extraData={favorites}
-              keyExtractor={item => item.id.toString()}
+              keyExtractor={item => item.id}
             />
           ) : (
             <View

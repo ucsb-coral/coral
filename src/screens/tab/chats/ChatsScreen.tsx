@@ -10,11 +10,17 @@ import {
 } from '../../../navigation/navigators/StackNavigator';
 import Header from '../../../components/header/Header';
 import {Ionicons} from '@expo/vector-icons';
-import {coral, white, black} from '../../../utilities/colors';
+import {coral, white, black, opacity, grey0} from '../../../utilities/colors';
 import {scale} from '../../../utilities/scale';
-import {avenirBlackCentered} from '../../../utilities/textfont';
+import {
+  avenirBlackCentered,
+  sfProTextBold,
+  sfProTextRegular,
+  sfProTextSemibold,
+} from '../../../utilities/textfont';
 import Button from '../../../components/button/Button';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {Card} from 'react-native-paper';
 
 export type ChatsScreenProps = EmptyProps;
 
@@ -47,21 +53,69 @@ export default function ChatsScreen({route, navigation}: ChatsPageProps) {
       ) : (
         <ScrollView style={styles.CurrentClasschatList}>
           {chats.map(chatId => (
-            <TouchableOpacity
-              key={chatId}
-              style={styles.chatItem}
-              onPress={() =>
-                appStackNavigate(navigation, 'chat', {id: chatId})
-              }>
-              <Text style={styles.chatName}>
+            <Card
+              style={{
+                marginBottom: scale(16),
+                padding: scale(14),
+              }}>
+              <Text
+                style={{
+                  fontFamily: sfProTextBold,
+                  fontSize: 26,
+                  color: black,
+                  marginBottom: 4,
+                }}>
                 {coursemap[chatId]?.courseId || 'Unknown Chat'}
               </Text>
-              <Ionicons
-                name={'chevron-forward-outline'}
-                size={scale(25)}
-                color={black}
-              />
-            </TouchableOpacity>
+              {/* <Text
+                style={{
+                  fontFamily: sfProTextSemibold,
+                  fontSize: 18,
+                  color: grey0,
+                  marginBottom: 8,
+                }}>
+                {coursemap[chatId]?.courseTitle}
+              </Text> */}
+
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                }}>
+                <View style={{display: 'flex'}}>
+                  <Text
+                    style={{
+                      fontFamily: sfProTextRegular,
+                      fontSize: 14,
+                      marginBottom: 4,
+                      color: grey0,
+                    }}>
+                    {coursemap[chatId]?.courseTitle}
+                  </Text>
+                  {/* <Text
+                    style={{
+                      fontFamily: sfProTextRegular,
+                      fontSize: 14,
+                      marginBottom: 4,
+                      color: grey0,
+                    }}>
+                    {'Efvwefvfev'}
+                  </Text> */}
+                </View>
+                <Button
+                  label={'Open Chat'}
+                  style={{
+                    alignSelf: 'flex-end',
+                    backgroundColor: opacity(coral, 0.9),
+                  }}
+                  onPress={() =>
+                    appStackNavigate(navigation, 'chat', {id: chatId})
+                  }
+                />
+              </View>
+            </Card>
           ))}
         </ScrollView>
       )}

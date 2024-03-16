@@ -7,6 +7,8 @@ import {
 import Button from '../../../../components/button/Button';
 import {joinCourseChat} from '../../../../firebaseReduxUtilities/useChatData';
 import {black, coral, grey0, opacity} from '../../../../utilities/colors';
+import {scale} from '../../../../utilities/scale';
+import {Card} from 'react-native-paper';
 
 export type Props = {
   id: string;
@@ -50,13 +52,11 @@ export default function CourseCard({id, course, joined, openChat}: Props) {
     timeLocations?.find(timeloc => timeloc?.instructionTypeCode === 'LAB');
   const instructors = timeLocation?.instructors[0];
   return (
-    <Pressable
+    <Card
       style={{
-        marginBottom: 16,
-        width: '100%',
-      }}
-      // onPress={() => openCourseModal(courseId)}
-    >
+        marginBottom: scale(16),
+        padding: scale(14),
+      }}>
       <Text
         style={{
           fontFamily: sfProTextBold,
@@ -125,6 +125,6 @@ export default function CourseCard({id, course, joined, openChat}: Props) {
           }}
         />
       </View>
-    </Pressable>
+    </Card>
   );
 }

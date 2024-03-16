@@ -1,92 +1,173 @@
-import {useState} from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
-import {Card, Paragraph, Button, Modal, Portal, IconButton} from 'react-native-paper';
-import {StyleSheet} from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  Modal,
+} from 'react-native';
+import {Card, IconButton} from 'react-native-paper';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import {scale} from '../../../../utilities/scale';
+import {
+  sfProTextBold,
+  sfProTextRegular,
+  sfProTextSemibold,
+} from '../../../../utilities/textfont';
+import {black, grey0, opacity, white} from '../../../../utilities/colors';
 
-export type Props = SchoolEvent;
+export type Props = {
+  title: String;
+  description: String;
+  photo: string;
+  time: Date;
+  location: String;
+  room_number: String;
+  modalVisible: boolean;
+  closeModal: () => void;
+};
 
 const nullDate = new Date('1970-01-01T00:00:00.000Z').getTime();
 
 function convertStartTime(time: Date) {
-  return time.toLocaleString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric', 
+  return time.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
     hour: 'numeric', // Add the hour component
     minute: '2-digit', // Display minutes with two digits
-    hour12: true // Use 12-hour clock (optionally add AM/PM if desired)
+    hour12: true, // Use 12-hour clock (optionally add AM/PM if desired)
   });
 }
 
 function convertEndTime(time: Date) {
-  if (time.getTime() == nullDate || time == null) {
+  if (!time || time?.getTime() == nullDate) {
     // console.log('null time');
-    return "All Day";
+    return 'All Day';
   }
-  return time.toLocaleString('en-US', { 
+  return time.toLocaleString('en-US', {
     hour: 'numeric', // Add the hour component
     minute: '2-digit', // Display minutes with two digits
-    hour12: true // Use 12-hour clock (optionally add AM/PM if desired)
+    hour12: true, // Use 12-hour clock (optionally add AM/PM if desired)
   });
 }
 
 type ModalProps = {
-  id: string,
-  title : String, 
-  description : String, 
-  photo : string, //for some reason, it must be kept to this for Card.Cover to understand it
-  time : Date, 
-  end_time : Date,
-  location : String, 
-  room_number : String,
+  id: string;
+  title: String;
+  description: String;
+  photo: string; //for some reason, it must be kept to this for Card.Cover to understand it
+  time: Date;
+  end_time: Date;
+  location: String;
+  room_number: String;
   modalVisible: boolean;
   closeModal: () => void;
-}
+};
 
-export default function SchoolModal({id, title, description, photo, time, end_time, location, room_number, modalVisible, closeModal} : ModalProps) {
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'space-between',
-      backgroundColor: '#fff',
-      padding: 20,
-      margin: 10,
-    }})
-
-    const modalStyle = { padding: 10, backgroundColor: 'white'};
-
+export default function SchoolModal({
+  id,
+  title,
+  description,
+  photo,
+  time,
+  end_time,
+  location,
+  room_number,
+  modalVisible,
+  closeModal,
+}: ModalProps) {
   return (
-    //be sure to fix the styling so that the image size is bounded in case of too big photos if it messes up
-    <Portal>
-      <Modal visible={modalVisible} onDismiss={closeModal}>
-        <View style={modalStyle}>
-          <ScrollView keyboardShouldPersistTaps="always">
-            <View style={{ backgroundColor: 'white', padding: 20 }}>
-              <Text style={{fontWeight: '900', flexWrap: 'wrap'}}>
-                {title}
-              </Text>
-              <Card.Cover source={{uri: photo}} style={{backgroundColor: '#fff'}} resizeMode="contain"/>
-              <Text style={{fontWeight: '500'}}>
-                {convertStartTime(time) + " - " + convertEndTime(end_time)}
-              </Text>
-              <Text style={{fontWeight: '500'}}>
-                {room_number ? location + " " + room_number : location}
-              </Text>
-              <Text>
-                {description}
-              </Text>
-              <IconButton                 
-                  icon="close"
-                  size={30}
-                  style={{ position: 'absolute', top: 0, right: 0 }} 
-                  onPress={closeModal} />
-            </View>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalVisible}
+      collapsable={true}
+      onRequestClose={closeModal}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <View
+          style={{
+            backgroundColor: white,
+            borderRadius: scale(10),
+            paddingTop: scale(20),
+            paddingBottom: scale(20),
+            alignItems: 'center',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5,
+            maxWidth: '90%',
+          }}>
+          <ScrollView
+            style={{width: '100%', maxHeight: scale(460)}}
+            contentContainerStyle={{
+              width: '100%',
+              paddingLeft: scale(24),
+              paddingRight: scale(24),
+            }}
+            keyboardShouldPersistTaps="always">
+            <Text
+              style={{
+                fontFamily: sfProTextBold,
+                fontSize: scale(22),
+                color: black,
+                marginTop: scale(24),
+              }}>
+              {title}
+            </Text>
+            <Card.Cover
+              source={{uri: photo}}
+              style={{marginBottom: scale(12), marginTop: scale(12)}}
+              resizeMode="contain"
+            />
+            <Text
+              style={{
+                fontFamily: sfProTextSemibold,
+                fontSize: scale(18),
+                marginBottom: scale(2),
+                color: black,
+              }}>
+              {convertStartTime(time) + ' - ' + convertEndTime(end_time)}
+            </Text>
+            <Text
+              style={{
+                fontFamily: sfProTextRegular,
+                marginBottom: scale(6),
+                fontSize: scale(16),
+                color: black,
+              }}>
+              {room_number ? location + ' ' + room_number : location}
+            </Text>
+            <Text
+              style={{
+                fontFamily: sfProTextRegular,
+                fontSize: scale(14),
+                color: opacity(black, 0.75),
+              }}>
+              {description}
+            </Text>
           </ScrollView>
+          <IconButton
+            icon="close"
+            iconColor={black}
+            size={scale(22)}
+            style={{position: 'absolute', top: scale(4), right: scale(4)}}
+            onPress={closeModal}
+          />
         </View>
-      </Modal>
-    </Portal>
+      </View>
+    </Modal>
   );
 }

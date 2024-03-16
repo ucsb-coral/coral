@@ -1116,7 +1116,7 @@ PODS:
     - glog
   - react-native-ionicons (4.6.5):
     - React
-  - react-native-safe-area-context (4.7.4):
+  - react-native-safe-area-context (4.9.0):
     - React-Core
   - react-native-video (6.0.0-beta.1):
     - React-Core
@@ -1575,7 +1575,7 @@ SPEC CHECKSUMS:
   React-jsinspector: aef73cbd43b70675f572214d10fa438c89bf11ba
   React-logger: 2e4aee3e11b3ec4fa6cfd8004610bbb3b8d6cca4
   react-native-ionicons: 7ce04a8e61c6de2fc3b6798e8b9621b865cb18b1
-  react-native-safe-area-context: 2cd91d532de12acdb0a9cbc8d43ac72a8e4c897c
+  react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-video: e25a27c954460f555bca25e24a8eb861685b4e55
   react-native-vlc-media-player: 0f9860bded57cd6764ac55b5c0e97347069cb40a
   React-NativeModulesApple: 535e26db03f74ecc500748ce79fa349b2ee2ee21

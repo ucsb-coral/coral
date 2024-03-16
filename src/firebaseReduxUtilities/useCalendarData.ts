@@ -71,7 +71,7 @@ export const testEvent = async () => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         userId: myUserId,
-        idToken: idToken,
+        eventId: '44832576496273',
         accessToken: accessToken,
         authToken: authToken,
       }),

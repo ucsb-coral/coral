@@ -65,7 +65,7 @@ export default function StackNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={'welcome'}>
+      initialRouteName={'tabNavigator'}>
       {authState === 'AUTHENTICATED' ? (
         <>
           <Stack.Screen name={'tabNavigator'} component={TabNavigator} />

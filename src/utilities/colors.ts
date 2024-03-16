@@ -1,4 +1,5 @@
 const white = '#FFFFFF';
+const gold = '#FFD700';
 const black = '#000000';
 const grey = 'grey';
 const grey0 = '#8E8E93';
@@ -9,6 +10,7 @@ const grey4 = '#E5E5EA';
 const grey5 = '#F2F2F7';
 
 const coral = '#F88379';
+const realcoral = '#F88379';
 
 const red = '#FF0000';
 
@@ -31,6 +33,7 @@ const transparent = 'transparent';
 
 export {
   white,
+  gold,
   red,
   black,
   grey,
@@ -41,6 +44,7 @@ export {
   grey4,
   grey5,
   coral,
+  realcoral,
   lightGrey,
   darkGrey,
   transparent,
