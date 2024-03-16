@@ -46,10 +46,7 @@ import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
 import {styles} from './ScheduleScreenStyles';
 import {getCurrentCourses} from '../../../firebaseReduxUtilities/useCourseData';
 import CourseCard from './components/CourseCard';
-import useCalendarData, {
-  syncCalendarEvents,
-  testEvent,
-} from '../../../firebaseReduxUtilities/useCalendarData';
+import useCalendarData from '../../../firebaseReduxUtilities/useCalendarData';
 import LoadingOverlay from '../../../components/LoadingOverlay';
 import CalendarSettings from './components/calendarSettings/CalendarSettings';
 
@@ -255,7 +252,7 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
                 <RefreshControl
                   enabled
                   refreshing={refreshing}
-                  onRefresh={testEvent}
+                  onRefresh={onRefresh}
                 />
               }
             />

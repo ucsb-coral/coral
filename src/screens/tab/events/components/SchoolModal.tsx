@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, MutableRefObject, SetStateAction} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Modal,
+  Alert,
 } from 'react-native';
 import {Card, IconButton} from 'react-native-paper';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
@@ -18,12 +19,16 @@ import {
   sfProTextSemibold,
 } from '../../../../utilities/textfont';
 import {black, grey0, opacity, white} from '../../../../utilities/colors';
+import Button from '../../../../components/button/Button';
+import {addEventToGoogleCalendar} from '../../../../firebaseReduxUtilities/useCalendarData';
 
 export type Props = {
+  id: string;
   title: String;
   description: String;
-  photo: string;
+  photo: string; //for some reason, it must be kept to this for Card.Cover to understand it
   time: Date;
+  end_time: Date;
   location: String;
   room_number: String;
   modalVisible: boolean;
@@ -66,6 +71,8 @@ type ModalProps = {
   room_number: String;
   modalVisible: boolean;
   closeModal: () => void;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  loadingTimeoutRef: MutableRefObject<NodeJS.Timeout | null>;
 };
 
 export default function SchoolModal({
@@ -79,7 +86,48 @@ export default function SchoolModal({
   room_number,
   modalVisible,
   closeModal,
+  setLoading,
+  loadingTimeoutRef,
 }: ModalProps) {
+  const userId = useSelector((state: ReduxState) => state.data.myUserId);
+  const syncedCalendar = useSelector(
+    (state: ReduxState) => state.data.usermap[userId].syncedCalendar,
+  );
+  const quarter = useSelector((state: ReduxState) => state.data.quarter);
+  const isSynced = syncedCalendar?.quarter === quarter;
+
+  const withLoadingAsync = async (fn: () => Promise<void>) => {
+    setLoading(true);
+    loadingTimeoutRef.current = setTimeout(() => {
+      Alert.alert('Error', 'Failed to update');
+      setLoading(false);
+    }, 60000);
+    fn().then(() => {
+      if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+      setLoading(false);
+    });
+  };
+
+  const syncCalendarWithAlert = () =>
+    Alert.alert(
+      'Add Event to Calendar',
+      'Would you like to add this event to your ucsb.edu Google Calendar?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Add Event',
+          onPress: () => {
+            closeModal();
+            withLoadingAsync(() => addEventToGoogleCalendar(id));
+          },
+        },
+      ],
+      {cancelable: true},
+    );
+
   return (
     <Modal
       animationType="fade"
@@ -166,6 +214,13 @@ export default function SchoolModal({
             style={{position: 'absolute', top: scale(4), right: scale(4)}}
             onPress={closeModal}
           />
+          {isSynced && (
+            <Button
+              style={{marginTop: scale(10)}}
+              onPress={syncCalendarWithAlert}
+              label="Add to Calendar"
+            />
+          )}
         </View>
       </View>
     </Modal>

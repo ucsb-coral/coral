@@ -61,28 +61,29 @@ export const shareToPersonalEmail = async (email: string) => {
   }
 };
 
-export const testEvent = async () => {
+export const addEventToGoogleCalendar = async (eventId: string) => {
   const myUserId = store.getState().data.myUserId;
-  const {accessToken, idToken, authToken} = await withTokens();
+  const {accessToken, authToken} = await withTokens();
 
   try {
-    const request = await fetch(`${API_URL}/test`, {
+    const request = await fetch(`${API_URL}/addEventToGoogleCalendar`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         userId: myUserId,
-        eventId: '44832576496273',
+        eventId,
         accessToken: accessToken,
         authToken: authToken,
       }),
     });
 
     const data = await request.json();
-    console.log(data);
-    // if (data?.error) throw new Error(data?.error);
-    // store.dispatch(updateMyUserAction({data}));
+    const success = data?.success;
+    if (!success) throw new Error();
+    Alert.alert('Success', 'Shared to personal calendar');
   } catch (error) {
-    throw new Error('Failed to get current courses: ' + error);
+    console.log('errordvd', error);
+    Alert.alert('Failed', 'Failed to share to personal calendar');
   }
 };
 

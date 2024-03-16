@@ -1,9 +1,17 @@
-import React, {useState} from 'react';
+import React, {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useState,
+} from 'react';
 import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {Card, Title, Paragraph} from 'react-native-paper';
 import SchoolModal from './SchoolModal';
 
-export type Props = SchoolEvent;
+export type Props = SchoolEvent & {
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  loadingTimeoutRef: MutableRefObject<NodeJS.Timeout | null>;
+};
 
 const nullDate = new Date('1970-01-01T00:00:00.000Z').getTime();
 
@@ -41,6 +49,8 @@ export default function SchoolEvent({
   end_time,
   location,
   room_number,
+  setLoading,
+  loadingTimeoutRef,
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -120,6 +130,8 @@ export default function SchoolEvent({
         room_number={room_number}
         modalVisible={modalVisible}
         closeModal={closeModal}
+        setLoading={setLoading}
+        loadingTimeoutRef={loadingTimeoutRef}
       />
     </View>
   );
