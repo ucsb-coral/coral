@@ -38,7 +38,7 @@ This app is intended for students currently attending UCSB
 
 - View a list of courses in which you are currently enrolled
 - Join a unique groupchat for each course
-- export class schedules and locations to google calender
+- export class schedules and locations to google calendar
 - ...more to come
 
 ## 5. Getting Started

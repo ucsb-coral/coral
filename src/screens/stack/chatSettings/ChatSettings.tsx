@@ -1,13 +1,6 @@
 // UserSettingPage.tsx
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  StatusBar,
-  ScrollView,
-} from 'react-native';
+import {View, StatusBar, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import {
   AppStackPageProps,
@@ -16,8 +9,6 @@ import {
 import {styles} from '../../tab/profile/UserPageStyle';
 import Header from '../../../components/header/Header';
 import {Ionicons} from '@expo/vector-icons';
-import {scale} from '../../../utilities/scale';
-import {black} from '../../../utilities/colors';
 import {leaveCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 import Participants from './components/Participants';
 import IconButton from '../../../components/iconButton/IconButton';

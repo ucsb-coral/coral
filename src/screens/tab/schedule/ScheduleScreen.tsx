@@ -21,6 +21,7 @@ import {
   RefreshControl,
   Alert,
   Linking,
+  Switch,
 } from 'react-native';
 import {
   AppStackPageProps,
@@ -42,23 +43,11 @@ import {scale, standardMargin} from '../../../utilities/scale';
 import Header from '../../../components/header/Header';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {TabPageProps} from '../../../navigation/navigators/TabNavigator';
-import {
-  Calendar,
-  EventRenderer,
-  ICalendarEventBase,
-  formatStartEnd,
-} from 'react-native-big-calendar';
-import dayjs from 'dayjs';
 import {styles} from './ScheduleScreenStyles';
-import Button from '../../../components/button/Button';
-import {joinCourseChat} from '../../../firebaseReduxUtilities/useChatData';
 import {getCurrentCourses} from '../../../firebaseReduxUtilities/useCourseData';
 import CourseCard from './components/CourseCard';
-import useCalendarData, {
-  syncCalendarEvents,
-} from '../../../firebaseReduxUtilities/useCalendarData';
 import LoadingOverlay from '../../../components/LoadingOverlay';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import CalendarSettings from './components/calendarSettings/CalendarSettings';
 
 export type ScheduleScreenProps = EmptyProps;
 
@@ -79,8 +68,6 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const refreshTimeout = useRef<NodeJS.Timeout | null>(null);
-  const loadingTimeout = useRef<NodeJS.Timeout | null>(null);
-  const {isSynced} = useCalendarData();
 
   const openCourseModal = (id: string) => {
     setModalData(id);
@@ -243,52 +230,12 @@ export default function ScheduleScreen({route, navigation}: SchedulePageProps) {
     });
   }, []);
 
-  const syncCalendar = async () => {
-    setLoading(true);
-    loadingTimeout.current = setTimeout(() => {
-      Alert.alert('Error', 'Failed to sync courses');
-      setLoading(false);
-    }, 60000);
-    syncCalendarEvents().then(() => {
-      if (loadingTimeout.current) clearTimeout(loadingTimeout.current);
-      setLoading(false);
-    });
-  };
-
-  const syncCalendarWithAlert = () =>
-    Alert.alert(
-      'Sync Google Calendar',
-      'Would you like to add your courses to your ucsb.edu Google Calendar? This may take up to a minute.',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Sync',
-          onPress: syncCalendar,
-        },
-      ],
-      {cancelable: true},
-    );
-
   return (
     <LoadingOverlay isLoading={loading}>
       <View style={{flex: 1}}>
         <Header centerElement={'Your Courses'} />
+        <CalendarSettings setLoading={setLoading} />
         <View style={{flex: 1, width: '100%'}}>
-          <Button
-            label={isSynced ? 'Open Calendar' : 'Sync Google Calendar'}
-            onPress={
-              isSynced
-                ? () =>
-                    Linking.openURL(
-                      'https://calendar.google.com/calendar?authuser=your@email.com',
-                    )
-                : syncCalendarWithAlert
-            }
-            style={{marginLeft: 16, marginRight: 16, marginBottom: 16}}
-          />
           {/* Conditional Rendering of FlatList or Calendar */}
           {courses.length === 0 ? (
             <Text style={styles.notEnrolledText}>

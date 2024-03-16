@@ -26,6 +26,7 @@ export default function LoadingOverlay({
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              pointerEvents: 'none',
             },
             ...(style as {}),
           }}>

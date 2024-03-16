@@ -1,4 +1,4 @@
-import {Text, TextInput, TextInputProps, View} from 'react-native';
+import {Text, TextInput, TextInputProps, View, ViewStyle} from 'react-native';
 import {
   GreyUseForButton,
   black,
@@ -11,9 +11,11 @@ import {
 } from '../../utilities/colors';
 import {NameFont, buttonFont} from '../../utilities/textfont';
 import {scale} from '../../utilities/scale';
+import {CSSProperties} from 'react';
 
 export type Props = TextInputProps & {
-  label: string;
+  label?: string;
+  positionStyle?: ViewStyle;
 };
 
 export default function Input({
@@ -21,29 +23,36 @@ export default function Input({
   style,
   value,
   maxLength,
+  positionStyle,
   ...rest
 }: Props) {
   const {multiline} = rest;
   return (
     <View
       style={{
-        display: 'flex',
-        alignItems: 'flex-start',
-        width: '100%',
-        padding: scale(16),
-        paddingBottom: 0,
+        ...{
+          display: 'flex',
+          alignItems: 'flex-start',
+          width: '100%',
+          padding: scale(16),
+          paddingBottom: 0,
+        },
+        ...positionStyle,
       }}>
-      <Text
-        style={{
-          fontSize: 18,
-          fontWeight: '700',
-          color: GreyUseForButton,
-          textAlign: 'left',
-          fontFamily: buttonFont,
-          marginBottom: scale(6),
-        }}>
-        {`${label}:`}
-      </Text>
+      {!!label && (
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: '700',
+            color: GreyUseForButton,
+            textAlign: 'left',
+            fontFamily: buttonFont,
+            marginBottom: scale(6),
+          }}>
+          {`${label}:`}
+        </Text>
+      )}
+
       <View
         style={{
           backgroundColor: opacity(coral, 0.2),

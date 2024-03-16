@@ -233,6 +233,7 @@ declare type SchoolEvent = {
 declare type SyncedCalendar = {
   quarter: number;
   calendarId: string;
+  withReminders?: boolean;
 };
 
 declare type Menu = {
