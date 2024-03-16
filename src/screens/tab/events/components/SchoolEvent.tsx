@@ -33,7 +33,7 @@ function convertEndTime(time: Date) {
   });
 }
 
-export default function SchoolEvent({title, description, photo, time, end_time, location, room_number}: Props) {
+export default function SchoolEvent({id, title, description, photo, time, end_time, location, room_number}: Props) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -68,7 +68,7 @@ export default function SchoolEvent({title, description, photo, time, end_time, 
           </View>
         </Card>
       </TouchableOpacity>
-      <SchoolModal title={title} description={description} photo={photo} time={time} end_time={end_time} location = {location} room_number={room_number} modalVisible={modalVisible} closeModal={closeModal}/>  
+      <SchoolModal id = {id.toString()} title={title} description={description} photo={photo} time={time} end_time={end_time} location = {location} room_number={room_number} modalVisible={modalVisible} closeModal={closeModal}/>  
     </View>
   );
 }

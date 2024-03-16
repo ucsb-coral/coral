@@ -1,10 +1,38 @@
 import axios from 'axios';
 import firestore from '@react-native-firebase/firestore';
+import {store} from '../redux/useRedux';
+import {withTokens} from './tokens';
+import {API_URL} from './constants';
+import {updateMyUserAction} from '../redux/actions';
 
 //const EVENTS_AL_URL = 'https://campuscalendar.ucsb.edu/api/2/events';
 //const MENU_URL_BASE = 'https://api.ucsb.edu/dining/menu/v1';
 
 const eventsCollection = firestore().collection('events');
+
+export const addEvent = async (eventId : string) => {
+  const myUserId = store.getState().data.myUserId;
+  const {accessToken, idToken, authToken} = await withTokens();
+
+  try {
+    const request = await fetch(`${API_URL}/addEventToGoogleCalendar`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: myUserId,
+        accessToken: accessToken,
+        authToken: authToken,
+        eventId: eventId
+      }),
+    });
+
+    const data = await request.json();
+    if (data?.error) throw new Error(data?.error);
+    store.dispatch(updateMyUserAction({data}));
+  } catch (error) {
+    throw new Error('Failed to add event: ' + error);
+  }
+};
 
 // Functions to get dining commons and their "code" (used in the menu URL)
 export const getEventDetails = async () => {
@@ -17,6 +45,7 @@ export const getEventDetails = async () => {
       const data = doc.data();
       const {title, description, photoUrl, start, end, locationName, roomNumber} = data;
       events.push({
+        id : doc.id,
         title,
         description,
         photo: photoUrl,
@@ -55,6 +84,7 @@ export const getEventDetails = async () => {
     throw error;
   } // I think this can be handled via .catch() as well, but this works still
 };
+
 
 // Usage in a React component
 /*
