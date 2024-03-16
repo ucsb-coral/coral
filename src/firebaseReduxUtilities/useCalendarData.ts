@@ -61,6 +61,31 @@ export const shareToPersonalEmail = async (email: string) => {
   }
 };
 
+export const testEvent = async () => {
+  const myUserId = store.getState().data.myUserId;
+  const {accessToken, idToken, authToken} = await withTokens();
+
+  try {
+    const request = await fetch(`${API_URL}/test`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: myUserId,
+        idToken: idToken,
+        accessToken: accessToken,
+        authToken: authToken,
+      }),
+    });
+
+    const data = await request.json();
+    console.log(data);
+    // if (data?.error) throw new Error(data?.error);
+    // store.dispatch(updateMyUserAction({data}));
+  } catch (error) {
+    throw new Error('Failed to get current courses: ' + error);
+  }
+};
+
 export const deleteCalendar = async () => {
   const myUserId = store.getState().data.myUserId;
   const {accessToken, authToken} = await withTokens();

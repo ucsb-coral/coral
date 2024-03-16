@@ -25,7 +25,7 @@ type DiningPageProps = CompositeScreenProps<
   AppStackPageProps<'tabNavigator'>,
   TabPageProps<'dining'>
 >;
-export default function DiningScreen({ route, navigation }: DiningPageProps) {
+export default function DiningScreen({route, navigation}: DiningPageProps) {
   const flatListRef = useRef<FlatList>(null);
 
   const {
@@ -38,17 +38,17 @@ export default function DiningScreen({ route, navigation }: DiningPageProps) {
     loadingData,
   } = useDiningData();
 
-  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
+  const [favorites, setFavorites] = useState<{[key: string]: boolean}>({});
   const [sortedMeals, setSortedMeals] = useState(meals);
 
   // Implement scrollToTop to scroll the FlatList to the top
   const scrollToTop = () => {
-    flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
+    flatListRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
   const toggleFavorite = (mealId: string) => {
     setFavorites(currentFavorites => {
-      const newFavorites = { ...currentFavorites };
+      const newFavorites = {...currentFavorites};
       if (newFavorites[mealId]) {
         delete newFavorites[mealId];
       } else {
@@ -66,11 +66,16 @@ export default function DiningScreen({ route, navigation }: DiningPageProps) {
         return bFav - aFav; // This ensures favorites are on top
       });
       setSortedMeals(sorted);
-
     }
   }, [favorites, meals]); // Re-sort when favorites or meals change
 
-  const renderItem = ({ item: meal, index }) => {
+  const renderItem = ({
+    item: meal,
+    index,
+  }: {
+    item: MealWithId;
+    index: number;
+  }) => {
     return (
       <MealCard
         {...meal}
@@ -83,9 +88,8 @@ export default function DiningScreen({ route, navigation }: DiningPageProps) {
 
   return (
     <Loading isReady={meals !== null}>
-
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Header centerElement="Daily Menus" />
         <CommonsSelector
           commons={commons!}
           selectedCommons={selectedCommons!}
@@ -97,11 +101,11 @@ export default function DiningScreen({ route, navigation }: DiningPageProps) {
           setMealtime={setSelectedMealtime}
           scrollToTop={scrollToTop}
         />
-        <View style={{ flex: 1, width: '100%' }}>
+        <View style={{flex: 1, width: '100%'}}>
           {meals && meals.length > 0 ? (
             <FlatList
               ref={flatListRef}
-              contentContainerStyle={{ width: '100%' }}
+              contentContainerStyle={{width: '100%'}}
               data={sortedMeals}
               renderItem={renderItem}
               bounces={true}
@@ -109,8 +113,14 @@ export default function DiningScreen({ route, navigation }: DiningPageProps) {
               keyExtractor={item => item.id.toString()}
             />
           ) : (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ fontSize: scale(20), fontFamily: sfProTextBold, color: grey0 }}>
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text
+                style={{
+                  fontSize: scale(20),
+                  fontFamily: sfProTextBold,
+                  color: grey0,
+                }}>
                 {'No meals available'}
               </Text>
             </View>
