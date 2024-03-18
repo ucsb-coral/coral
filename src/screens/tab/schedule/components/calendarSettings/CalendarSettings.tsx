@@ -184,9 +184,9 @@ export default function CalendarSettings({setLoading}: Props) {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            marginLeft: 16,
-            marginRight: 16,
-            marginBottom: 16,
+            marginLeft: scale(16),
+            marginRight: scale(16),
+            marginBottom: scale(16),
           }}>
           <View
             style={{
@@ -200,8 +200,8 @@ export default function CalendarSettings({setLoading}: Props) {
               style={{
                 color: black,
                 fontFamily: sfProTextSemibold,
-                fontSize: 24,
-                marginRight: 8,
+                fontSize: scale(20),
+                marginRight: scale(6),
               }}>
               Reminders:
             </Text>

@@ -2,7 +2,10 @@ import React from 'react';
 import {Card, Button} from 'react-native-paper';
 import {Text} from 'react-native';
 import {black, coral, grey0} from '../../../../utilities/colors';
-import {sfProTextRegular, sfProTextSemibold} from '../../../../utilities/textfont';
+import {
+  sfProTextRegular,
+  sfProTextSemibold,
+} from '../../../../utilities/textfont';
 
 // Assuming getLastMessageDetails is implemented as previously described
 
@@ -41,9 +44,8 @@ export default function ChatCard({
         <Button
           onPress={() => openChat(chatId)}
           mode="contained"
-          style={{backgroundColor: coral}}
-        >
-          {joined ? 'Open Chat' : 'Join Chat'} 
+          style={{backgroundColor: coral}}>
+          {joined ? 'Open Chat' : 'Join Chat'}
         </Button>
       </Card.Actions>
     </Card>
