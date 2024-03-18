@@ -7,6 +7,13 @@ import React, {
 import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {Card, Title, Paragraph} from 'react-native-paper';
 import SchoolModal from './SchoolModal';
+import {black} from '../../../../utilities/colors';
+import {
+  sfProTextBold,
+  sfProTextRegular,
+  sfProTextSemibold,
+} from '../../../../utilities/textfont';
+import {scale} from '../../../../utilities/scale';
 
 export type Props = SchoolEvent & {
   setLoading: Dispatch<SetStateAction<boolean>>;
@@ -99,9 +106,13 @@ export default function SchoolEvent({
         <Card style={styles.cardContainer}>
           <View style={styles.titleContainer}>
             <Title
-              numberOfLines={1}
+              numberOfLines={2}
               ellipsizeMode="tail"
-              style={{fontWeight: '700'}}>
+              style={{
+                color: black,
+                fontFamily: sfProTextBold,
+                fontSize: scale(20),
+              }}>
               {title}
             </Title>
           </View>
@@ -109,11 +120,20 @@ export default function SchoolEvent({
             <Image source={{uri: photo}} style={styles.imageStyle} />
           </View>
           <View style={styles.timeLocationContainer}>
-            <Paragraph>
-              {' '}
+            <Paragraph
+              style={{
+                color: black,
+                fontFamily: sfProTextSemibold,
+                fontSize: scale(16),
+              }}>
               {convertStartTime(time) + ' - ' + convertEndTime(end_time)}{' '}
             </Paragraph>
-            <Paragraph>
+            <Paragraph
+              style={{
+                color: black,
+                fontFamily: sfProTextRegular,
+                fontSize: scale(16),
+              }}>
               {room_number ? `${location} ${room_number}` : location}
             </Paragraph>
           </View>

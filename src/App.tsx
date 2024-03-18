@@ -2,7 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import {Provider as StoreProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import {Provider as PaperProvider} from 'react-native-paper';
+import {
+  DefaultTheme,
+  MD3Theme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
 import useRedux from './redux/useRedux';
 import Navigation from './navigation/Navigation';
 import {loadFonts} from './utilities/textfont';
@@ -25,10 +29,16 @@ export default function App() {
     return null; // Render nothing or a loading spinner until fonts are loaded
   }
 
+  const lightTheme: MD3Theme = {
+    ...DefaultTheme,
+    dark: false,
+    mode: 'exact', // force light theme
+  };
+
   return (
     <StoreProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <PaperProvider>
+        <PaperProvider theme={lightTheme}>
           <ActionSheetProvider>
             <SafeAreaProvider>{!!isReady && <Navigation />}</SafeAreaProvider>
           </ActionSheetProvider>

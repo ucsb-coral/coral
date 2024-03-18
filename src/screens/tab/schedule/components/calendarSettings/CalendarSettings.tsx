@@ -7,6 +7,7 @@ import {
   grey3,
   grey4,
   grey5,
+  white,
 } from '../../../../../utilities/colors';
 import {Dispatch, SetStateAction, useRef, useState} from 'react';
 import useCalendarData, {
@@ -18,7 +19,6 @@ import {IconButton} from 'react-native-paper';
 import {scale} from '../../../../../utilities/scale';
 import ShareModal from './ShareModal';
 import {emailRegex} from '../../../../../utilities/regexes';
-import {white} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 export type Props = {
   setLoading: Dispatch<SetStateAction<boolean>>;
@@ -191,8 +191,6 @@ export default function CalendarSettings({setLoading}: Props) {
           }}>
           <View
             style={{
-              flex: 1,
-              marginRight: 8,
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
@@ -213,7 +211,7 @@ export default function CalendarSettings({setLoading}: Props) {
               value={withRemindersOptimistic}
             />
           </View>
-          <View style={{flex: 1, marginLeft: 8}}>
+          <View style={{flex: 1, marginLeft: 2}}>
             <Button
               label={'Link Personal Email'}
               onPress={() => setModalOpen(true)}
