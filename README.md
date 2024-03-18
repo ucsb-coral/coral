@@ -130,4 +130,4 @@ SOFTWARE.
 
 ## Deployment
 
-Download the [latest version](https://github.com/ucsb-cs184-f23/pj-react-04/releases/tag/v2.0.0)
+Download the [latest version](https://github.com/ucsb-cs148-w24/coral/releases/tag/v0.1.0)

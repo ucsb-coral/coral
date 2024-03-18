@@ -19,3 +19,12 @@ Did the front end for Events, the APIs, and a bit of the redux functionality so 
 ### James
 
 Worked on Events with Thomas, also contributed to some documentation and led scrum meetings
+
+### Ethan Pletcher
+
+* Google Calendar integration (FE and Node Server Integration) / UI - Get courses from API, track quarter start/end dates (first and last occurrances of events), Remove/resync calendar, link with personal google calendar,...
+* Ensure graceful failing and UX feedback principles followed
+* Project Management / Ownership
+* Teaching React Native Basics, Firebase Firestore/Functions, node, etc... and helping teammates understand the repo organization
+* Code Reviews / Quality & Code Style Control
+* Management of API keys / deployments / dev-ops
