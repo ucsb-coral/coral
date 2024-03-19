@@ -4,7 +4,10 @@ Worked on the dining common menu API testing and backend of firebase
 
 
 ### Scott Graham
-Front end dining common and (wasted) the last week on the backend.
+* Front end dining common and work with it's respective componet on the backend.
+* Heavy hand in standing up the first version of the dining UI and even more so for the second version.
+* Established the functionality for the dining feature at every step.
+* Dining team coordinator and organizer.  
 
 ### Konark Vinod
 Pair programmed with scott and daniel on frontend and backend for dining. Led Retro 03
