@@ -1,7 +1,7 @@
 ### Daniel
 
-* Brought up the favorite dining common menu feature and planed features
-* Worked on the dining common menu API functionaility
+* Brought up the favorite dining common menu feature and planed features for it
+* Worked with the dining common menu API to integrate into our app
 * Encapsulated UCSB API access by moving the api calls from front end to the back end
 * Led retro 01 and pair programmed with Scott a lot
 
