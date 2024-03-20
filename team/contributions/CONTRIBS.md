@@ -1,6 +1,9 @@
 ### Daniel
 
-Worked on the dining common menu API testing and backend of firebase
+*Initiated the favorite dining common menu feature and planed features
+*Worked on the dining common menu API functionaility
+*Encapsulated UCSB API access by moving the api calls from front end to the back end
+*Led retro 01 and pair programmed with Scott a lot
 
 
 ### Scott Graham
