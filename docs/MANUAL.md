@@ -9,13 +9,10 @@
 - [5. Getting Started](#5-getting-started)
   - [5.1 Installation](#51-installation)
   - [5.2 Login](#52-login)
-- [6. How to Join Group Chats](#6-how-to-join-group-chats)
+- [6. How to](#6-how-to)
   - [6.1 Finding Classes](#61-finding-classes)
   - [6.2 Joining a Group Chat](#62-joining-a-group-chat)
 - [7. Screenshots](#7-screenshots)
-  - [7.1 Screen 1](#71-login-screen)
-  - [7.2 Screen 2](#72-class-selection)
-  - [7.3 Screen 3](#73-group-chat-interface)
 - [8. Troubleshooting](#8-troubleshooting)
   - [8.1 Unable to Join a Chat](#81-unable-to-join-a-chat)
   - [8.2 Technical Issues](#82-technical-issues)
@@ -30,6 +27,10 @@ Welcome to the official user manual for Coral! This document provides comprehens
 
 Coral is a Cross-Platform React Native application designed to help UCSB students reduce friction in their day to day academic workflows. From managing class schedules and meetings to facilitating easy communication and collaboration among UCSB students, we hope Coral will be a companion app to many aspects of academic life.
 
+CS 148 update:
+
+Now featuring seamless integration with campus events, enhanced Google Calendar syncing, and dining menus with personalized preferences, Coral streamlines the essential aspects of your UCSB experience.
+
 ## 3. Intended User Audience
 
 This app is intended for students currently attending UCSB
@@ -39,7 +40,13 @@ This app is intended for students currently attending UCSB
 - View a list of courses in which you are currently enrolled
 - Join a unique groupchat for each course
 - export class schedules and locations to google calendar
-- ...more to come
+
+CS148 Update:
+
+- Stay up-to-date with campus events and activities, with integration to Google Calendar
+- Synchronize your Coral schedule with your Google Calendar for a unified view
+- Browse dining menus with your personalized preferences stored for quick meal decisions
+- ... with more to come!
 
 ## 5. Getting Started
 
@@ -51,7 +58,7 @@ Install directly from the [IOS App Store](https://google.com) or [Android Play S
 
 Authenticate using UCSB organizational email (@ucsb.edu).
 
-## 6. How to Join Group Chats
+## 6. How to
 
 ### 6.1 Finding Classes
 
@@ -61,37 +68,52 @@ Once you are enrolled in a class on Gold, it should show up in your schedule pag
 
 From the schedule page, press a course to open an info modal. Then click "join chat". After a chat has been joined, it is accessible directly from the chats page.
 
+## CS148 Updates
+
+### 6.3 Syncing Classes and Getting Reminders
+
+Keep your schedule perfectly in sync!  From your Coral schedule view, easily link your classes to Google Calendar.  Choose to link to a personal email for even greater flexibility. Need to update your schedule? Options to resync or delete are available as your schedule changes.  Best of all, set a reminder for 40 minutes before your class so you're always on time.
+
+### 6.4 Staying Connected to Campus Life
+
+Never miss out on exciting events! Browse the events tab for the latest campus happenings.  Found something that interests you? Add it directly to your Google Calendar with a single click.
+
+### 6.5 Personalizing Your Dining Experience
+
+Discover your favorite meals and make dining choices a breeze! Browse dining menus and mark your preferences. The next time your top picks are on the menu, they'll be highlighted for a quick and easy decision.
+
 ## 7. Screenshots
 
-### 7.1 Screen 1
+All of these are completely updated for CS148.
 
-![Test Image 2](/team/HW04_image/03.jpg)
+### Welcome
 
-### 7.2 Screen 2
+![Log In Screen](/screenshots/log_in.png)
 
-![Test Image 2](/team/HW04_image/02.jpg)
+### Schedule
 
-### 7.3 Screen 3
+![Viewing Your Schedule](/screenshots/schedule.png)
+![Adding to Your Personal Schedule](/screenshots/personal.png)
+![Turning On Reminders](/screenshots/reminder-prompt.png)
+![Deleting Your Schedule](/screenshots/delete.png)
 
-![Screen 3](image.png)
+### Chat
 
-### 7.4 Screenshots---Final version!!!
+![Viewing Your List of Chats](/screenshots/chat_list.png)
+![Viewing A Specific Chat](/screenshots/chat.png)
 
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/1ee02c53-c14e-4b27-8935-c221f4a99483)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/c5e0f0dc-dc4a-449f-9435-cc5b5f081553)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/d20fbbcd-d4ea-4c33-84b0-39de33e748cc)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/e0f96345-d6ea-4128-96eb-ada960d3090c)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/0b88af50-8564-4a49-805d-f886250ec6e7)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/c6fbeb30-deba-4aeb-befb-039b0fc4a136)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/97f2e4d3-52c1-45a8-af5f-46147535c89b)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/2ef58320-d7ea-4bb9-b1ab-ccdc5ba5ee30)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/97f4ee4c-b68a-423c-9a94-3e9230d60936)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/bf76e2ce-a56b-4271-ac2a-e65b4ebdc02f)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/fecd3314-b311-4d6e-a28c-6deeef43b6be)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/d71a0f05-a112-48af-bbb2-a541d7bb89fa)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/7ce7b018-4163-42c3-a2d8-c8c522d7d442)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/0856b948-ea8c-4087-bfa6-8bade1f47629)
-![image](https://github.com/ucsb-cs184-f23/pj-react-04/assets/96481218/817c0768-fbd4-4256-8b3e-ade1777bcd32)
+### Dining
+
+![Browsing Dining Menus & Like to Store Preferences](/screenshots/dining.png)
+
+### Events
+
+![Browse Campus Events](/screenshots/event.png)
+![Viewing Event Details and Adding to Calendar](/screenshots/event_modal.png)
+
+### Profile
+
+![Viewing and Editing your Profile](/screenshots/profile.png)
 
 ## 8. Troubleshooting
 
@@ -101,7 +123,7 @@ Please ensure that you are enrolled in the course.
 
 ### 8.2 Technical Issues
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...
+Contact us! Email <as-osa-publicinterest@ucsb.edu> and we would love to help.
 
 ## 9. Frequently Asked Questions (FAQ)
 
@@ -110,8 +132,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...
   - A: Yes, for the app to work effectively, you should be actively enrolled in classes.
 
 - **Q: Can I use the app on multiple devices?**
-  - A: Currently, do not have e release for web or desktop, the app will work simultainiously on multiple devices.
+  - A: Currently, we do not have a release for web or desktop. However, the app will work simultainiously on multiple devices.
 
 ## 10. Contact and Support
 
-For further assistance, please contact our support team at [coraldev@ucsb.edu](coraldev@ucsb.edu).
+For further assistance, please contact our support team at <as-osa-publicinterest@ucsb.edu>.
