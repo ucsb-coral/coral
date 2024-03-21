@@ -1,0 +1,8 @@
+### Arnav Kumar
+- Spent most of my class time, and hours of personal time, helping team members Konark and Thomas on Ruby installations during the beginning weeks of the class
+- Google Calendar integration function for adding arbitrary, singleton events (MVP)
+- Performed intensive research on machine learning methods for events (Tensorflow Lite recommender for document ranking)
+- Performed intensive research for potentially integrating Storyboard into our app to test components without building due to Android build issues.
+- Wrote react-native-paper transformations for the schedule screen, chat screen, and Events screen (for the final evolution of the Events UI). Greatly improved visual aesthetic in the process, thus making good use of the user feedback received during the UAT sessions in class. Also tested prototyped colors in Figma (blue and gold) to perform A/B comparisons between different color schemes for the app in response to user feedback on an unnatural color scheme with little contrast.
+- ROLLBACKS: Implemented a chat screen feature where the last message sent in the chat is previewed on the card that has the "Show chat" button in the form {Sender}: {Message}. Also implemented a react-native-paper button that dynamically resized to replace hard-to-manage react-native buttons that had hardcoded values for items like position and font size. Both changes were overridden and rolled back at the last minute before the code freeze due to personal preferences and unforeseen, third-party server-side issues.
+- Worked on the slides and presented my portion of work on the app.
