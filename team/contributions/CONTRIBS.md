@@ -25,6 +25,7 @@ Pair programmed with Scott and Daniel on the front end and back end for dining. 
 - Performed intensive research for potentially integrating Storyboard into our app to test components without building due to Android build issues.
 - Wrote react-native-paper transformations for the schedule screen, chat screen, and Events screen (for the final evolution of the Events UI). Greatly improved visual aesthetic in the process, thus making good use of the user feedback received during the UAT sessions in class. Also tested prototyped colors in Figma (blue and gold) to perform A/B comparisons between different color schemes for the app in response to user feedback on an unnatural color scheme with little contrast.
 - ROLLBACKS: Implemented a chat screen feature where the last message sent in the chat is previewed on the card that has the "Show chat" button in the form {Sender}: {Message}. Also implemented a react-native-paper button that dynamically resized to replace hard-to-manage react-native buttons that had hardcoded values for items like position and font size. Both changes were overridden and rolled back at the last minute before the code freeze due to personal preferences and unforeseen, third-party server-side issues.
+- Worked on the slides and presented my portion of work on the app.
 
 ### Thomas Hale 
 Did the front end for Events, the APIs, and a bit of the redux functionality so far. Basically, the entirety of the events tab was done by both of us.
