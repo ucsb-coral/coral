@@ -88,32 +88,32 @@ All of these are completely updated for CS148.
 
 ### Welcome
 
-![Log In Screen](/screenshots/log_in.png)
+<img src="./screenshots/log_in.png" width="25%" alt="Log In Screen">
 
 ### Schedule
 
-![Viewing Your Schedule](/screenshots/schedule.png)
-![Adding to Your Personal Schedule](/screenshots/personal.png)
-![Turning On Reminders](/screenshots/reminder-prompt.png)
-![Deleting Your Schedule](/screenshots/delete.png)
+<img src="./screenshots/schedule.png" width="25%" alt="Viewing Your Schedule">
+<img src="./screenshots/personal.png" width="25%" alt="Adding to Your Personal Schedule">
+<img src="./screenshots/reminder_prompt.png" width="25%" alt="Turning On Reminders">
+<img src="./screenshots/delete.png" width="25%" alt="Deleting Your Schedule">
 
 ### Chat
 
-![Viewing Your List of Chats](/screenshots/chat_list.png)
-![Viewing A Specific Chat](/screenshots/chat.png)
+<img src="./screenshots/chat_list.png" width="25%" alt="Viewing Your List of Chats">
+<img src="./screenshots/chat.png" width="25%" alt="Viewing A Specific Chat">
 
 ### Dining
 
-![Browsing Dining Menus & Like to Store Preferences](/screenshots/dining.png)
+<img src="./screenshots/menu.png" width="25%" alt="Browsing Dining Menus & Like to Store Preferences">
 
 ### Events
 
-![Browse Campus Events](/screenshots/event.png)
-![Viewing Event Details and Adding to Calendar](/screenshots/event_modal.png)
+<img src="./screenshots/event.png" width="25%" alt="Browse Campus Events">
+<img src="./screenshots/event_modal.png" width="25%" alt="Viewing Event Details and Adding to Calendar">
 
 ### Profile
 
-![Viewing and Editing your Profile](/screenshots/profile.png)
+<img src="./screenshots/profile.png" width="25%" alt="Viewing and Editing your Profile">
 
 ## 8. Troubleshooting
 
