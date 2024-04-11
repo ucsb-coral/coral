@@ -61,6 +61,23 @@ export const getEventDetails = async () => {
   } // I think this can be handled via .catch() as well, but this works still
 };
 
+export const addDummyEvent = (currentEvents : SchoolEvent[] | null, event : SchoolEvent): SchoolEvent[] => {
+  
+  //will expand this into a proper function later
+  let newEvents : SchoolEvent[];
+
+  if (currentEvents == null) {
+    newEvents = [];
+  } else {
+    newEvents = currentEvents;
+  }
+
+  console.log("adding dummy event to events lists");
+
+  newEvents.push(event);
+
+  return newEvents;
+};
 
 // Usage in a React component
 /*

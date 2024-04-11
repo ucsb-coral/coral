@@ -14,11 +14,14 @@ import {
   sfProTextSemibold,
 } from '../../../../utilities/textfont';
 import {scale} from '../../../../utilities/scale';
+import {StyleSheet} from 'react-native';
+
 
 export type Props = SchoolEvent & {
   setLoading: Dispatch<SetStateAction<boolean>>;
   loadingTimeoutRef: MutableRefObject<NodeJS.Timeout | null>;
 };
+
 
 const nullDate = new Date('1970-01-01T00:00:00.000Z').getTime();
 
@@ -59,6 +62,7 @@ export default function SchoolEvent({
   setLoading,
   loadingTimeoutRef,
 }: Props) {
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => setModalVisible(true);
@@ -99,7 +103,6 @@ export default function SchoolEvent({
       alignItems: 'center',
     },
   });
-
   return (
     <View>
       <TouchableOpacity activeOpacity={0.5} onPress={openModal}>
@@ -156,3 +159,4 @@ export default function SchoolEvent({
     </View>
   );
 }
+
