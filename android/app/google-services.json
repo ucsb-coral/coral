@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "44210895544",
+    "project_id": "coral-406419",
+    "storage_bucket": "coral-406419.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44210895544:android:bee92d1a2f6b524849124d",
+        "android_client_info": {
+          "package_name": "com.coral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44210895544-s7nk4iaotcd1ovs72qb7702eis735ld0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYb1fLyKQ-WajqbslxTvHnQi07z6ZOsDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44210895544-s7nk4iaotcd1ovs72qb7702eis735ld0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
