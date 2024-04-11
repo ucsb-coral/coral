@@ -1,0 +1,9 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": false,
+    "isolatedModules": false,
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "types": ["jest", "node"]
+  }
+}

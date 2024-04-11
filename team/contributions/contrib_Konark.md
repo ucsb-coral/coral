@@ -1,0 +1,4 @@
+- Part of dining team with Scott and Daniel
+- Pair programmed with both Scott and Daniel in order to work on the frontend, including the react native paper integration
+- Worked with Scott on figuring out how to schedule populationg the Firestore db with all meals as well as using the db to store favorite meals
+- Logged a few scrums and led Retro 03
