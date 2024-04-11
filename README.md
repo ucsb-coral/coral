@@ -1,4 +1,4 @@
-# pj-react-04
+# UCSB Coral
 
 -----
 Schedule and group chat for UCSB student
@@ -16,7 +16,7 @@ Phase 1 Team Members:
 * Wenjin Li
   [Wenjin09](<https://github.com/Wenjin09>)
 
-Current Team Members:
+Phase 2 Members:
 
 * Ethan Pletcher
   [epletcher72](<https://github.com/epletcher72>)
@@ -32,6 +32,8 @@ Current Team Members:
   [thomashale-ucsb](<https://github.com/thomashale-ucsb>)
 * Arnav Kumar
   [aarnavkumar](<https://github.com/aarnavkumar>)
+
+Project currently on maintenance mode
 
 ## Project Plan
 
