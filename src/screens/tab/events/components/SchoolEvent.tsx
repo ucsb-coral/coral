@@ -14,7 +14,6 @@ import {
   sfProTextSemibold,
 } from '../../../../utilities/textfont';
 import {scale} from '../../../../utilities/scale';
-import {StyleSheet} from 'react-native';
 
 
 export type Props = SchoolEvent & {

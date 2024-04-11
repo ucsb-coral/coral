@@ -7,7 +7,7 @@ import {getEventDetails, addDummyEvent} from '../../../firebaseReduxUtilities/us
 import SchoolEvent from './components/SchoolEvent';
 //import { EventComponent } from './EventComponent'
 
-import {PaperProvider, IconButton} from 'react-native-paper';
+import {PaperProvider, FAB} from 'react-native-paper';
 import Loading from '../../../components/Loading';
 
 import Header from '../../../components/header/Header';
@@ -26,11 +26,12 @@ type EventsPageProps = CompositeScreenProps<
 >;
 
 const dummyEvent : SchoolEvent = {
-  id: getRandomInt(10000000000),
+  id: getRandomInt(1000).toString(),
   title: "dummyEvent",
   description: "this is a dummy event \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
   photo: "https://www.popsci.com/uploads/2023/05/15/ButterflyFamilyTree.png?auto=webp&optimize=high&width=1440",
-  time: new Date('2024-03-08T00:00:00-08:00'),
+  time: new Date('2027-03-08T00:00:00-08:00'),
+  end_time: new Date('2027-03-09T00:00:00-08:00'),
   location: "USA, anywhere",
   room_number: "4001"
 }
@@ -45,7 +46,6 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
   const dummyAdd = () => 
     setEventDetails(addDummyEvent(eventData, dummyEvent));
   ;
-  const testAdd = () => setTestState("yes");
 
   useEffect(() => {
     getEventDetails().then(setEventDetails); //this will be where we will store our events
@@ -86,10 +86,9 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
                   keyExtractor={item => `${item.id}`}
                   ItemSeparatorComponent={() => <View style={{height: 10}} />}
                 />          
-                <IconButton                 
-                  icon="folder-open-outline"
-                  size={30}
-                  style={{ position: 'absolute', bottom: 0, right: 0 }} 
+                <FAB
+                  style={{ position: 'absolute', right: 16, bottom: 16 }}
+                  icon="plus"
                   onPress={dummyAdd} 
                 />
               </PaperProvider>
