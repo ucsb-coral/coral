@@ -9,6 +9,7 @@ const initialData: Data = {
   coursemap: {},
   tokenData: null,
   quarter: 0,
+  events: {}
 };
 
 function initializeState(): Data {
@@ -172,6 +173,17 @@ export function reducer(
         },
       };
     }
+    case 'SET_EVENT':
+      const {eventID, data} = action;
+      return {
+        ...state,
+        events: {
+          ...state.events,
+          [eventID]: {
+            ...data,
+          }
+        }
+      };
     default:
       return state;
   }

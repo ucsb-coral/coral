@@ -28,6 +28,9 @@ import EditProfileScreen, {
 import UserProfilePage, {
   UserProfileScreenProps,
 } from '../../screens/stack/userProfile/UserProfilePage';
+import EditEventScreen, {
+  EditEventScreenProps
+} from '../../screens/stack/editEvent/EditEventScreen';
 
 type AuthStackNavigatorScreens = {
   welcome: WelcomeScreenProps;
@@ -45,6 +48,7 @@ type AppStackNavigatorScreens = {
   editProfile: EditProfileScreenProps;
   about: AboutScreenProps;
   userProfile: UserProfileScreenProps;
+  editEvent: EditEventScreenProps;
   // ADD more app screens here
 };
 
@@ -75,6 +79,7 @@ export default function StackNavigator() {
           <Stack.Screen name={'settings'} component={SettingsScreen} />
           <Stack.Screen name={'editProfile'} component={EditProfileScreen} />
           <Stack.Screen name={'userProfile'} component={UserProfilePage} />
+          <Stack.Screen name={'editEvent'} component={EditEventScreen} />
           {/* ADD more app stack screens here */}
         </>
       ) : authState === 'NONE' ? (

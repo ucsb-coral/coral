@@ -78,6 +78,12 @@ declare type SetUserLikesAction = {
   data: LikesMap;
 };
 
+declare type SetEventAction = {
+  type: 'SET_EVENT';
+  eventID: string;
+  data: SchoolEvent;
+}
+
 declare type ActionTypes =
   | SetAuthStateAction
   | SetMyUserAction
@@ -93,7 +99,8 @@ declare type ActionTypes =
   | NewMessagesAction
   | EditUsersAction
   | SetUserAction
-  | SetUserLikesAction;
+  | SetUserLikesAction
+  | SetEventAction;
 
 declare type Data = {
   authState: AuthState;
@@ -104,6 +111,7 @@ declare type Data = {
   coursemap: Coursemap;
   tokenData: TokenData | null;
   quarter: number;
+  events: Eventmap;
 };
 
 declare type ReduxState = {
@@ -127,6 +135,10 @@ declare type Chatmap = {
 declare type Messagemap = {
   [id: string]: Message;
 };
+
+declare type Eventmap = {
+  [id: string]: SchoolEvent;
+}
 
 declare type TokenData = {
   accessToken: string;

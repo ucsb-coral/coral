@@ -25,6 +25,7 @@ import DiningScreen, {
 import EventsScreen, {
   EventsScreenProps,
 } from '../../screens/tab/events/EventsScreen';
+import { useEventsData } from '../../firebaseReduxUtilities/useEventsData';
 
 type TabNavigatorScreens = {
   profile: ProfileScreenProps;
@@ -42,6 +43,7 @@ export default function TabNavigator() {
   useUserData();
   useChatData();
   useCourseData();
+  useEventsData();
 
   return (
     <Tab.Navigator

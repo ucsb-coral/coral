@@ -105,6 +105,13 @@ const setUserLikesAction: Action<SetUserLikesAction> = props => {
   };
 };
 
+const setEventAction: Action<SetEventAction> = props => {
+  return {
+    type: 'SET_EVENT',
+    ...props,
+  };
+}
+
 export {
   setAuthStateAction,
   setMyUserAction,
@@ -121,4 +128,5 @@ export {
   editUsersAction,
   setUserAction,
   setUserLikesAction,
+  setEventAction,
 };
