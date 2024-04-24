@@ -82,7 +82,16 @@ declare type SetEventAction = {
   type: 'SET_EVENT';
   eventID: string;
   data: SchoolEvent;
-}
+};
+
+declare type DeleteEventAction = {
+  type: 'DELETE_EVENT';
+  deleteEventID: string;
+};
+
+declare type ClearEventsAction = {
+  type: 'CLEAR_EVENTS';
+};
 
 declare type ActionTypes =
   | SetAuthStateAction
@@ -100,7 +109,9 @@ declare type ActionTypes =
   | EditUsersAction
   | SetUserAction
   | SetUserLikesAction
-  | SetEventAction;
+  | SetEventAction
+  | DeleteEventAction
+  | ClearEventsAction;
 
 declare type Data = {
   authState: AuthState;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, LogBox} from 'react-native';
 import {Provider as StoreProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {
@@ -14,6 +14,8 @@ import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function App() {
+  LogBox.ignoreAllLogs(); // ignoring yellow warning boxes
+
   const [isReady, setIsReady] = useState<boolean>(false);
   const {store, persistor} = useRedux();
 

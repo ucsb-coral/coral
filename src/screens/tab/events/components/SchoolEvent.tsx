@@ -36,12 +36,17 @@ function convertStartTime(time: Date) {
 }
 
 function convertEndTime(time: Date) {
-  console.log('end time: ', time);
-  console.log('null date: ', nullDate);
-  if (!time || time?.getTime() == nullDate) {
-    console.log('null time');
-    return 'All Day';
-  }
+  // console.log('end time: ', time);
+  // console.log('null date: ', nullDate);
+
+  // if (typeof time === "string") {
+  //   console.log("it's a string fuck");
+  //   Date.parse(time);
+  // }
+  // if (!time || time?.getTime() == nullDate) {
+  //   console.log('null time');
+  //   return 'All Day';
+  // }
   return time.toLocaleString('en-US', {
     hour: 'numeric', // Add the hour component
     minute: '2-digit', // Display minutes with two digits

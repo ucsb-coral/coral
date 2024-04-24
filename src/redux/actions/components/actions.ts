@@ -112,6 +112,20 @@ const setEventAction: Action<SetEventAction> = props => {
   };
 }
 
+const deleteEventAction: Action<DeleteEventAction> = props => {
+  return {
+    type: 'DELETE_EVENT',
+    ...props,
+  };
+}
+
+const clearEventsAction: Action<ClearEventsAction> = props => {
+  return {
+    type: 'CLEAR_EVENTS',
+    ...props,
+  };
+}
+
 export {
   setAuthStateAction,
   setMyUserAction,
@@ -129,4 +143,6 @@ export {
   setUserAction,
   setUserLikesAction,
   setEventAction,
+  clearEventsAction,
+  deleteEventAction,
 };

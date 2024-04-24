@@ -5,7 +5,9 @@ import {store} from '../redux/useRedux';
 import {useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import {
-  setEventAction
+  setEventAction,
+  deleteEventAction,
+  clearEventsAction
 } from '../redux/actions';
 import {withTokens} from './tokens';
 import {API_URL} from './constants';
@@ -21,9 +23,11 @@ const getEventDocumentRef = (eventID: string) =>
   eventsCollection.doc(eventID);
 
 export const useEventsData = () => {
-  const events = useSelector((state: ReduxState) => state.data.events);
+  // const events = useSelector((state: ReduxState) => state.data.events);
 
   useEffect(() => {
+    store.dispatch(clearEventsAction({}));
+
     // const subscriptions: (() => void)[] = [];
     // if (!events) return;
     // Object.keys(events)
@@ -41,23 +45,58 @@ export const useEventsData = () => {
     // console.log(`useEventsData outside ${events.length}`);
 
     const eventSubscription = eventsCollection.onSnapshot(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const {title, description, photoUrl, start, end, locationName, roomNumber} = data;
-        console.log('useEventsData snapshot2', doc.id, data);
-        
-        const event = {
-          id : doc.id,
-          title,
-          description,
-          photo: photoUrl,
-          time: start.toDate(),
-          end_time: end.toDate(),
-          location: locationName,
-          room_number: roomNumber
+      snapshot.docChanges().forEach(dc => {
+        switch (dc.type) {
+          case 'added':
+          case 'modified':
+          const data = dc.doc.data();
+          const {title, description, photoUrl, start, end, locationName, roomNumber} = data;
+          // console.log('useEventsData snapshot2', doc.id, data);
+          // console.log('event date: ', end.toDate(), typeof end);
+          
+          const event = {
+            id : dc.doc.id,
+            title,
+            description,
+            photo: photoUrl,
+            time: start.toDate(),
+            end_time: end.toDate(),
+            location: locationName,
+            room_number: roomNumber
+          };
+  
+          // console.log('event date converted: ', event.end_time, typeof event.end_time);
+  
+          store.dispatch(setEventAction({eventID: dc.doc.id, data: event}));
+          break;
+
+          case 'removed':
+          store.dispatch(deleteEventAction({deleteEventID: dc.doc.id}));
+          break;
         }
-        store.dispatch(setEventAction({eventID: doc.id, data: event}));
       });
+
+      // snapshot.forEach(doc => {
+      //   const data = doc.data();
+      //   const {title, description, photoUrl, start, end, locationName, roomNumber} = data;
+      //   console.log('useEventsData snapshot2', doc.id, data);
+      //   console.log('event date: ', end.toDate(), typeof end);
+        
+      //   const event = {
+      //     id : doc.id,
+      //     title,
+      //     description,
+      //     photo: photoUrl,
+      //     time: start.toDate(),
+      //     end_time: end.toDate(),
+      //     location: locationName,
+      //     room_number: roomNumber
+      //   };
+
+      //   console.log('event date converted: ', event.end_time, typeof event.end_time);
+
+      //   store.dispatch(setEventAction({eventID: doc.id, data: event}));
+      // });
     });
 
     return () => {
@@ -76,6 +115,7 @@ export const getEventDetails = async () => {
       console.log('event data: ', doc.data());
       const data = doc.data();
       const {title, description, photoUrl, start, end, locationName, roomNumber} = data;
+      console.log('event date: ', end.toDate(), typeof end);
       events.push({
         id : doc.id,
         title,
@@ -176,11 +216,11 @@ export const updateEventImage = async (eventID: string, url: string) => {
   try {
     await deleteOldEventImage(eventID);
     const photo = await uploadEventImage(eventID, url);
-    if (photo) {
-      await eventsCollection.doc(eventID).set({
-        photoUrl: photo
-      }, {merge: true});
-    }
+    // if (photo) {
+    //   await eventsCollection.doc(eventID).set({
+    //     photoUrl: photo
+    //   }, {merge: true});
+    // }
     return photo;
   } catch (error) {
     console.error('Error updating event image', error);

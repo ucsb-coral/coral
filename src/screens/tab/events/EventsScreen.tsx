@@ -46,6 +46,8 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
     (state: ReduxState) => state.data.events,
   );
 
+  console.log("[Events Screen] events list:", events);
+
   const [isLoading, setLoading] = useState<boolean>(false);
   const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -61,20 +63,22 @@ export default function EventsScreen({route, navigation}: EventsPageProps) {
   //   //setEventDetails(getEventDetails());
   // }, []);
 
-  const renderItem = ({item}: {item: SchoolEvent}) => (
-    <SchoolEvent
-      id={item.id}
-      title={item.title}
-      description={item.description}
-      photo={item.photo}
-      time={item.time}
-      end_time={item.end_time}
-      location={item.location}
-      room_number={item.room_number}
-      setLoading={setLoading}
-      loadingTimeoutRef={loadingTimeoutRef}
-    />
-  );
+  const renderItem = ({item}: {item: SchoolEvent}) => {
+    return (
+      <SchoolEvent
+        id={item.id}
+        title={item.title}
+        description={item.description}
+        photo={item.photo}
+        time={new Date(item.time)}
+        end_time={new Date(item.end_time)}
+        location={item.location}
+        room_number={item.room_number}
+        setLoading={setLoading}
+        loadingTimeoutRef={loadingTimeoutRef}
+      />
+    );
+  };
 
   return (
     <Loading isReady={events !== null}>

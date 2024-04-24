@@ -184,6 +184,21 @@ export function reducer(
           }
         }
       };
+    case 'DELETE_EVENT':
+      const {deleteEventID} = action;
+      const newEvents = {...state.events};
+      delete newEvents[deleteEventID];
+      return {
+        ...state,
+        events: {
+          ...newEvents
+        }
+      };
+    case 'CLEAR_EVENTS':
+      return {
+        ...state,
+        events: {}
+      };
     default:
       return state;
   }
